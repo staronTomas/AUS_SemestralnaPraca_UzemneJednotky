@@ -5,6 +5,8 @@
 
 using namespace std;
 
+using namespace structures; // nemusim robiù structures::
+
 class UzemnaJednotka
 {
 private:
@@ -20,7 +22,7 @@ private:
 	bool list_;
 	bool koren_;
 	
-	structures::SortedSequenceTable<UZEMNA_JEDNOTKA, structures::SortedSequenceTable<string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
+	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
 
 public:
 	UzemnaJednotka(string nazov, UZEMNA_JEDNOTKA typUzemnejJednotky, string kodUJ, UzemnaJednotka* rodic) {
@@ -48,6 +50,62 @@ public:
 		vyssiaUJRodic_ = nullptr;
 	};
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//Gettery
+
+
+	string getNazov() {
+		return nazov_;
+	}
+
+	UZEMNA_JEDNOTKA getTypUzemnejJednotky() {
+		return typUzemnejJednotky_;
+	}
+
+	string getKodUJ() {
+		return kodUJ_;
+	}
+
+	UzemnaJednotka* getVyssiaUJRodic() {
+		return vyssiaUJRodic_;
+	}
+
+	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<string, UzemnaJednotka*>*>* getUzemneJednotkyChildren() {
+		return uzemneJednotkyChilder_;
+	}
+
+
+	// Settery
+
+	void setNazov(string nazov) {
+		nazov_ = nazov;
+	}
+
+	void setTypUzemnejJednotky(UZEMNA_JEDNOTKA typUJ) {
+		typUzemnejJednotky_ = typUJ;
+	}
+
+	void setKodUJ(string kodUj) {
+		kodUJ_ = kodUj;
+	}
+
+	void setVyssiaUJRodic(UzemnaJednotka* vyssiaUJRodic) {
+		vyssiaUJRodic_ = vyssiaUJRodic;
+	}
 
 
 };
