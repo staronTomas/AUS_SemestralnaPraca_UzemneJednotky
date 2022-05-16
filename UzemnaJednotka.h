@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "sorted_sequence_table.h"
+#include "structures/table/sorted_sequence_table.h"
 #include "Vzdelanie.h"
 
 using namespace std;
@@ -13,15 +13,13 @@ class UzemnaJednotka
 
 private:
 
-
 	enum UZEMNA_JEDNOTKA {
 		STAT, KRAJ, OKRES, OBEC
 	};
 
-	enum TYP_VZDELANIA {
+	enum class TYP_VZDELANIA {
 		BEZ_UKONCENEHO_VZDELANIA, ZAKLADNE, UCNOVSKE, STREDNE, VYSSIE, VYSOKOSKOLSKE, BEZ_VZDELANIA, NEZISTENE
 	};
-
 
 	string nazov_;
 	UZEMNA_JEDNOTKA typUzemnejJednotky_;
@@ -30,7 +28,6 @@ private:
 	bool list_;
 	bool koren_;
 	Vzdelanie* vzdelanie_;
-
 	
 	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
 
