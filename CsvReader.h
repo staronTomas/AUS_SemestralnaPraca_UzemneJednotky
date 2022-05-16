@@ -2,20 +2,19 @@
 
 #include <iostream>
 
-using namespace std;
+class CsvReader {
 
-class CsvReader
-{
 
 private:
-	string nazovSuboru;
+
+	std::string nazovSuboru;
 
 
 public:
 
-	CsvReader();
-	~CsvReader();
+	CsvReader() {};
+	~CsvReader() {};
 
-	void readFromCsv(string nazovSuboru);
+
+	void readFromCsv(std::string nazovSuboru) {};
 };
-

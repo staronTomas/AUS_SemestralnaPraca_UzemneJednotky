@@ -230,9 +230,6 @@
     <ClInclude Include="structures\vector\vector.h">
       <Filter>Source Files\structures\vector</Filter>
     </ClInclude>
-    <ClInclude Include="CsvReader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="UzemnaJednotka.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -240,6 +237,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="HlavnyProgram.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CsvReader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
