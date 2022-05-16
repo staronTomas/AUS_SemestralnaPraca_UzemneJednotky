@@ -82,6 +82,7 @@
     <ClInclude Include="structures\_logger\file_log_consumer.h" />
     <ClInclude Include="structures\_logger\logger.h" />
     <ClInclude Include="UzemnaJednotka.h" />
+    <ClInclude Include="Vzdelanie.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

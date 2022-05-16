@@ -236,5 +236,8 @@
     <ClInclude Include="UzemnaJednotka.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vzdelanie.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
