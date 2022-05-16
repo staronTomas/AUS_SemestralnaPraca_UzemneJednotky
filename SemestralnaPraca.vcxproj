@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CsvReader.h" />
+    <ClInclude Include="HlavnyProgram.h" />
     <ClInclude Include="structures\array\array.h" />
     <ClInclude Include="structures\data_item.h" />
     <ClInclude Include="structures\heap_monitor.h" />

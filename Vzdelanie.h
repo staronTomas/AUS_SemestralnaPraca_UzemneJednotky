@@ -82,7 +82,6 @@ public:
 	}
 
 };
-=======
 
 
 	int getPocetVzdelanie(TYP_VZDELANIA typVzdelania) {

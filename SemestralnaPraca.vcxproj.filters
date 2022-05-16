@@ -239,5 +239,8 @@
     <ClInclude Include="Vzdelanie.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="HlavnyProgram.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

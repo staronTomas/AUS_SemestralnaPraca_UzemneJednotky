@@ -3,8 +3,12 @@
 
 #include <iostream>
 
+#include "HlavnyProgram.h"
+
 int main()
 {
+	HlavnyProgam* program = new HlavnyProgam();
 
+	program->spustiProgram();
 	
 }
