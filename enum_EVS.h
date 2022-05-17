@@ -1,0 +1,6 @@
+#pragma once
+
+
+enum class EVS {
+	PREDPRODUKTIVNI, PRODUKTIVNI, POPRODUKTIVNY
+};

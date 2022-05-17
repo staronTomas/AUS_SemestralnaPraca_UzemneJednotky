@@ -4,21 +4,19 @@
 #include "structures/table/sorted_sequence_table.h"
 #include "Vzdelanie.h"
 
+#include "enum_UzemnaJednotka.h"
+#include "enum_TypVzdelania.h"
+
 using namespace std;
 
 using namespace structures; // nemusim robiù structures::
 
 
-enum class UZEMNA_JEDNOTKA {
-	STAT, KRAJ, OKRES, OBEC
-};
 
-enum class TYP_VZDELANIA {
-	BEZ_UKONCENEHO_VZDELANIA, ZAKLADNE, UCNOVSKE, STREDNE, VYSSIE, VYSOKOSKOLSKE, BEZ_VZDELANIA, NEZISTENE
-};
 
 class UzemnaJednotka
 {
+
 
 private:
 

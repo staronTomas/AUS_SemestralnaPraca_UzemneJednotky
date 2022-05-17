@@ -49,6 +49,9 @@
     <Filter Include="Source Files\structures\vector">
       <UniqueIdentifier>{419f6645-e8b3-4f87-8f20-e565a935cfeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Enums">
+      <UniqueIdentifier>{7cc63368-6cf5-4ba6-9d9d-0098295b0c9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -241,6 +244,21 @@
     </ClInclude>
     <ClInclude Include="CsvReader.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_UzemnaJednotka.h">
+      <Filter>Source Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_TypVzdelania.h">
+      <Filter>Source Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_EVS.h">
+      <Filter>Source Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_Pohlavie.h">
+      <Filter>Source Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_VyssiCelok.h">
+      <Filter>Source Files\Enums</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

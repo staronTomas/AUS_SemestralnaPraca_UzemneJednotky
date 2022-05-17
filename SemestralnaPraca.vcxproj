@@ -28,6 +28,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CsvReader.h" />
+    <ClInclude Include="enum_EVS.h" />
+    <ClInclude Include="enum_Pohlavie.h" />
+    <ClInclude Include="enum_TypVzdelania.h" />
+    <ClInclude Include="enum_UzemnaJednotka.h" />
+    <ClInclude Include="enum_VyssiCelok.h" />
     <ClInclude Include="HlavnyProgram.h" />
     <ClInclude Include="structures\array\array.h" />
     <ClInclude Include="structures\data_item.h" />

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "enum_TypVzdelania.h"
+
 using namespace std;
 
 
@@ -10,9 +12,7 @@ class Vzdelanie {
 
 private:
 
-	enum class TYP_VZDELANIA {
-		BEZ_UKONCENEHO_VZDELANIA_DETI, ZAKLADNE, UCNOVSKE, STREDNE, VYSSIE, VYSOKOSKOLSKE, BEZ_VZDELANIA, NEZISTENE
-	};
+
 
 	int bezUkoncenehoVzdelaniaDeti_;
 	int zakladne_;
@@ -25,7 +25,17 @@ private:
 
 public:
 
-	Vzdelanie() {};
+	Vzdelanie() {
+		bezUkoncenehoVzdelaniaDeti_ = 0;
+		zakladne_ = 0;
+		ucnovske_ = 0;
+		stredne_ = 0;
+		vyssie_ = 0;
+		vysokoskolske_ = 0;
+		bezVzdelania_ = 0;
+		nezistene_ = 0;
+	};
+
 	~Vzdelanie() {};
 
 	int getPocetVzdelanie(TYP_VZDELANIA vzd) {
@@ -76,6 +86,34 @@ public:
 			bezVzdelania_ = pocet;
 		case TYP_VZDELANIA::NEZISTENE:
 			nezistene_ = pocet;
+
+		default:
+			;
+		}
+	}
+
+
+
+	void navysPocetVzdelanie(TYP_VZDELANIA vzd, int pocet) {
+
+		switch (vzd) {
+
+		case TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI:
+			bezUkoncenehoVzdelaniaDeti_ += pocet;
+		case TYP_VZDELANIA::ZAKLADNE:
+			zakladne_ += pocet;
+		case TYP_VZDELANIA::UCNOVSKE:
+			ucnovske_ += pocet;
+		case TYP_VZDELANIA::STREDNE:
+			stredne_ += pocet;
+		case TYP_VZDELANIA::VYSSIE:
+			vyssie_ += pocet;
+		case TYP_VZDELANIA::VYSOKOSKOLSKE:
+			vysokoskolske_ += pocet;
+		case TYP_VZDELANIA::BEZ_VZDELANIA:
+			bezVzdelania_ += pocet;
+		case TYP_VZDELANIA::NEZISTENE:
+			nezistene_ += pocet;
 
 		default:
 			;
