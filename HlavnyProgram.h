@@ -8,6 +8,9 @@
 #include "enum_Pohlavie.h"
 #include "enum_EVS.h"
 
+#include "structures/list/array_list.h"
+#include "structures/heap_monitor.h"
+
 #include "UzemnaJednotka.h"
 #include "CsvReader.h"
 
@@ -42,12 +45,19 @@ public:
 
 
 	void spustiProgram() {
-		reader_->readFromCsv("../Data/kraje.csv");
-		std::cout << "ahoj";
+		std::cout << "ahoj, Vitaj v tomto programe" << endl << endl;
+
+		nacitajVsetkyData();
 	}
 
 
 	void nacitajVsetkyData() {
+		
+		ArrayList<string>* obceArrayList = reader_->nacitajObceAleboOkresy("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+
+		for (string item : *obceArrayList) {
+			cout << item << endl;
+		}
 
 	}
 
