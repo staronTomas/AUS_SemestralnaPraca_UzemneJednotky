@@ -7,7 +7,7 @@ using namespace std;
 
 class Vzdelanie {
 
-	
+
 private:
 
 	enum class TYP_VZDELANIA {
@@ -78,50 +78,7 @@ public:
 			nezistene_ = pocet;
 
 		default:
+			;
 		}
 	}
-
 };
-
-
-	int getPocetVzdelanie(TYP_VZDELANIA typVzdelania) {
-		switch (typVzdelania) {
-
-			case BEZ_UKONCENEHO_VZDELANIA:
-				return bezUkoncenehoVzdelaniaDeti_;
-			case UCNOVSKE:
-				return ucnovske_;
-			case STREDNE:
-				return stredne_;
-			case VYSSIE:
-				return vyssie_;
-			case VYSOKOSKOLSKE:
-				return vysokoskolske_;
-			case BEZ_VZDELANIA:
-				return bezVzdelania_;
-			case NEZISTENE:
-				return nezistene_;
-		}
-	}
-
-	void setPocetVzdelanie(TYP_VZDELANIA typVzdelania, int pocet){
-		switch (typVzdelania) {
-
-		case BEZ_UKONCENEHO_VZDELANIA:
-			bezUkoncenehoVzdelaniaDeti_ = pocet;
-		case UCNOVSKE:
-			ucnovske_ = pocet;
-		case STREDNE:
-			stredne_ = pocet;
-		case VYSSIE:
-			vyssie_ = pocet;
-		case VYSOKOSKOLSKE:
-			vysokoskolske_ = pocet;
-		case BEZ_VZDELANIA:
-			bezVzdelania_ = pocet;
-		case NEZISTENE:
-			nezistene_ = pocet;
-		}
-	}
-}
->>>>>>> b556cf61ff2d84013eb7966929bf0fec8c4568f1

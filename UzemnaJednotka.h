@@ -8,18 +8,20 @@ using namespace std;
 
 using namespace structures; // nemusim robiù structures::
 
+
+enum class UZEMNA_JEDNOTKA {
+	STAT, KRAJ, OKRES, OBEC
+};
+
+enum class TYP_VZDELANIA {
+	BEZ_UKONCENEHO_VZDELANIA, ZAKLADNE, UCNOVSKE, STREDNE, VYSSIE, VYSOKOSKOLSKE, BEZ_VZDELANIA, NEZISTENE
+};
+
 class UzemnaJednotka
 {
 
 private:
 
-	enum UZEMNA_JEDNOTKA {
-		STAT, KRAJ, OKRES, OBEC
-	};
-
-	enum class TYP_VZDELANIA {
-		BEZ_UKONCENEHO_VZDELANIA, ZAKLADNE, UCNOVSKE, STREDNE, VYSSIE, VYSOKOSKOLSKE, BEZ_VZDELANIA, NEZISTENE
-	};
 
 	string nazov_;
 	UZEMNA_JEDNOTKA typUzemnejJednotky_;
@@ -32,25 +34,26 @@ private:
 	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
 
 public:
+
 	UzemnaJednotka(string nazov, UZEMNA_JEDNOTKA typUzemnejJednotky, string kodUJ, UzemnaJednotka* rodic) {
+
 		nazov_ = nazov;
 		typUzemnejJednotky_ = typUzemnejJednotky;
 		kodUJ_ = kodUJ;
 		vyssiaUJRodic_ = rodic;
 		
-		if (typUzemnejJednotky_ = STAT) {
+		if (typUzemnejJednotky_ == UZEMNA_JEDNOTKA::STAT) {
 			koren_ = true;
 		}
 		else {
 			koren_ = false;
-			if (typUzemnejJednotky_ = OBEC) {
+			if (typUzemnejJednotky_ == UZEMNA_JEDNOTKA::OBEC) {
 				list_ = true;
 			}
 		}
 
-
-
 	};
+
 	~UzemnaJednotka() {
 		nazov_ = "";
 		kodUJ_ = "";

@@ -81,12 +81,12 @@ namespace structures
 	inline void SortedSequenceTable<K, T>::insert(const K& key, const T& data)
 	{
 		bool found = false;
-		int index = indexOfKey(key, 0, static_cast<int>(size()), found);
+		int index = indexOfKey(key, 0, static_cast<int>(SequenceTable<K, T>::size()), found);
 
 		if (!found)
 		{
 			TableItem<K, T>* tableItem = new TableItem<K, T>(key, data);
-			list_->insert(tableItem, index);
+			SequenceTable<K, T>::list_list_->insert(tableItem, index);
 		}
 		else
 		{
@@ -97,22 +97,22 @@ namespace structures
 	template<typename K, typename T>
 	inline TableItem<K, T>* SortedSequenceTable<K, T>::findTableItem(const K& key)
 	{
-		if (size() == 0)
+		if (SequenceTable<K, T>::size() == 0)
 		{
 			return false;
 		}
 		else
 		{
 			bool found = false;
-			int index = indexOfKey(key, 0, static_cast<int>(size()), found);
-			return found ? list_->at(index) : nullptr;
+			int index = indexOfKey(key, 0, static_cast<int>(SequenceTable<K, T>::size()), found);
+			return found ? SequenceTable<K, T>::list_->at(index) : nullptr;
 		}
 	}
 
 	template<typename K, typename T>
 	inline int SortedSequenceTable<K, T>::indexOfKey(K key, int indexStart, int indexEnd, bool& found)
 	{
-		int indexSize = static_cast<int>(size());
+		int indexSize = static_cast<int>(SequenceTable<K, T>::size());
 
 		if (indexStart == indexSize)
 		{
@@ -121,7 +121,7 @@ namespace structures
 		}
 
 		int pivot = (indexStart + indexEnd) / 2;
-		K keyAtPivot = list_->at(pivot)->getKey();
+		K keyAtPivot = SequenceTable<K, T>::list_list_->at(pivot)->getKey();
 
 		if (keyAtPivot == key)
 		{
