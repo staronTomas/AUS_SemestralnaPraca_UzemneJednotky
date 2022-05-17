@@ -7,8 +7,9 @@
 #include "enum_TypVzdelania.h"
 #include "enum_Pohlavie.h"
 #include "enum_EVS.h"
+#include "structures/list/linked_list.h"
 
-#include "structures/list/array_list.h"
+
 #include "structures/heap_monitor.h"
 
 #include "UzemnaJednotka.h"
@@ -47,23 +48,15 @@ public:
 
 	void nacitajVsetkyData() {
 		
-		ArrayList<std::string>* obceArrayList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		LinkedList<std::string>* obceArrayList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
 
-		ArrayList<std::string>* NedokonaleokresyArrayList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
-		ArrayList<std::string>* okresyArrayList = new ArrayList<std::string>();
+		LinkedList<std::string>* okresyArrayList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
 
 
-		for (const std::string& item : *NedokonaleokresyArrayList) {
+		for (const std::string& item : *obceArrayList) {
 
-			//
-			std::string text;
-			text = item.substr(6, item.size());
-			okresyArrayList->add(text);
-
-			std::cout << text << std::endl;
+			std::cout << item << std::endl;
 		}
-
-		std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << "KONIEEEEEEEEEEEEC" << std::endl << std::endl << std::endl << std::endl << std::endl;
 
 		for (const std::string& item : *okresyArrayList) {
 

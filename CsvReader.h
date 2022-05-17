@@ -10,7 +10,7 @@ typedef std::basic_string<wchar_t> wstring;
 #include<clocale>
 #include<string>
 
-#include "structures/list/array_list.h"
+#include "structures/list/linked_list.h"
 #include "structures/heap_monitor.h"
 
 
@@ -29,7 +29,7 @@ public:
 	~CsvReader() {};
 
 
-	structures::ArrayList<std::string>* nacitajObce(std::string nazovSuboru) {
+	structures::LinkedList<std::string>* nacitajObce(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -58,8 +58,8 @@ public:
 			std::cout << "Could not open the file\n";
 		}
 
-		structures::ArrayList<std::string>* texty = new structures::ArrayList<std::string>();
-		structures::ArrayList<std::string>* result = new structures::ArrayList<std::string>();
+		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>();
+		structures::LinkedList<std::string>* result = new structures::LinkedList<std::string>();
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -107,7 +107,7 @@ public:
 
 
 
-	structures::ArrayList<std::string>* nacitajOkresy(std::string nazovSuboru) {
+	structures::LinkedList<std::string>* nacitajOkresy(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -136,8 +136,8 @@ public:
 			std::cout << "Could not open the file\n";
 		}
 
-		structures::ArrayList<std::string>* texty = new structures::ArrayList<std::string>;
-		structures::ArrayList<std::string>* result = new structures::ArrayList<std::string>;
+		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>;
+		structures::LinkedList<std::string>* result = new structures::LinkedList<std::string>;
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -178,7 +178,9 @@ public:
 
 			std::string text = nazovUJ + ";" + kodUJ;
 
-			std::cout << text << std::endl;
+
+			text = text.substr(6, text.size()); // Odstraním prvých 6 znakov z nazvov okresov "Okres "
+
 			result->add(text);
 			
 		}
