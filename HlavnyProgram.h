@@ -53,9 +53,10 @@ public:
 
 	void nacitajVsetkyData() {
 		
-		ArrayList<string>* obceArrayList = reader_->nacitajObceAleboOkresy("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		ArrayList<string>* obceArrayList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		ArrayList<string>* okresyArrayList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
 
-		for (string item : *obceArrayList) {
+		for (string item : *okresyArrayList) {
 			cout << item << endl;
 		}
 
