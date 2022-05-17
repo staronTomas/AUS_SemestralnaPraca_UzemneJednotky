@@ -16,12 +16,6 @@
 
 
 
-
-
-
-
-
-
 class HlavnyProgam {
 	
 
@@ -45,7 +39,7 @@ public:
 
 
 	void spustiProgram() {
-		std::cout << "ahoj, Vitaj v tomto programe" << endl << endl;
+		std::cout << "ahoj, Vitaj v tomto programe" << std::endl << std::endl;
 
 		nacitajVsetkyData();
 	}
@@ -53,11 +47,27 @@ public:
 
 	void nacitajVsetkyData() {
 		
-		ArrayList<string>* obceArrayList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
-		ArrayList<string>* okresyArrayList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		ArrayList<std::string>* obceArrayList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
 
-		for (string item : *okresyArrayList) {
-			cout << item << endl;
+		ArrayList<std::string>* NedokonaleokresyArrayList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		ArrayList<std::string>* okresyArrayList = new ArrayList<std::string>();
+
+
+		for (const std::string& item : *NedokonaleokresyArrayList) {
+
+			//
+			std::string text;
+			text = item.substr(6, item.size());
+			okresyArrayList->add(text);
+
+			std::cout << text << std::endl;
+		}
+
+		std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << "KONIEEEEEEEEEEEEC" << std::endl << std::endl << std::endl << std::endl << std::endl;
+
+		for (const std::string& item : *okresyArrayList) {
+
+			std::cout << item << std::endl;
 		}
 
 	}

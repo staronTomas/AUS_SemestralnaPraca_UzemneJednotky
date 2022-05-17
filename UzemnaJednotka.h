@@ -7,7 +7,6 @@
 #include "enum_UzemnaJednotka.h"
 #include "enum_TypVzdelania.h"
 
-using namespace std;
 
 using namespace structures; // nemusim robiù structures::
 
@@ -21,19 +20,19 @@ class UzemnaJednotka
 private:
 
 
-	string nazov_;
+	std::string nazov_;
 	UZEMNA_JEDNOTKA typUzemnejJednotky_;
-	string kodUJ_;
+	std::string kodUJ_;
 	UzemnaJednotka* vyssiaUJRodic_;
 	bool list_;
 	bool koren_;
 	Vzdelanie* vzdelanie_;
 	
-	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
+	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
 
 public:
 
-	UzemnaJednotka(string nazov, UZEMNA_JEDNOTKA typUzemnejJednotky, string kodUJ, UzemnaJednotka* rodic) {
+	UzemnaJednotka(std::string nazov, UZEMNA_JEDNOTKA typUzemnejJednotky, std::string kodUJ, UzemnaJednotka* rodic) {
 
 		nazov_ = nazov;
 		typUzemnejJednotky_ = typUzemnejJednotky;
@@ -71,7 +70,7 @@ public:
 	//Gettery
 
 
-	string getNazov() {
+	std::string getNazov() {
 		return nazov_;
 	}
 
@@ -79,7 +78,7 @@ public:
 		return typUzemnejJednotky_;
 	}
 
-	string getKodUJ() {
+	std::string getKodUJ() {
 		return kodUJ_;
 	}
 
@@ -87,7 +86,7 @@ public:
 		return vyssiaUJRodic_;
 	}
 
-	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<string, UzemnaJednotka*>*>* getUzemneJednotkyChildren() {
+	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* getUzemneJednotkyChildren() {
 		return uzemneJednotkyChilder_;
 	}
 
@@ -102,7 +101,7 @@ public:
 
 	// Settery
 
-	void setNazov(string nazov) {
+	void setNazov(std::string nazov) {
 		nazov_ = nazov;
 	}
 
@@ -110,7 +109,7 @@ public:
 		typUzemnejJednotky_ = typUJ;
 	}
 
-	void setKodUJ(string kodUj) {
+	void setKodUJ(std::string kodUj) {
 		kodUJ_ = kodUj;
 	}
 

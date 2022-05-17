@@ -4,8 +4,6 @@
 
 #include "enum_TypVzdelania.h"
 
-using namespace std;
-
 
 class Vzdelanie {
 

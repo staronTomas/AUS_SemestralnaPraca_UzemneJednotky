@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-typedef basic_string<wchar_t> wstring;
+typedef std::basic_string<wchar_t> wstring;
 
 #include <iostream>
 #include <fstream>
@@ -12,9 +12,6 @@ typedef basic_string<wchar_t> wstring;
 
 #include "structures/list/array_list.h"
 #include "structures/heap_monitor.h"
-
-using namespace std;
-
 
 
 
@@ -32,13 +29,13 @@ public:
 	~CsvReader() {};
 
 
-	structures::ArrayList<string>* nacitajObce(std::string nazovSuboru) {
+	structures::ArrayList<std::string>* nacitajObce(std::string nazovSuboru) {
 
-		vector<vector<string>> content;
-		vector<string> row;
-		string line, word;
+		std::vector<std::vector<std::string>> content;
+		std::vector<std::string> row;
+		std::string line, word;
 
-		fstream file(nazovSuboru, ios::in);
+		std::fstream file(nazovSuboru, std::ios::in);
 		if (file.is_open())
 		{
 			bool firstTime = true;
@@ -50,7 +47,7 @@ public:
 				}
 				row.clear();
 
-				stringstream str(line);
+				std::stringstream str(line);
 
 				while (getline(str, word, ','))
 					row.push_back(word);
@@ -58,16 +55,16 @@ public:
 			}
 		}
 		else {
-			cout << "Could not open the file\n";
+			std::cout << "Could not open the file\n";
 		}
 
-		structures::ArrayList<string>* texty = new structures::ArrayList<string>;
-		structures::ArrayList<string>* result = new structures::ArrayList<string>;
+		structures::ArrayList<std::string>* texty = new structures::ArrayList<std::string>();
+		structures::ArrayList<std::string>* result = new structures::ArrayList<std::string>();
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
 		{
-			string riadok = "";
+			std::string riadok = "";
 			for (int j = 0; j < content[i].size(); j++)
 			{
 				riadok += content[i][j];
@@ -81,9 +78,9 @@ public:
 		}
 
 		
-		for (string item : *texty) {
-			string kodUJ = "";
-			string nazovUJ = "";
+		for (std::string item : *texty) {
+			std::string kodUJ = "";
+			std::string nazovUJ = "";
 			int i = 0;
 			// najprv prejdem po prvu ";" v obciach, vyfiltrujem poradove cislo, netreba mi ho, potom sa dostanem na meno obce
 			while (item.at(i) != ';') {
@@ -110,13 +107,13 @@ public:
 
 
 
-	structures::ArrayList<string>* nacitajOkresy(std::string nazovSuboru) {
+	structures::ArrayList<std::string>* nacitajOkresy(std::string nazovSuboru) {
 
-		vector<vector<string>> content;
-		vector<string> row;
-		string line, word;
+		std::vector<std::vector<std::string>> content;
+		std::vector<std::string> row;
+		std::string line, word;
 
-		fstream file(nazovSuboru, ios::in);
+		std::fstream file(nazovSuboru, std::ios::in);
 		if (file.is_open())
 		{
 			bool firstTime = true;
@@ -128,7 +125,7 @@ public:
 				}
 				row.clear();
 
-				stringstream str(line);
+				std::stringstream str(line);
 
 				while (getline(str, word, ','))
 					row.push_back(word);
@@ -136,16 +133,16 @@ public:
 			}
 		}
 		else {
-			cout << "Could not open the file\n";
+			std::cout << "Could not open the file\n";
 		}
 
-		structures::ArrayList<string>* texty = new structures::ArrayList<string>;
-		structures::ArrayList<string>* result = new structures::ArrayList<string>;
+		structures::ArrayList<std::string>* texty = new structures::ArrayList<std::string>;
+		structures::ArrayList<std::string>* result = new structures::ArrayList<std::string>;
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
 		{
-			string riadok = "";
+			std::string riadok = "";
 			for (int j = 0; j < content[i].size(); j++)
 			{
 				riadok += content[i][j];
@@ -159,9 +156,9 @@ public:
 		}
 
 
-		for (string item : *texty) {
-			string kodUJ = "";
-			string nazovUJ = "";
+		for (std::string item : *texty) {
+			std::string kodUJ = "";
+			std::string nazovUJ = "";
 			int i = 0;
 			// najprv prejdem po prvu ";" v obciach, vyfiltrujem poradove cislo, netreba mi ho, potom sa dostanem na meno obce
 			while (item.at(i) != ';') {
@@ -179,16 +176,16 @@ public:
 				i++;
 			}
 
-			string text = nazovUJ + ";" + kodUJ;
+			std::string text = nazovUJ + ";" + kodUJ;
 
-			cout << text << endl;
+			std::cout << text << std::endl;
 			result->add(text);
 			
 		}
 
 		delete texty;
 
-		cout << endl << endl << endl << endl << endl << "KONIEEEEEEEEEEEEC" << endl << endl << endl << endl << endl;
+		
 
 		return result;
 	}
