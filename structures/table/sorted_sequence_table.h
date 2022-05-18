@@ -86,7 +86,7 @@ namespace structures
 		if (!found)
 		{
 			TableItem<K, T>* tableItem = new TableItem<K, T>(key, data);
-			SequenceTable<K, T>::list_list_->insert(tableItem, index);
+			SequenceTable<K, T>::list_->insert(tableItem, index);
 		}
 		else
 		{
@@ -99,7 +99,7 @@ namespace structures
 	{
 		if (SequenceTable<K, T>::size() == 0)
 		{
-			return false;
+			return nullptr;
 		}
 		else
 		{
@@ -121,7 +121,7 @@ namespace structures
 		}
 
 		int pivot = (indexStart + indexEnd) / 2;
-		K keyAtPivot = SequenceTable<K, T>::list_list_->at(pivot)->getKey();
+		K keyAtPivot = SequenceTable<K, T>::list_->at(pivot)->getKey();
 
 		if (keyAtPivot == key)
 		{

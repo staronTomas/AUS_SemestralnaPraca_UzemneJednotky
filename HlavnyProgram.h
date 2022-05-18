@@ -52,16 +52,26 @@ public:
 
 		LinkedList<std::string>* okresyArrayList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
 
+		LinkedList<std::string>* krajeArrayList = reader_->nacitajKraje("../Data_bez_diakritiky/kraje.csv");  // Obce mi nacita:   NazovUJ-KodUJ
 
-		for (const std::string& item : *obceArrayList) {
+		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("../Data_bez_diakritiky/vzdelanie.csv");
 
-			std::cout << item << std::endl;
-		}
-
-		for (const std::string& item : *okresyArrayList) {
+		for (const std::string& item : *krajeArrayList) {
 
 			std::cout << item << std::endl;
 		}
+
+
+		Vzdelanie* x = vzdelanieZoSuborov->find("SK0102529320");
+
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::STREDNE) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA) << std::endl;
+		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE) << std::endl;
 
 	}
 
