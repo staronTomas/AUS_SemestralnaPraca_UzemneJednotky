@@ -91,13 +91,6 @@ public:
 		return uzemneJednotkyChildren_;
 	}
 
-	bool jeKoren() {
-		return koren_;
-	}
-
-	bool jeList() {
-		return list_;
-	}
 
 
 	// Settery
@@ -116,14 +109,6 @@ public:
 
 	void setVyssiaUJRodic(UzemnaJednotka* vyssiaUJRodic) {
 		vyssiaUJRodic_ = vyssiaUJRodic;
-	}
-
-	void setKoren(bool isRoot) {
-		koren_ = isRoot;
-	}
-
-	void setList(bool isList) {
-		list_ = isList;
 	}
 
 	void setChildren(SortedSequenceTable<std::string, UzemnaJednotka*>*  newChildren) {
