@@ -127,28 +127,37 @@ public:
 
 		SortedSequenceTable<std::string, UzemnaJednotka*>*  kraje = slovensko_->getUzemneJednotkyChildren();
 
-		if (kraje->containsKey("Bratislavsky kraj"))
-		{
-			std::cout << "true" << std::endl;
-			std::cout << kraje->find("Zilinsky kraj")->getUzemneJednotkyChildren()->find("Liptovsky Mikulas")->getUzemneJednotkyChildren()->find("Lazisko")->getNazov() << std::endl;
-		}
-		else {
-			std::cout << "false" << std::endl;
-		}
-		
+		/*
+		std::cout << kraje->find("Zilinsky kraj")->getUzemneJednotkyChildren()->find("Liptovsky Mikulas")->getUzemneJednotkyChildren()->find("Lazisko")->getNazov() << std::endl;
+		*/
 
 		// SKUSKA CI TO FUNGUJE
 		int x = 1;
 		
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
+			std::string nazovKraja = zoznamKrajov->at(i)->at(0);
+
 			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
+
+				std::string nazovOkresu = zoznamOkresov->at(j)->at(0);
+
+				if (!slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->containsKey(nazovOkresu)) {
+					continue;
+				}
+
 				for (int k = 0; k < zoznamObci->size(); k++)
 				{
+					std::string nazovObce = zoznamObci->at(k)->at(0);
+
+
+					if (!slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->containsKey(nazovObce)) {
+						continue;
+					}
 					//std::cout << x << std::endl;
+					std::cout << slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->find(nazovObce)->getNazov() << std::endl;
 					x++;
-					//std::cout << slovensko_->getUzemneJednotkyChildren()->find(zoznamKrajov->at(i)->at(0))->getUzemneJednotkyChildren()->find(zoznamOkresov->at(j)->at(0))->getUzemneJednotkyChildren()->find(zoznamObci->at(k)->at(0)) << std::endl;
 				}
 			}
 		}
