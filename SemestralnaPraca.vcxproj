@@ -27,6 +27,8 @@
     <ClCompile Include="structures\_logger\logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Criterion.h" />
+    <ClInclude Include="CriterionUJ.h" />
     <ClInclude Include="CsvReader.h" />
     <ClInclude Include="enum_EVS.h" />
     <ClInclude Include="enum_Pohlavie.h" />

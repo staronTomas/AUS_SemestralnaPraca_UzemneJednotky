@@ -89,8 +89,6 @@ public:
 			system("CLS");
 			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
 			std::cout << "Prebieha nacitavanie dat do uzemnych jednotiek." << std::endl << "Dokoncene: " << percentoDokoncene << "%" << std::endl;
-			
-			
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
@@ -117,71 +115,37 @@ public:
 
 						int porovnanie = subKodUjObec.compare(okresKodUJ);
 
-						std::cout << subKodUjObec << "  -  " << okresKodUJ;
-
 						if (porovnanie == 0)
 						{   
 							// patri okres do tohoto kraja
 							// idem okresu priradit jeho OBCE V CYKLE
 							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novyOkres);
 							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novaObec);
-						}
 
+
+							if (vzdelanieZoSuborov->containsKey(obecKodUJ)) {
+								Vzdelanie* vzd = vzdelanieZoSuborov->find(obecKodUJ);
+								novaObec->setVzdelanie(vzd);
+								novaObec->navysPocetObyvatelovZoVzdelania(vzd);
+
+								novyOkres->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
+								novyOkres->navysPocetObyvatelovZoVzdelania(vzd);
+
+								novyKraj->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
+								novyKraj->navysPocetObyvatelovZoVzdelania(vzd);
+
+								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
+								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
+							}	
+						}
 					}
 				}
-			}
-			
+			}	
 		}
 
 		system("CLS");
-		std::cout << "Nacitvanie dat bolo uspesne dokoncene." << std::endl;
-
-		SortedSequenceTable<std::string, UzemnaJednotka*>*  kraje = slovensko_->getUzemneJednotkyChildren();
-
-		int x = 0;
-		
-		for (int i = 0; i < zoznamKrajov->size(); i++)
-		{
-			int pocetOkresovVKraji = 0;
-			int pocetObciVKraji = 0;
-
-
-			std::string nazovKraja = zoznamKrajov->at(i)->at(0);
-
-			for (int j = 0; j < zoznamOkresov->size(); j++)
-			{
-
-				std::string nazovOkresu = zoznamOkresov->at(j)->at(0);
-
-				if (!slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->containsKey(nazovOkresu)) {
-					continue;
-				}
-				pocetOkresovVKraji++;
-
-				for (int k = 0; k < zoznamObci->size(); k++)
-				{
-					std::string nazovObce = zoznamObci->at(k)->at(0);
-
-
-					if (!slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->containsKey(nazovObce)) {
-						continue;
-					}
-
-					x++;
-					/*
-					std::cout << x << std::endl;
-					std::cout << slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->find(nazovObce)->getNazov() << std::endl;
-					*/
-
-					pocetObciVKraji++;
-
-				}
-			}
-			std::cout << "V kraji " << nazovKraja << " je: " << pocetObciVKraji << " obci." << std::endl;
-		}
-
-		std::cout << "Celkovy pocet obci: " << x << std::endl;
-		std::cout << "Koniec nacitavania a ukladania dat.";
+		std::cout << "Nacitavanie dat bolo uspesne dokoncene." << std::endl;
+	
 	}
 
 

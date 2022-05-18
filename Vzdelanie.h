@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "enum_TypVzdelania.h"
+#include "structures/heap_monitor.h"
 
 
 class Vzdelanie {
@@ -70,6 +71,17 @@ public:
 		}
 	}
 
+	void navysCelkovyPocetVzdelania(Vzdelanie* vzd) {
+
+		bezUkoncenehoVzdelaniaDeti_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
+		zakladne_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE);
+		ucnovske_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE);
+		stredne_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::STREDNE);
+		vyssie_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE);
+		vysokoskolske_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE);
+		bezVzdelania_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA);
+		nezistene_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE);
+	}
 
 
 
@@ -140,5 +152,11 @@ public:
 		default:
 			break;
 		}
+	}
+
+
+
+	int vratCelkovyPocetVzdelaniaVsetkych() {
+		return bezUkoncenehoVzdelaniaDeti_ + zakladne_ + ucnovske_ + stredne_ + vyssie_ + vysokoskolske_ + bezVzdelania_ + nezistene_;
 	}
 };

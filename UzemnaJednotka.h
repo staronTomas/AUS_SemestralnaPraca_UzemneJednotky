@@ -6,6 +6,7 @@
 
 #include "enum_UzemnaJednotka.h"
 #include "enum_TypVzdelania.h"
+#include "structures/heap_monitor.h"
 
 
 using namespace structures; // nemusim robiù structures::
@@ -24,9 +25,8 @@ private:
 	UZEMNA_JEDNOTKA typUzemnejJednotky_;
 	std::string kodUJ_;
 	UzemnaJednotka* vyssiaUJRodic_;
-	bool list_;
-	bool koren_;
 	Vzdelanie* vzdelanie_;
+	int pocetObyvatelov_;
 	
 	SortedSequenceTable<std::string, UzemnaJednotka*>* uzemneJednotkyChildren_;
 
@@ -38,18 +38,9 @@ public:
 		typUzemnejJednotky_ = typUzemnejJednotky;
 		kodUJ_ = kodUJ;
 		vyssiaUJRodic_ = rodic;
-		
-		if (typUzemnejJednotky_ == UZEMNA_JEDNOTKA::STAT) {
-			koren_ = true;
-		}
-		else {
-			koren_ = false;
-			if (typUzemnejJednotky_ == UZEMNA_JEDNOTKA::OBEC) {
-				list_ = true;
-			}
-		}
-
+		pocetObyvatelov_ = 0;
 		uzemneJednotkyChildren_ = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+		vzdelanie_ = new Vzdelanie();
 	};
 
 	~UzemnaJednotka() {
@@ -60,12 +51,20 @@ public:
 
 
 
+	void navysPocetObyvatelov(int pocet) {
+		pocetObyvatelov_ += pocet;
+	}
 
-
-
-
-
-
+	void navysPocetObyvatelovZoVzdelania(Vzdelanie* vzd) {
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::STREDNE);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA);
+		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE);
+	}
 
 
 	//Gettery
@@ -91,6 +90,14 @@ public:
 		return uzemneJednotkyChildren_;
 	}
 
+	int getPocetObyvatelov() {
+		return pocetObyvatelov_;
+	}
+
+	Vzdelanie* getVzdelanie() {
+		return vzdelanie_;
+	}
+
 
 
 	// Settery
@@ -113,6 +120,14 @@ public:
 
 	void setChildren(SortedSequenceTable<std::string, UzemnaJednotka*>*  newChildren) {
 		uzemneJednotkyChildren_ = newChildren;
+	}
+
+	void setPocetObyvatelov(int pocet) {
+		pocetObyvatelov_ = pocet;
+	}
+
+	void setVzdelanie(Vzdelanie* vzdelanie) {
+		vzdelanie_ = vzdelanie;
 	}
 
 };

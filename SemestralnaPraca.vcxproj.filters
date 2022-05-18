@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Enums">
       <UniqueIdentifier>{7cc63368-6cf5-4ba6-9d9d-0098295b0c9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Criterions">
+      <UniqueIdentifier>{913e1236-c417-4d27-9f30-7ce64d31af7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -262,6 +265,12 @@
     </ClInclude>
     <ClInclude Include="ZoznamUzemnychJednotiek.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Criterion.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJ.h">
+      <Filter>Source Files\Criterions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

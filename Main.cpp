@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "HlavnyProgram.h"
+#include "structures/heap_monitor.h"
 
 int main()
 {
