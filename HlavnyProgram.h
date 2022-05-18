@@ -36,12 +36,14 @@ private:
 	UzemnaJednotka* slovensko_;
 	CsvReader* reader_;
 
+	structures::LinkedList<LinkedList<std::string>*>* zoznamDuplicitnychNazvovObci_;
 
 public:
 
 	HlavnyProgam() {
 		slovensko_ = new UzemnaJednotka("Slovensko", UZEMNA_JEDNOTKA::STAT, "SK", nullptr);
 		reader_ = new CsvReader();
+		zoznamDuplicitnychNazvovObci_ = new structures::LinkedList<LinkedList<std::string>*>();
 	}
 
 	~HlavnyProgam() {
@@ -69,6 +71,8 @@ public:
 
 
 
+		LinkedList<std::string>* zoznamObciPocitaniePreDuplicity = new LinkedList<std::string>();
+
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
 			std::string nazovUjKraj = zoznamKrajov->at(i)->at(0);
@@ -81,6 +85,7 @@ public:
 			system("CLS");
 			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
 			std::cout << "Prebieha nacitavanie dat do uzemnych jednotiek." << std::endl << "Dokoncene: " << percentoDokoncene << "%" << std::endl;
+			
 			
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
@@ -108,16 +113,20 @@ public:
 
 						int porovnanie = subKodUjObec.compare(okresKodUJ);
 
+						std::cout << subKodUjObec << "  -  " << okresKodUJ;
+
 						if (porovnanie == 0)
-						{
+						{   
 							// patri okres do tohoto kraja
 							// idem okresu priradit jeho OBCE V CYKLE
 							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novyOkres);
 							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novaObec);
 						}
+
 					}
 				}
 			}
+			
 		}
 
 		system("CLS");
