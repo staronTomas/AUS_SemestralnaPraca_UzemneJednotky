@@ -58,13 +58,6 @@ public:
 		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("../Data_bez_diakritiky/vzdelanie.csv");
 
 
-		for (int i = 0; i < krajeList->size(); i++)
-		{
-			std::cout << krajeList->at(i)->at(0) << std::endl;
-			std::cout << krajeList->at(i)->at(1) << std::endl;
-		}
-		std::cout << "hotovo" << std::endl << std::endl << std::endl << std::endl;
-
 		
 		//Najprv si ich vsetky vlozim do tychto SequenceTable postupne
 

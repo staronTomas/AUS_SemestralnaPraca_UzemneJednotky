@@ -258,6 +258,9 @@ public:
 				break;
 			}
 
+
+			riadok += ";"; // ABY SOM MOHOL NESKOR ZISTIT CI UZ JE KONIEC
+
 			texty->add(riadok);
 		}
 
@@ -268,21 +271,43 @@ public:
 			int i = 0;
 			// najprv prejdem po prvu ";" v obciach, vyfiltrujem poradove cislo, netreba mi ho, potom sa dostanem na meno obce
 			while (item.at(i) != ';') {
+				//stlpec A
 				i++;
 			}
 			i++;
 			while (item.at(i) != ';') {
+				//stlpec B
+				i++;
+			}
+			i++;
+
+			while (item.at(i) != ';') {
+				//stlpec C
+				nazovUJ += item.at(i);
+				i++;
+			}
+			i++;
+
+			while (item.at(i) != ';') {
+				//stlpec D
+				i++;
+			}
+			i++;
+
+			while (item.at(i) != ';') {
+				//stlpec E
+				i++;
+			}
+			i++;
+
+			i = i + 5; //chcem preskocit prvych 5 znakov v stlpcochF
+			while (item.at(i) != ';') {
+				//stlpec F
 				kodUJ += item.at(i);
 				i++;
 			}
 			i++;
-
-			while (item.at(i) != ';') {
-				nazovUJ += item.at(i);
-				i++;
-			}
-
-			kodUJ = "SK0" + kodUJ;
+			
 
 			LinkedList<std::string>* list = new LinkedList<std::string>;
 			list->add(nazovUJ);
