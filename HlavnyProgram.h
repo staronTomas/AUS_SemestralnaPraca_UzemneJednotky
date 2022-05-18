@@ -24,6 +24,7 @@
 
 #include "UzemnaJednotka.h"
 #include "CsvReader.h"
+#include "ZoznamUzemnychJednotiek.h"
 
 
 
@@ -35,15 +36,15 @@ private:
 
 	UzemnaJednotka* slovensko_;
 	CsvReader* reader_;
-
-	structures::LinkedList<LinkedList<std::string>*>* zoznamDuplicitnychNazvovObci_;
+	ZoznamUzemnychJednotiek* zoznamUJ_;
 
 public:
 
 	HlavnyProgam() {
 		slovensko_ = new UzemnaJednotka("Slovensko", UZEMNA_JEDNOTKA::STAT, "SK", nullptr);
 		reader_ = new CsvReader();
-		zoznamDuplicitnychNazvovObci_ = new structures::LinkedList<LinkedList<std::string>*>();
+		zoznamUJ_ = new ZoznamUzemnychJednotiek();
+
 	}
 
 	~HlavnyProgam() {
@@ -70,8 +71,32 @@ public:
 		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("data_bez_diakritiky/vzdelanie.csv");
 
 
+		// Utriedenie duplicitnych zoznamov OBCI, priadnie na koniec nazov okresu v ktorom je
 
-		LinkedList<std::string>* zoznamObciPocitaniePreDuplicity = new LinkedList<std::string>();
+		for (int i = 0; i < zoznamObci->size(); i++)
+		{
+			system("CLS");
+			int x = 100 / zoznamObci->size() * i;
+			std::cout << i;
+			for (int j = i; j < zoznamObci->size(); j++)
+			{
+				int porovnanie1 = strcmp(zoznamObci->at(i)->at(0), zoznamObci->at(j)->at(0));
+				int porovnanie = zoznamObci->at(i)->at(0).compare(zoznamObci->at(j)->at(0));
+
+				if (porovnanie == 0) {
+					// ak sa rovnaju nazvy tak im priradim za ich koniec nazvy okresov kde su
+					for (int k = 0; k < zoznamOkresov->size(); k++)
+					{
+
+					}
+				}
+			}
+		}
+
+		zoznamUJ_->setZoznamObci(zoznamObci);
+		zoznamUJ_->setZoznamOkresov(zoznamOkresov);
+		zoznamUJ_->setZoznamKrajov(zoznamKrajov);
+
 
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{

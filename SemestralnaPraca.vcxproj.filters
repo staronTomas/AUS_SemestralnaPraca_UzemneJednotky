@@ -260,5 +260,8 @@
     <ClInclude Include="enum_VyssiCelok.h">
       <Filter>Source Files\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="ZoznamUzemnychJednotiek.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
