@@ -58,44 +58,52 @@ public:
 		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("../Data_bez_diakritiky/vzdelanie.csv");
 
 
-		
-		//Najprv si ich vsetky vlozim do tychto SequenceTable postupne
-
-		SortedSequenceTable<std::string, UzemnaJednotka*>* obce = new SortedSequenceTable<std::string, UzemnaJednotka*>();
-		SortedSequenceTable<std::string, UzemnaJednotka*>* okresy = new SortedSequenceTable<std::string, UzemnaJednotka*>();
-		SortedSequenceTable<std::string, UzemnaJednotka*>* kraje = new SortedSequenceTable<std::string, UzemnaJednotka*>();
-
-
 		for (int i = 0; i < krajeList->size(); i++)
 		{
 			std::string nazovUjKraj = krajeList->at(i)->at(0);
 			std::string kodUjKraj = krajeList->at(i)->at(1);
 
-			UzemnaJednotka* novyKraj = new UzemnaJednotka(nazovUjKraj, UZEMNA_JEDNOTKA::OBEC, kodUjKraj, slovensko_);
+			UzemnaJednotka* novyKraj = new UzemnaJednotka(nazovUjKraj, UZEMNA_JEDNOTKA::KRAJ, kodUjKraj, slovensko_);
+			slovensko_->getUzemneJednotkyChildren()->insert(nazovUjKraj, novyKraj);
 
 			for (int j = 0; j < okresyList->size(); j++)
 			{
-				std::string subKodUjOkres = okresyList->at(j)->at(1).substr(0,5);
+				std::string okresNazovUj = okresyList->at(j)->at(0);
+				std::string okresKodUJ = okresyList->at(j)->at(1);
+
+				std::string subKodUjOkres = okresKodUJ.substr(0,5);
 				
 				int porovnanie = subKodUjOkres.compare(kodUjKraj);
 
-				std::cout << subKodUjOkres << "    -     " << kodUjKraj << std::endl;
 				if (porovnanie == 0)
 				{
-					std::cout << "anoo" << std::endl;
-				}
-				else {
-					std::cout << "nieee" << std::endl;
-				}
+					// patri okres do tohoto kraja
+					// idem okresu priradit jeho OBCE V CYKLE
+					UzemnaJednotka* novyOkres = new UzemnaJednotka(okresNazovUj, UZEMNA_JEDNOTKA::OKRES, okresKodUJ, novyKraj);
+					novyKraj->getUzemneJednotkyChildren()->insert(okresNazovUj, novyOkres);
 
+					for (int j = 0; j < obceList->size(); j++)
+					{
+						std::string obecNazovUj = obceList->at(j)->at(0);
+						std::string obecKodUJ = obceList->at(j)->at(1);
+
+						std::string subKodUjObec = obecKodUJ.substr(0, 6);
+
+						int porovnanie = subKodUjObec.compare(okresKodUJ);
+
+						if (porovnanie == 0)
+						{
+							// patri okres do tohoto kraja
+							// idem okresu priradit jeho OBCE V CYKLE
+
+							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novaObec);
+							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novyOkres);
+
+						}
+					}
+				}
 			}
-
-
-			kraje->insert(kodUjKraj, novyKraj);
 		}
-
-		// Teraz popriradujem kazdej uzemnej jednotke jej nizzsie uzemne jednotky "children"
-		
 	}
 
 
