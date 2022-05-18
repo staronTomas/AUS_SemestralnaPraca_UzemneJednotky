@@ -1,7 +1,16 @@
 #pragma once
 
+
 #include <iostream>
+#include <cstdlib>
 #include <string.h>
+#include <stdlib.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 #include "enum_UzemnaJednotka.h"
 #include "enum_VyssiCelok.h"
@@ -41,35 +50,42 @@ public:
 
 
 	void spustiProgram() {
-		std::cout << "ahoj, Vitaj v tomto programe" << std::endl << std::endl;
-
+		std::cout << "Ahoj, Vitaj v tomto programe" << std::endl << std::endl;
+		Sleep(1000);
+		system("CLS");
 		nacitajVsetkyData();
 	}
 
 
 	void nacitajVsetkyData() {
 		
-		LinkedList<LinkedList<std::string>*>* obceList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
+		LinkedList<LinkedList<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
 
-		LinkedList<LinkedList<std::string>*>* okresyList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
+		LinkedList<LinkedList<std::string>*>* zoznamOkresov = reader_->nacitajOkresy("data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
 
-		LinkedList<LinkedList<std::string>*>* krajeList = reader_->nacitajKraje("../Data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
+		LinkedList<LinkedList<std::string>*>* zoznamKrajov = reader_->nacitajKraje("data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
 
-		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("../Data_bez_diakritiky/vzdelanie.csv");
+		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("data_bez_diakritiky/vzdelanie.csv");
 
 
-		for (int i = 0; i < krajeList->size(); i++)
+		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
-			std::string nazovUjKraj = krajeList->at(i)->at(0);
-			std::string kodUjKraj = krajeList->at(i)->at(1);
+			std::string nazovUjKraj = zoznamKrajov->at(i)->at(0);
+			std::string kodUjKraj = zoznamKrajov->at(i)->at(1);
 
 			UzemnaJednotka* novyKraj = new UzemnaJednotka(nazovUjKraj, UZEMNA_JEDNOTKA::KRAJ, kodUjKraj, slovensko_);
+
 			slovensko_->getUzemneJednotkyChildren()->insert(nazovUjKraj, novyKraj);
 
-			for (int j = 0; j < okresyList->size(); j++)
+			system("CLS");
+			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
+			std::cout << "Prebieha nacitavanie dat do uzemnych jednotiek." << std::endl << "Dokoncene: " << percentoDokoncene << "%" << std::endl;
+			
+
+			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
-				std::string okresNazovUj = okresyList->at(j)->at(0);
-				std::string okresKodUJ = okresyList->at(j)->at(1);
+				std::string okresNazovUj = zoznamOkresov->at(j)->at(0);
+				std::string okresKodUJ = zoznamOkresov->at(j)->at(1);
 
 				std::string subKodUjOkres = okresKodUJ.substr(0,5);
 				
@@ -82,10 +98,10 @@ public:
 					UzemnaJednotka* novyOkres = new UzemnaJednotka(okresNazovUj, UZEMNA_JEDNOTKA::OKRES, okresKodUJ, novyKraj);
 					novyKraj->getUzemneJednotkyChildren()->insert(okresNazovUj, novyOkres);
 
-					for (int j = 0; j < obceList->size(); j++)
+					for (int j = 0; j < zoznamObci->size(); j++)
 					{
-						std::string obecNazovUj = obceList->at(j)->at(0);
-						std::string obecKodUJ = obceList->at(j)->at(1);
+						std::string obecNazovUj = zoznamObci->at(j)->at(0);
+						std::string obecKodUJ = zoznamObci->at(j)->at(1);
 
 						std::string subKodUjObec = obecKodUJ.substr(0, 6);
 
@@ -95,15 +111,49 @@ public:
 						{
 							// patri okres do tohoto kraja
 							// idem okresu priradit jeho OBCE V CYKLE
-
-							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novaObec);
+							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novyOkres);
 							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novyOkres);
-
 						}
 					}
 				}
 			}
 		}
+
+		system("CLS");
+		std::cout << "Nacitvanie dat bolo uspesne dokoncene." << std::endl;
+
+
+		std::cout << zoznamKrajov->at(0)->at(0);
+
+
+		SortedSequenceTable<std::string, UzemnaJednotka*>*  kraje = slovensko_->getUzemneJednotkyChildren();
+
+		if (kraje->containsKey("Bratislavsky kraj"))
+		{
+			std::cout << "true" << std::endl;
+		}
+		else {
+			std::cout << "false" << std::endl;
+		}
+		
+
+		// SKUSKA CI TO FUNGUJE
+		int x = 1;
+		
+		for (int i = 0; i < zoznamKrajov->size(); i++)
+		{
+			for (int j = 0; j < zoznamOkresov->size(); j++)
+			{
+				for (int k = 0; k < zoznamObci->size(); k++)
+				{
+					//std::cout << x << std::endl;
+					x++;
+					//std::cout << slovensko_->getUzemneJednotkyChildren()->find(zoznamKrajov->at(i)->at(0))->getUzemneJednotkyChildren()->find(zoznamOkresov->at(j)->at(0))->getUzemneJednotkyChildren()->find(zoznamObci->at(k)->at(0)) << std::endl;
+				}
+			}
+		}
+
+		std::cout << "Koniec nacitavania a ukladania dat.";
 	}
 
 

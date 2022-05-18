@@ -49,6 +49,7 @@ public:
 			}
 		}
 
+		uzemneJednotkyChildren_ = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 	};
 
 	~UzemnaJednotka() {
