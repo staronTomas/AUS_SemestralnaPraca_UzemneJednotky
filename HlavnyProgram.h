@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string.h>
 
 #include "enum_UzemnaJednotka.h"
 #include "enum_VyssiCelok.h"
@@ -48,63 +49,60 @@ public:
 
 	void nacitajVsetkyData() {
 		
-		LinkedList<std::string>* obceList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		LinkedList<LinkedList<std::string>*>* obceList = reader_->nacitajObce("../Data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
 
-		LinkedList<std::string>* okresyList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		LinkedList<LinkedList<std::string>*>* okresyList = reader_->nacitajOkresy("../Data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
 
-		LinkedList<std::string>* krajeList = reader_->nacitajKraje("../Data_bez_diakritiky/kraje.csv");  // Obce mi nacita:   NazovUJ-KodUJ
+		LinkedList<LinkedList<std::string>*>* krajeList = reader_->nacitajKraje("../Data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
 
 		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("../Data_bez_diakritiky/vzdelanie.csv");
 
 
+		for (int i = 0; i < krajeList->size(); i++)
+		{
+			std::cout << krajeList->at(i)->at(0) << std::endl;
+			std::cout << krajeList->at(i)->at(1) << std::endl;
+		}
+		std::cout << "hotovo" << std::endl << std::endl << std::endl << std::endl;
+
+		
+		//Najprv si ich vsetky vlozim do tychto SequenceTable postupne
 
 		SortedSequenceTable<std::string, UzemnaJednotka*>* obce = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 		SortedSequenceTable<std::string, UzemnaJednotka*>* okresy = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 		SortedSequenceTable<std::string, UzemnaJednotka*>* kraje = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 
-		for (int i = 0; i < obceList->size(); i++)
-		{	
-			std::string nazovUj = obceList->at(i);
-			i++;
-			std::string kodUj = obceList->at(i);
 
-			for (int i = 0; i < okresyList->size(); i++)
+		for (int i = 0; i < krajeList->size(); i++)
+		{
+			std::string nazovUjKraj = krajeList->at(i)->at(0);
+			std::string kodUjKraj = krajeList->at(i)->at(1);
+
+			UzemnaJednotka* novyKraj = new UzemnaJednotka(nazovUjKraj, UZEMNA_JEDNOTKA::OBEC, kodUjKraj, slovensko_);
+
+			for (int j = 0; j < okresyList->size(); j++)
 			{
-				/*
+				std::string subKodUjOkres = okresyList->at(j)->at(1).substr(0,5);
 				
-				TREBA DOPLNIT ZADANIE RODICA PRE DANU OBEC
+				int porovnanie = subKodUjOkres.compare(kodUjKraj);
 
-				A
+				std::cout << subKodUjOkres << "    -     " << kodUjKraj << std::endl;
+				if (porovnanie == 0)
+				{
+					std::cout << "anoo" << std::endl;
+				}
+				else {
+					std::cout << "nieee" << std::endl;
+				}
 
-				VZDELANIE DO KAZDEJ OBCE
-				
-				*/
 			}
 
-			UzemnaJednotka* novaObec = new UzemnaJednotka(nazovUj, UZEMNA_JEDNOTKA::OBEC, kodUj, nullptr);
 
-			obce->insert(kodUj, novaObec);
+			kraje->insert(kodUjKraj, novyKraj);
 		}
 
-
-
-		std::cout << "koniec" << std::endl;
-
-
-
-		/*
-		TEST ci funguje vytahovanie vzdelania
-		Vzdelanie* x = vzdelanieZoSuborov->find("SK042B544043");
-
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::STREDNE) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA) << std::endl;
-		std::cout << x->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE) << std::endl;
-		*/
+		// Teraz popriradujem kazdej uzemnej jednotke jej nizzsie uzemne jednotky "children"
+		
 	}
 
 

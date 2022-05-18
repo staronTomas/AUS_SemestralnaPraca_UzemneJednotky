@@ -35,7 +35,7 @@ public:
 	~CsvReader() {};
 
 
-	structures::LinkedList<std::string>* nacitajObce(std::string nazovSuboru) {
+	structures::LinkedList<LinkedList<std::string>*>* nacitajObce(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -65,7 +65,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>();
-		structures::LinkedList<std::string>* result = new structures::LinkedList<std::string>();
+		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>();
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -102,7 +102,13 @@ public:
 				nazovUJ += item.at(i);
 				i++;
 			}		
-			result->add(nazovUJ + ";" + kodUJ);
+
+
+			LinkedList<std::string>* list = new LinkedList<std::string>;
+			list->add(nazovUJ);
+			list->add(kodUJ);
+
+			result->add(list);
 		}
 		return result;
 	}
@@ -113,7 +119,7 @@ public:
 
 
 
-	structures::LinkedList<std::string>* nacitajOkresy(std::string nazovSuboru) {
+	structures::LinkedList<LinkedList<std::string>*>* nacitajOkresy(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -143,7 +149,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>;
-		structures::LinkedList<std::string>* result = new structures::LinkedList<std::string>;
+		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>;
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -182,12 +188,13 @@ public:
 				i++;
 			}
 
-			std::string text = nazovUJ + ";" + kodUJ;
+			nazovUJ = nazovUJ.substr(6, nazovUJ.size()); // Odstraním prvých 6 znakov z nazvov okresov "Okres "
 
+			LinkedList<std::string>* list = new LinkedList<std::string>();
+			list->add(nazovUJ);
+			list->add(kodUJ);
 
-			text = text.substr(6, text.size()); // Odstraním prvých 6 znakov z nazvov okresov "Okres "
-
-			result->add(text);
+			result->add(list);
 
 		}
 
@@ -206,7 +213,7 @@ public:
 
 
 
-	structures::LinkedList<std::string>* nacitajKraje(std::string nazovSuboru) {
+	structures::LinkedList<LinkedList<std::string>*>* nacitajKraje(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -236,7 +243,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>;
-		structures::LinkedList<std::string>* result = new structures::LinkedList<std::string>;
+		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>;
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -275,9 +282,13 @@ public:
 				i++;
 			}
 
-			std::string text = nazovUJ + ";SK0" + kodUJ;
+			kodUJ = "SK0" + kodUJ;
 
-			result->add(text);
+			LinkedList<std::string>* list = new LinkedList<std::string>;
+			list->add(nazovUJ);
+			list->add(kodUJ);
+
+			result->add(list);
 
 		}
 
