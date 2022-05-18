@@ -112,7 +112,7 @@ public:
 							// patri okres do tohoto kraja
 							// idem okresu priradit jeho OBCE V CYKLE
 							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novyOkres);
-							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novyOkres);
+							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novaObec);
 						}
 					}
 				}
@@ -125,12 +125,12 @@ public:
 
 		std::cout << zoznamKrajov->at(0)->at(0);
 
-
 		SortedSequenceTable<std::string, UzemnaJednotka*>*  kraje = slovensko_->getUzemneJednotkyChildren();
 
 		if (kraje->containsKey("Bratislavsky kraj"))
 		{
 			std::cout << "true" << std::endl;
+			std::cout << kraje->find("Zilinsky kraj")->getUzemneJednotkyChildren()->find("Liptovsky Mikulas")->getUzemneJednotkyChildren()->find("Lazisko")->getNazov() << std::endl;
 		}
 		else {
 			std::cout << "false" << std::endl;
