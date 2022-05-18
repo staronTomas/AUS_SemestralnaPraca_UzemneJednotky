@@ -68,6 +68,7 @@ public:
 		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("data_bez_diakritiky/vzdelanie.csv");
 
 
+
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
 			std::string nazovUjKraj = zoznamKrajov->at(i)->at(0);
@@ -122,20 +123,16 @@ public:
 		system("CLS");
 		std::cout << "Nacitvanie dat bolo uspesne dokoncene." << std::endl;
 
-
-		std::cout << zoznamKrajov->at(0)->at(0);
-
 		SortedSequenceTable<std::string, UzemnaJednotka*>*  kraje = slovensko_->getUzemneJednotkyChildren();
 
-		/*
-		std::cout << kraje->find("Zilinsky kraj")->getUzemneJednotkyChildren()->find("Liptovsky Mikulas")->getUzemneJednotkyChildren()->find("Lazisko")->getNazov() << std::endl;
-		*/
-
-		// SKUSKA CI TO FUNGUJE
-		int x = 1;
+		int x = 0;
 		
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
+			int pocetOkresovVKraji = 0;
+			int pocetObciVKraji = 0;
+
+
 			std::string nazovKraja = zoznamKrajov->at(i)->at(0);
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
@@ -146,6 +143,7 @@ public:
 				if (!slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->containsKey(nazovOkresu)) {
 					continue;
 				}
+				pocetOkresovVKraji++;
 
 				for (int k = 0; k < zoznamObci->size(); k++)
 				{
@@ -155,13 +153,21 @@ public:
 					if (!slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->containsKey(nazovObce)) {
 						continue;
 					}
-					//std::cout << x << std::endl;
-					std::cout << slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->find(nazovObce)->getNazov() << std::endl;
+
 					x++;
+					/*
+					std::cout << x << std::endl;
+					std::cout << slovensko_->getUzemneJednotkyChildren()->find(nazovKraja)->getUzemneJednotkyChildren()->find(nazovOkresu)->getUzemneJednotkyChildren()->find(nazovObce)->getNazov() << std::endl;
+					*/
+
+					pocetObciVKraji++;
+
 				}
 			}
+			std::cout << "V kraji " << nazovKraja << " je: " << pocetObciVKraji << " obci." << std::endl;
 		}
 
+		std::cout << "Celkovy pocet obci: " << x << std::endl;
 		std::cout << "Koniec nacitavania a ukladania dat.";
 	}
 
