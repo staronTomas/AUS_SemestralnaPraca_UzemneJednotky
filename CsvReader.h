@@ -350,7 +350,6 @@ public:
 				kodUJ += item.at(i);
 				i++;
 			}
-			std::cout << kodUJ << "KOOOOOD UJ" << std::endl;
 			i++;
 
 			while (item.at(i) != ';') {
@@ -358,7 +357,6 @@ public:
 			}
 			i++;
 			
-			std::cout << i << std::endl;
 			//tu nacitavam pocet vzdelanych ludi v konkretnom..
 			for (int j = 0; j < 8; j++)
 			{
@@ -372,7 +370,6 @@ public:
 				i++;
 			}
 
-			std::cout << vzdelanie->at(1) << std::endl;
 
 			Vzdelanie* vzdelanieObjekt = new Vzdelanie();
 			vzdelanieObjekt->navysPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI, vzdelanie->at(0));
@@ -383,6 +380,8 @@ public:
 			vzdelanieObjekt->navysPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE, vzdelanie->at(5));
 			vzdelanieObjekt->navysPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA, vzdelanie->at(6));
 			vzdelanieObjekt->navysPocetVzdelanie(TYP_VZDELANIA::NEZISTENE, vzdelanie->at(7));
+
+
 
 
 			vzdelanieTable->insert(kodUJ, vzdelanieObjekt);

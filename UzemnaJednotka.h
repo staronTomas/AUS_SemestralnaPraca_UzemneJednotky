@@ -28,7 +28,7 @@ private:
 	bool koren_;
 	Vzdelanie* vzdelanie_;
 	
-	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* uzemneJednotkyChilder_;
+	SortedSequenceTable<std::string, UzemnaJednotka*>* uzemneJednotkyChildren_;
 
 public:
 
@@ -86,8 +86,8 @@ public:
 		return vyssiaUJRodic_;
 	}
 
-	SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* getUzemneJednotkyChildren() {
-		return uzemneJednotkyChilder_;
+	SortedSequenceTable<std::string, UzemnaJednotka*>* getUzemneJednotkyChildren() {
+		return uzemneJednotkyChildren_;
 	}
 
 	bool jeKoren() {
@@ -123,6 +123,10 @@ public:
 
 	void setList(bool isList) {
 		list_ = isList;
+	}
+
+	void setChildren(SortedSequenceTable<std::string, UzemnaJednotka*>*  newChildren) {
+		uzemneJednotkyChildren_ = newChildren;
 	}
 
 };
