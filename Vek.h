@@ -8,8 +8,6 @@
 #include "enum_Pohlavie.h"
 
 
-template<typename T>
-
 class Vek {
 
 
@@ -26,6 +24,8 @@ public:
 		pocetVekZeny_ = new structures::Array<int>(101);
 	}
 
+
+	
 
 	void navysPocetVek(POHLAVIE pohlavie, int pocetRokov, int pocet) {
 		if (pohlavie == POHLAVIE::MUZ)
@@ -49,7 +49,7 @@ public:
 	}
 
 
-
+	
 	//gettery
 
 	int getPocetVek(POHLAVIE pohlavie, int pocetRokov) {
@@ -72,24 +72,24 @@ public:
 			}
 		}
 	}
-
-	Array<int>* getArrayVekMuzi() {
+	
+	structures::Array<int>* getArrayVekMuzi() {
 		return pocetVekMuzi_;
 	}
 
-	Array<int>* getArrayVekZeny() {
+	structures::Array<int>* getArrayVekZeny() {
 		return pocetVekZeny_;
 	}
 
 	//settery
 
-	void setArrayVekMuzi(Array<int>* arrayVeky) {
+	void setArrayVekMuzi(structures::Array<int>* arrayVeky) {
 		pocetVekMuzi_ = arrayVeky;
 	}
 
-	void setArrayVekZeny(Array<int>* arrayVeky) {
+	void setArrayVekZeny(structures::Array<int>* arrayVeky) {
 		pocetVekZeny_ = arrayVeky;
 	}
 
-
+	
 };

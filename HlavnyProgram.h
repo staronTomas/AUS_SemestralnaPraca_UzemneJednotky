@@ -27,7 +27,6 @@
 #include "ZoznamUzemnychJednotiek.h"
 
 
-
 class HlavnyProgam {
 	
 
