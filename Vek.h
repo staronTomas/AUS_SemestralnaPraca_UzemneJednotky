@@ -54,7 +54,7 @@ public:
 
 
 	void navysPocetVekCelkovo(Vek* vek) {
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 101; i++)
 		{
 			pocetVekMuzi_->at(i) += vek->getArrayVekMuzi()->at(i);
 			pocetVekZeny_->at(i) += vek->getArrayVekZeny()->at(i);

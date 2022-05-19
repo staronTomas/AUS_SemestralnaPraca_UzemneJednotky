@@ -464,11 +464,14 @@ public:
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
 		{
+
 			std::string riadok = "";
 			for (int j = 0; j < content[i].size(); j++)
 			{
 				riadok += content[i][j];
 			}
+
+
 
 			riadok += ";"; // pre zistovanie ukoncenia neskor
 			texty->add(riadok);
@@ -479,7 +482,7 @@ public:
 
 		for (std::string item : *texty) {
 			pocitadlo++;
-			if (pocitadlo == 2927) {
+			if (pocitadlo == 2928) {
 				break;
 			}
 			std::string kodUJ = "";
@@ -496,7 +499,7 @@ public:
 				i++;
 			}
 			i++;
-
+			std::cout << kodUJ << std::endl;
 			//preskocim nazov Uzemnej jednotky
 			while (item.at(i) != ';') {
 				i++;

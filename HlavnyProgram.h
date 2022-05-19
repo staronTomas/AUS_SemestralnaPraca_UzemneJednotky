@@ -163,9 +163,20 @@ public:
 
 							if (vekZoSuborov->containsKey(obecKodUJ)) {
 								Vek* vek = vekZoSuborov->find(obecKodUJ);
-
-								int porovnanie = obecNazovUj.compare("Lazisko");
-
+/*
+								int result = 0;
+								for (int i = 0; i < vek->getArrayVekMuzi()->size(); i++)
+								{
+									result += vek->getArrayVekMuzi()->at(i);
+									//std::cout << "Muzi -> " << i << "  : " << vek->getArrayVekMuzi()->at(i) << std::endl;
+								}
+								for (int i = 0; i < vek->getArrayVekZeny()->size(); i++)
+								{
+									result += vek->getArrayVekZeny()->at(i);
+									//std::cout << "Zeny -> " << i << "  : " << vek->getArrayVekZeny()->at(i) << std::endl;
+								}
+								std::cout << result << std::endl;
+*/
 								novaObec->setVekObyvatelov(vek);
 								novaObec->getVekObyvatelov()->navysPocetEvsSkupin(vek);
 
