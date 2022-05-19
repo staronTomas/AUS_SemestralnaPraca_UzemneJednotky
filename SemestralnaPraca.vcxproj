@@ -29,12 +29,18 @@
   <ItemGroup>
     <ClInclude Include="Criterion.h" />
     <ClInclude Include="CriterionUJ.h" />
+    <ClInclude Include="CriterionUJPrislusnost.h" />
+    <ClInclude Include="CriterionUJTyp.h" />
+    <ClInclude Include="CriterionUJVekPocet.h" />
+    <ClInclude Include="CriterionVzdelaniePocet.h" />
+    <ClInclude Include="CriterionVzdelaniePodiel.h" />
     <ClInclude Include="CsvReader.h" />
     <ClInclude Include="enum_EVS.h" />
     <ClInclude Include="enum_Pohlavie.h" />
     <ClInclude Include="enum_TypVzdelania.h" />
     <ClInclude Include="enum_UzemnaJednotka.h" />
     <ClInclude Include="enum_VyssiCelok.h" />
+    <ClInclude Include="CriterionUJNazov.h" />
     <ClInclude Include="HlavnyProgram.h" />
     <ClInclude Include="structures\array\array.h" />
     <ClInclude Include="structures\data_item.h" />

@@ -1,14 +1,23 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include "Criterion.h"
 
-template<typename T, typename O>
+// includy, aby som nemusel v každej ich pisat...
+#include "UzemnaJednotka.h"
+#include "Vzdelanie.h"
+#include "enum_EVS.h"
+#include "enum_Pohlavie.h"
+#include "enum_TypVzdelania.h"
+#include "enum_UzemnaJednotka.h"
+#include "enum_VyssiCelok.h"
 
-class CriterionUJ : public Criterion<T, O>{
+template<typename T>
+
+class CriterionUJ : public Criterion<O, T>{
 
 public:
-
-	virtual T evaluate(O* o) const = 0;
-	virtual ~Criterion() {};
 
 };

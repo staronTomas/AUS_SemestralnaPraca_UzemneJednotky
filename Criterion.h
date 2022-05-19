@@ -1,6 +1,6 @@
 #pragma once
 
-template<typename T, typename O>
+template<typename O, typename T>
 
 class Criterion {
 

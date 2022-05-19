@@ -272,5 +272,23 @@
     <ClInclude Include="CriterionUJ.h">
       <Filter>Source Files\Criterions</Filter>
     </ClInclude>
+    <ClInclude Include="CriterionUJNazov.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJTyp.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJPrislusnost.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionVzdelaniePocet.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionVzdelaniePodiel.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJVekPocet.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
