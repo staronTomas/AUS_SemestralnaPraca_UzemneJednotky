@@ -105,12 +105,12 @@ public:
 
 			slovensko_->getUzemneJednotkyChildren()->insert(nazovUjKraj, novyKraj);
 
-			system("CLS");
+			//system("CLS");
 			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
-			std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
-			std::cout << "#" << std::endl;
-			std::cout << "# Prebieha ukladanie dat v Uzemnej jednotke -> " << nazovUjKraj << " a jeho okresoch a obciach." << std::endl;
-			std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;
+			//std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
+			//std::cout << "#" << std::endl;
+			//std::cout << "# Prebieha ukladanie dat v Uzemnej jednotke -> " << nazovUjKraj << " a jeho okresoch a obciach." << std::endl;
+			//std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
@@ -158,25 +158,26 @@ public:
 
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
+
+
+								int result = 0;
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::STREDNE);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA);
+								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE);
+								std::cout << result << std::endl;
+
+								
+
 							}	
 
 
 							if (vekZoSuborov->containsKey(obecKodUJ)) {
 								Vek* vek = vekZoSuborov->find(obecKodUJ);
-/*
-								int result = 0;
-								for (int i = 0; i < vek->getArrayVekMuzi()->size(); i++)
-								{
-									result += vek->getArrayVekMuzi()->at(i);
-									//std::cout << "Muzi -> " << i << "  : " << vek->getArrayVekMuzi()->at(i) << std::endl;
-								}
-								for (int i = 0; i < vek->getArrayVekZeny()->size(); i++)
-								{
-									result += vek->getArrayVekZeny()->at(i);
-									//std::cout << "Zeny -> " << i << "  : " << vek->getArrayVekZeny()->at(i) << std::endl;
-								}
-								std::cout << result << std::endl;
-*/
 								novaObec->setVekObyvatelov(vek);
 								novaObec->getVekObyvatelov()->navysPocetEvsSkupin(vek);
 
@@ -188,6 +189,21 @@ public:
 
 								slovensko_->getVekObyvatelov()->navysPocetVekCelkovo(vek);
 								slovensko_->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+
+								
+								/*
+								int result = 0;
+								for (int i = 0; i < vek->getArrayVekMuzi()->size(); i++)
+								{
+									result += vek->getArrayVekMuzi()->at(i);
+								}
+								for (int i = 0; i < vek->getArrayVekZeny()->size(); i++)
+								{
+									result += vek->getArrayVekZeny()->at(i);
+								}
+								std::cout << result << std::endl;
+
+								*/
 							}
 
 						}
@@ -202,8 +218,39 @@ public:
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
 
-		
-		std::cout << "Poèet obyvatelov v SK: " << slovensko_->getPocetObyvatelov() << std::endl;
+
+		std::cout << slovensko_->getUzemneJednotkyChildren()->find("Kosicky kraj")->getUzemneJednotkyChildren()->find("Trebisov")->getUzemneJednotkyChildren()->find("Zemplinsky Branc")->getPocetObyvatelov();
+	
+	}
+
+
+
+
+	UzemnaJednotka* getSlovensko() {
+		return slovensko_;
+	}
+
+
+
+
+
+
+
+
+
+};
+
+
+
+
+/*
+
+Kod cez ktory som si zistoval ci je vsade kazdy obyvatel zapocitany
+
+
+
+
+std::cout << "Poèet obyvatelov v SK: " << slovensko_->getPocetObyvatelov() << std::endl;
 		std::cout << "Poèet obyvatelov v SK z poctu vzdelania: " << slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI) +
 			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE) +
 			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE) +
@@ -233,13 +280,7 @@ public:
 		int result = resultZeny + resultMuzi;
 		std::cout << "Pocet obyvatelov v SK cez vek: " << result << std::endl;
 		system("pause");
-	}
 
 
 
-
-	UzemnaJednotka* getSlovensko() {
-		return slovensko_;
-	}
-
-};
+*/

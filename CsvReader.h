@@ -423,8 +423,6 @@ public:
 		}
 		delete texty;
 
-
-
 		return vzdelanieTable;
 	}
 
@@ -499,7 +497,6 @@ public:
 				i++;
 			}
 			i++;
-			std::cout << kodUJ << std::endl;
 			//preskocim nazov Uzemnej jednotky
 			while (item.at(i) != ';') {
 				i++;
@@ -537,9 +534,9 @@ public:
 			vekVysledok->setArrayVekZeny(vekZeny);
 
 			vekTable->insert(kodUJ, vekVysledok);
-
 		}
-		//delete texty;  hadzalo mi to tu vynimku z nejakeho dovodu, tak som to odstranil
+
+		// delete texty; hadzalo mi to nejaky error pri vymazavani, nechapem preco..
 
 		return vekTable;
 	}
