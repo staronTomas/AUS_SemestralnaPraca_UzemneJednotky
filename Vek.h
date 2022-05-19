@@ -15,6 +15,7 @@ private:
 
 	structures::Array<int>* pocetVekMuzi_;
 	structures::Array<int>* pocetVekZeny_;
+	structures::Array<int>* ekoVekSkupiny_;
 
 
 public:
@@ -22,6 +23,7 @@ public:
 	Vek() {
 		pocetVekMuzi_ = new structures::Array<int>(101);
 		pocetVekZeny_ = new structures::Array<int>(101);
+		ekoVekSkupiny_ = new structures::Array<int>(3);
 	}
 
 
@@ -45,6 +47,23 @@ public:
 			else {
 				pocetVekZeny_->at(100) += pocet;
 			}
+		}
+	}
+
+	void navysEkoVekSkupinu(EVS evs, int pocet) {
+		switch (evs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			ekoVekSkupiny_->at(0) += pocet;
+			break;
+		case EVS::PRODUKTIVNI:
+			ekoVekSkupiny_->at(1) += pocet;
+			break;
+		case EVS::POPRODUKTIVNY:
+			ekoVekSkupiny_->at(2) += pocet;
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -81,6 +100,26 @@ public:
 		return pocetVekZeny_;
 	}
 
+
+	int getPocetEkoVekSkupinu(EVS evs) {
+		switch (evs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			return ekoVekSkupiny_->at(0);
+			break;
+		case EVS::PRODUKTIVNI:
+			return ekoVekSkupiny_->at(1);
+			break;
+		case EVS::POPRODUKTIVNY:
+			return ekoVekSkupiny_->at(2);
+			break;
+		default:
+			break;
+		}
+	}
+
+
+
 	//settery
 
 	void setArrayVekMuzi(structures::Array<int>* arrayVeky) {
@@ -90,6 +129,8 @@ public:
 	void setArrayVekZeny(structures::Array<int>* arrayVeky) {
 		pocetVekZeny_ = arrayVeky;
 	}
+
+
 
 	
 };

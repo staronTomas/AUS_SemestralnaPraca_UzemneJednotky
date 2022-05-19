@@ -29,9 +29,11 @@
   <ItemGroup>
     <ClInclude Include="Criterion.h" />
     <ClInclude Include="CriterionUJ.h" />
+    <ClInclude Include="CriterionUJNadradena.h" />
     <ClInclude Include="CriterionUJPrislusnost.h" />
     <ClInclude Include="CriterionUJTyp.h" />
     <ClInclude Include="CriterionUJVekovaSkupinaPocet.h" />
+    <ClInclude Include="CriterionUJVekovaSkupinaPodiel.h" />
     <ClInclude Include="CriterionUJVekPocet.h" />
     <ClInclude Include="CriterionUJVekPodiel.h" />
     <ClInclude Include="CriterionVzdelaniePocet.h" />

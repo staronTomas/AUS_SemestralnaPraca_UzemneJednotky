@@ -299,5 +299,11 @@
     <ClInclude Include="CriterionUJVekovaSkupinaPocet.h">
       <Filter>Source Files\Criterions</Filter>
     </ClInclude>
+    <ClInclude Include="CriterionUJVekovaSkupinaPodiel.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJNadradena.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
