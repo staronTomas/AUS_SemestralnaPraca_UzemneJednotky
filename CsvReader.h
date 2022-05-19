@@ -471,13 +471,17 @@ public:
 			}
 
 			riadok += ";"; // pre zistovanie ukoncenia neskor
-
 			texty->add(riadok);
-
 		}
 
 
+		int pocitadlo = 0;
+
 		for (std::string item : *texty) {
+			pocitadlo++;
+			if (pocitadlo == 2927) {
+				break;
+			}
 			std::string kodUJ = "";
 			structures::Array<int>* vekMuzi = new Array<int>(101);
 			structures::Array<int>* vekZeny = new Array<int>(101);
@@ -510,7 +514,6 @@ public:
 				vekMuzi->at(j) = stoi(vekPocetStr);
 
 				i++;
-				std::cout << vekMuzi->at(j) << std::endl;
 			}
 
 
@@ -524,21 +527,17 @@ public:
 				vekZeny->at(j) = stoi(vekPocetStr);
 
 				i++;
-				std::cout << vekZeny->at(j) << std::endl;
 			}
 
 			Vek* vekVysledok = new Vek();
 			vekVysledok->setArrayVekMuzi(vekMuzi);
 			vekVysledok->setArrayVekMuzi(vekZeny);
 
-
 			vekTable->insert(kodUJ, vekVysledok);
 
 		}
-		delete texty;
+		//delete texty;  hadzalo mi to tu vynimku z nejakeho dovodu, tak som to odstranil
 
 		return vekTable;
 	}
-
-
 };

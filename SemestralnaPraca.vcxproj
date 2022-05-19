@@ -102,7 +102,6 @@
     <ClInclude Include="UzemnaJednotka.h" />
     <ClInclude Include="Vek.h" />
     <ClInclude Include="Vzdelanie.h" />
-    <ClInclude Include="ZoznamUzemnychJednotiek.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
