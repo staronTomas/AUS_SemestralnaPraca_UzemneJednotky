@@ -69,6 +69,8 @@ public:
 
 		SortedSequenceTable<std::string, Vzdelanie*>* vzdelanieZoSuborov = reader_->nacitajVzdelanie("data_bez_diakritiky/vzdelanie.csv");
 
+		SortedSequenceTable<std::string, Vek*>* vekZoSuborov = reader_->nacitajVek("data_bez_diakritiky/vek.csv");
+
 		// Utriedenie duplicitnych zoznamov OBCI, priadnie na koniec nazov okresu v ktorom je
 
 		zoznamUJ_->setZoznamObci(zoznamObci);
@@ -136,6 +138,23 @@ public:
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
 							}	
+
+
+							if (vekZoSuborov->containsKey(obecKodUJ)) {
+								Vek* vek = vekZoSuborov->find(obecKodUJ);
+								novaObec->setVekObyvatelov(vek);
+								novaObec->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+
+								novyOkres->getVekObyvatelov()->navysPocetVekCelkovo(vek);
+								novyOkres->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+
+								novyKraj->getVekObyvatelov()->navysPocetVekCelkovo(vek);
+								novyKraj->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+
+								slovensko_->getVekObyvatelov()->navysPocetVekCelkovo(vek);
+								slovensko_->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+							}
+
 						}
 					}
 				}

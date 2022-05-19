@@ -428,7 +428,117 @@ public:
 		return vzdelanieTable;
 	}
 
+	structures::SortedSequenceTable<std::string, Vek*>* nacitajVek(std::string nazovSuboru) {
 
+		std::vector<std::vector<std::string>> content;
+		std::vector<std::string> row;
+		std::string line, word;
+
+		std::fstream file(nazovSuboru, std::ios::in);
+		if (file.is_open())
+		{
+			bool firstTime = true;
+			while (getline(file, line))
+			{
+				if (firstTime) {
+					firstTime = false;
+					continue;
+				}
+				row.clear();
+
+				std::stringstream str(line);
+
+				while (getline(str, word, ','))
+					row.push_back(word);
+				content.push_back(row);
+			}
+		}
+		else {
+			std::cout << "Could not open the file\n";
+		}
+
+		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>;
+		structures::SortedSequenceTable<std::string, Vek*>* vekTable = new SortedSequenceTable<std::string, Vek*>();
+
+
+		// nacitam vsetky texty z csv file
+		for (int i = 0; i < content.size(); i++)
+		{
+			std::string riadok = "";
+			for (int j = 0; j < content[i].size(); j++)
+			{
+				riadok += content[i][j];
+			}
+
+			riadok += ";"; // pre zistovanie ukoncenia neskor
+
+			texty->add(riadok);
+
+		}
+
+
+		for (std::string item : *texty) {
+			std::string kodUJ = "";
+			structures::Array<int>* vekMuzi = new Array<int>(101);
+			structures::Array<int>* vekZeny = new Array<int>(101);
+
+			Vek* novyVek = new Vek();
+
+
+			//nacitam si kod uzemnejJednotky
+			int i = 0;
+			while (item.at(i) != ';') {
+				kodUJ += item.at(i);
+				i++;
+			}
+			i++;
+
+			//preskocim nazov Uzemnej jednotky
+			while (item.at(i) != ';') {
+				i++;
+			}
+			i++;
+
+			//tu nacitavam pocet vzdelanych ludi v konkretnom..
+			for (int j = 0; j < 101; j++)
+			{
+				std::string vekPocetStr = "";
+				while (item.at(i) != ';') {
+					vekPocetStr += item.at(i);
+					i++;
+				}
+				vekMuzi->at(j) = stoi(vekPocetStr);
+
+				i++;
+				std::cout << vekMuzi->at(j) << std::endl;
+			}
+
+
+			for (int j = 0; j < 101; j++)
+			{
+				std::string vekPocetStr = "";
+				while (item.at(i) != ';') {
+					vekPocetStr += item.at(i);
+					i++;
+				}
+				vekZeny->at(j) = stoi(vekPocetStr);
+
+				i++;
+				std::cout << vekZeny->at(j) << std::endl;
+			}
+
+			Vek* vekVysledok = new Vek();
+			vekVysledok->setArrayVekMuzi(vekMuzi);
+			vekVysledok->setArrayVekMuzi(vekZeny);
+
+
+			vekTable->insert(kodUJ, vekVysledok);
+
+		}
+		delete texty;
+
+		return vekTable;
+	}
 
 
 };

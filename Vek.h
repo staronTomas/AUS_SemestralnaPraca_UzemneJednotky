@@ -15,7 +15,8 @@ private:
 
 	structures::Array<int>* pocetVekMuzi_;
 	structures::Array<int>* pocetVekZeny_;
-	structures::Array<int>* ekoVekSkupiny_;
+	structures::Array<int>* ekoVekSkupinyMuzi_;
+	structures::Array<int>* ekoVekSkupinyZeny_;
 
 
 public:
@@ -23,7 +24,8 @@ public:
 	Vek() {
 		pocetVekMuzi_ = new structures::Array<int>(101);
 		pocetVekZeny_ = new structures::Array<int>(101);
-		ekoVekSkupiny_ = new structures::Array<int>(3);
+		ekoVekSkupinyMuzi_ = new structures::Array<int>(3);
+		ekoVekSkupinyZeny_ = new structures::Array<int>(3);
 	}
 
 
@@ -50,17 +52,53 @@ public:
 		}
 	}
 
-	void navysEkoVekSkupinu(EVS evs, int pocet) {
+
+	void navysPocetVekCelkovo(Vek* vek) {
+		for (int i = 0; i < 100; i++)
+		{
+			pocetVekMuzi_->at(i) += vek->getArrayVekMuzi()->at(i);
+			pocetVekZeny_->at(i) += vek->getArrayVekZeny()->at(i);
+		}
+	}
+
+	void navysPocetEvsSkupin(Vek* vek) {
+		for (int i = 0; i < 15; i++)
+		{
+
+		}
+	}
+
+
+
+
+	void navysEkoVekSkupinuZeny(EVS evs, int pocet) {
 		switch (evs) {
 
 		case EVS::PREDPRODUKTIVNI:
-			ekoVekSkupiny_->at(0) += pocet;
+			ekoVekSkupinyZeny_->at(0) += pocet;
 			break;
 		case EVS::PRODUKTIVNI:
-			ekoVekSkupiny_->at(1) += pocet;
+			ekoVekSkupinyZeny_->at(1) += pocet;
 			break;
 		case EVS::POPRODUKTIVNY:
-			ekoVekSkupiny_->at(2) += pocet;
+			ekoVekSkupinyZeny_->at(2) += pocet;
+			break;
+		default:
+			break;
+		}
+	}
+
+	void navysEkoVekSkupinuMuzi(EVS evs, int pocet) {
+		switch (evs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			ekoVekSkupinyMuzi_->at(0) += pocet;
+			break;
+		case EVS::PRODUKTIVNI:
+			ekoVekSkupinyMuzi_->at(1) += pocet;
+			break;
+		case EVS::POPRODUKTIVNY:
+			ekoVekSkupinyMuzi_->at(2) += pocet;
 			break;
 		default:
 			break;
@@ -101,23 +139,57 @@ public:
 	}
 
 
-	int getPocetEkoVekSkupinu(EVS evs) {
+	int getPocetEkoVekSkupinuZeny(EVS evs) {
 		switch (evs) {
 
 		case EVS::PREDPRODUKTIVNI:
-			return ekoVekSkupiny_->at(0);
+			return ekoVekSkupinyZeny_->at(0);
 			break;
 		case EVS::PRODUKTIVNI:
-			return ekoVekSkupiny_->at(1);
+			return ekoVekSkupinyZeny_->at(1);
 			break;
 		case EVS::POPRODUKTIVNY:
-			return ekoVekSkupiny_->at(2);
+			return ekoVekSkupinyZeny_->at(2);
 			break;
 		default:
 			break;
 		}
 	}
 
+	int getPocetEkoVekSkupinuMuzi(EVS evs) {
+		switch (evs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			return ekoVekSkupinyMuzi_->at(0);
+			break;
+		case EVS::PRODUKTIVNI:
+			return ekoVekSkupinyMuzi_->at(1);
+			break;
+		case EVS::POPRODUKTIVNY:
+			return ekoVekSkupinyMuzi_->at(2);
+			break;
+		default:
+			break;
+		}
+	}
+
+
+	int getPocetEkoVekSkupinuCelkovo(EVS evs) {
+		switch (evs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			return ekoVekSkupinyMuzi_->at(0) + ekoVekSkupinyZeny_->at(0);
+			break;
+		case EVS::PRODUKTIVNI:
+			return ekoVekSkupinyMuzi_->at(1) + ekoVekSkupinyZeny_->at(2);
+			break;
+		case EVS::POPRODUKTIVNY:
+			return ekoVekSkupinyMuzi_->at(2) + ekoVekSkupinyZeny_->at(1);
+			break;
+		default:
+			break;
+		}
+	}
 
 
 	//settery
