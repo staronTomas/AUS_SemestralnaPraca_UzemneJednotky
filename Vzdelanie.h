@@ -35,7 +35,16 @@ public:
 		nezistene_ = 0;
 	};
 
-	~Vzdelanie() {};
+	~Vzdelanie() {
+		bezUkoncenehoVzdelaniaDeti_ = 0;
+		zakladne_ = 0;
+		ucnovske_ = 0;
+		stredne_ = 0;
+		vyssie_ = 0;
+		vysokoskolske_ = 0;
+		bezVzdelania_ = 0;
+		nezistene_ = 0;
+	};
 
 	int getPocetVzdelanie(TYP_VZDELANIA vzd) {
 

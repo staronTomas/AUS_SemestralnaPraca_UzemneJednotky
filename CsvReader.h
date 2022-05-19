@@ -26,8 +26,6 @@ class CsvReader {
 
 private:
 
-	std::string nazovSuboru;
-
 
 public:
 

@@ -31,7 +31,9 @@
     <ClInclude Include="CriterionUJ.h" />
     <ClInclude Include="CriterionUJPrislusnost.h" />
     <ClInclude Include="CriterionUJTyp.h" />
+    <ClInclude Include="CriterionUJVekovaSkupinaPocet.h" />
     <ClInclude Include="CriterionUJVekPocet.h" />
+    <ClInclude Include="CriterionUJVekPodiel.h" />
     <ClInclude Include="CriterionVzdelaniePocet.h" />
     <ClInclude Include="CriterionVzdelaniePodiel.h" />
     <ClInclude Include="CsvReader.h" />
@@ -96,6 +98,7 @@
     <ClInclude Include="structures\_logger\file_log_consumer.h" />
     <ClInclude Include="structures\_logger\logger.h" />
     <ClInclude Include="UzemnaJednotka.h" />
+    <ClInclude Include="Vek.h" />
     <ClInclude Include="Vzdelanie.h" />
     <ClInclude Include="ZoznamUzemnychJednotiek.h" />
   </ItemGroup>

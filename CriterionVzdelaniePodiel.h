@@ -14,11 +14,11 @@ public:
 	CriterionUJVzdelaniePodiel() {};
 	~CriterionUJVzdelaniePodiel() {};
 
-	double evaluate(UzemnaJednotka* UJ, TYP_VZDELANIA typVzdelania) {
+	double evaluate(UzemnaJednotka* object, TYP_VZDELANIA typVzdelania) {
 		double result = 0;
 
-		int pocetVzdelanych = UJ->getVzdelanie()->getPocetVzdelanie(typVzdelania);
-		int celkovyPocetObyv = UJ->getPocetObyvatelov();
+		int pocetVzdelanych = object->getVzdelanie()->getPocetVzdelanie(typVzdelania);
+		int celkovyPocetObyv = object->getPocetObyvatelov();
 
 		result = 100 / celkovyPocetObyv * pocetVzdelanych;
 

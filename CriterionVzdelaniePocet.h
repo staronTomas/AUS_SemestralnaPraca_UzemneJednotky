@@ -14,8 +14,8 @@ public:
 	CriterionUJVzdelaniePocet() {};
 	~CriterionUJVzdelaniePocet() {};
 
-	int evaluate(UzemnaJednotka* UJ, TYP_VZDELANIA typVzdelania) {
-		return UJ->getVzdelanie()->getPocetVzdelanie(typVzdelania);
+	int evaluate(UzemnaJednotka* object, TYP_VZDELANIA typVzdelania) {
+		return object->getVzdelanie()->getPocetVzdelanie(typVzdelania);
 	}
 
 };

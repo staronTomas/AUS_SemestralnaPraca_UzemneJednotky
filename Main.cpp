@@ -6,6 +6,8 @@
 #include "HlavnyProgram.h"
 #include "structures/heap_monitor.h"
 
+
+
 int main()
 {
 	HlavnyProgam* program = new HlavnyProgam();

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "structures/table/sorted_sequence_table.h"
 #include "Vzdelanie.h"
+#include "Vek.h"
 
 #include "enum_UzemnaJednotka.h"
 #include "enum_TypVzdelania.h"
@@ -10,7 +11,6 @@
 
 
 using namespace structures; // nemusim robiù structures::
-
 
 
 
@@ -27,6 +27,7 @@ private:
 	UzemnaJednotka* vyssiaUJRodic_;
 	Vzdelanie* vzdelanie_;
 	int pocetObyvatelov_;
+	Vek* vekObyvatelov_;
 	
 	SortedSequenceTable<std::string, UzemnaJednotka*>* uzemneJednotkyChildren_;
 
@@ -39,15 +40,11 @@ public:
 		kodUJ_ = kodUJ;
 		vyssiaUJRodic_ = rodic;
 		pocetObyvatelov_ = 0;
+		vekObyvatelov_ = new Vek();
 		uzemneJednotkyChildren_ = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 		vzdelanie_ = new Vzdelanie();
 	};
 
-	~UzemnaJednotka() {
-		nazov_ = "";
-		kodUJ_ = "";
-		vyssiaUJRodic_ = nullptr;
-	};
 
 
 
@@ -98,6 +95,9 @@ public:
 		return vzdelanie_;
 	}
 
+	Vek* getVekObyvatelov() {
+		return vekObyvatelov_;
+	}
 
 
 	// Settery
@@ -128,6 +128,10 @@ public:
 
 	void setVzdelanie(Vzdelanie* vzdelanie) {
 		vzdelanie_ = vzdelanie;
+	}
+
+	void setVekObyvatelov(Vek* vek) {
+		vekObyvatelov_ = vek;
 	}
 
 };

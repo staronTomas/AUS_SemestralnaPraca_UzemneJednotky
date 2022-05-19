@@ -290,5 +290,14 @@
     <ClInclude Include="CriterionUJVekPocet.h">
       <Filter>Source Files\Criterions</Filter>
     </ClInclude>
+    <ClInclude Include="Vek.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJVekPodiel.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="CriterionUJVekovaSkupinaPocet.h">
+      <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

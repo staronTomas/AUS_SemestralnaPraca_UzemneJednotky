@@ -15,8 +15,8 @@ public:
 	CriterionUJNazov() {};
 	~CriterionUJNazov() {};
 
-	std::string evaluate(UzemnaJednotka* UJ) {
-		return UJ->getNazov();
+	std::string evaluate(UzemnaJednotka* object) {
+		return object->getNazov();
 	}
 
 

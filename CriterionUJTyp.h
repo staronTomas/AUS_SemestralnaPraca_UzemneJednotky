@@ -15,8 +15,8 @@ public:
 	CriterionUJTyp() {};
 	~CriterionUJTyp() {};
 
-	UZEMNA_JEDNOTKA evaluate(UzemnaJednotka* UJ) {
-		return UJ->getTypUzemnejJednotky();
+	UZEMNA_JEDNOTKA evaluate(UzemnaJednotka* object) {
+		return object->getTypUzemnejJednotky();
 	}
 
 
