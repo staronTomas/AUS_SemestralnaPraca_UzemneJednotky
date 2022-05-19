@@ -62,9 +62,26 @@ public:
 	}
 
 	void navysPocetEvsSkupin(Vek* vek) {
+
+		//PredProduktivni
 		for (int i = 0; i < 15; i++)
 		{
+			ekoVekSkupinyMuzi_->at(0) += vek->getArrayVekMuzi()->at(i);
+			ekoVekSkupinyZeny_->at(0) += vek->getArrayVekZeny()->at(i);
+		}
 
+		//Produktivni
+		for (int i = 15; i < 65; i++)
+		{
+			ekoVekSkupinyMuzi_->at(1) += vek->getArrayVekMuzi()->at(i);
+			ekoVekSkupinyZeny_->at(1) += vek->getArrayVekZeny()->at(i);
+		}
+
+		//Poproduktivni
+		for (int i = 65; i < 101; i++)
+		{
+			ekoVekSkupinyMuzi_->at(2) += vek->getArrayVekMuzi()->at(i);
+			ekoVekSkupinyZeny_->at(2) += vek->getArrayVekZeny()->at(i);
 		}
 	}
 

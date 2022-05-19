@@ -531,7 +531,7 @@ public:
 
 			Vek* vekVysledok = new Vek();
 			vekVysledok->setArrayVekMuzi(vekMuzi);
-			vekVysledok->setArrayVekMuzi(vekZeny);
+			vekVysledok->setArrayVekZeny(vekZeny);
 
 			vekTable->insert(kodUJ, vekVysledok);
 

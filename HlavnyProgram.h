@@ -91,9 +91,9 @@ public:
 		// Utriedenie duplicitnych zoznamov OBCI, priadnie na koniec nazov okresu v ktorom je
 
 		system("cls");
-		std::cout << "• Parsovanie bolo dokoncene." << std::endl;
+		std::cout << "# Parsovanie bolo dokoncene." << std::endl;
 		std::cout << std::endl;
-		std::cout << "• Hotovo -> 100%" << std::endl;
+		std::cout << "# Hotovo -> 100%" << std::endl;
 		Sleep(1000);
 
 		for (int i = 0; i < zoznamKrajov->size(); i++)
@@ -163,6 +163,9 @@ public:
 
 							if (vekZoSuborov->containsKey(obecKodUJ)) {
 								Vek* vek = vekZoSuborov->find(obecKodUJ);
+
+								int porovnanie = obecNazovUj.compare("Lazisko");
+
 								novaObec->setVekObyvatelov(vek);
 								novaObec->getVekObyvatelov()->navysPocetEvsSkupin(vek);
 
@@ -186,6 +189,38 @@ public:
 		std::cout << "# Nacitavanie dat bolo uspesne dokoncene." << std::endl;
 		Sleep(1000);
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
+		system("pause");
+
+		
+		std::cout << "Poèet obyvatelov v SK: " << slovensko_->getPocetObyvatelov() << std::endl;
+		std::cout << "Poèet obyvatelov v SK z poctu vzdelania: " << slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::STREDNE) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA) +
+			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE) << std::endl;
+
+
+		std::cout << "Poèet obyvatelov v SK z poctu Ekonomickych VekovychSkupin: " << slovensko_->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(EVS::PREDPRODUKTIVNI) +
+			slovensko_->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(EVS::PRODUKTIVNI) +
+			slovensko_->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(EVS::POPRODUKTIVNY) << std::endl;
+
+
+		int resultMuzi = 0;
+		int resultZeny = 0;
+
+		for (int i = 0; i < slovensko_->getVekObyvatelov()->getArrayVekMuzi()->size(); i++)
+		{
+			resultMuzi += slovensko_->getVekObyvatelov()->getArrayVekMuzi()->at(i);
+		}
+		for (int i = 0; i < slovensko_->getVekObyvatelov()->getArrayVekZeny()->size(); i++)
+		{
+			resultMuzi += slovensko_->getVekObyvatelov()->getArrayVekZeny()->at(i);
+		}
+		int result = resultZeny + resultMuzi;
+		std::cout << "Pocet obyvatelov v SK cez vek: " << result << std::endl;
 		system("pause");
 	}
 
