@@ -16,7 +16,7 @@
 
 template<typename T>
 
-class CriterionUJ : public Criterion<O, T>{
+class CriterionUJ : public Criterion<UzemnaJednotka*, T> {
 
 public:
 

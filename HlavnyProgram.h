@@ -29,6 +29,13 @@
 #include "enum_Pohlavie.h"
 #include "enum_EVS.h"
 
+#include "Criterion.h"
+#include "CriterionUJNazov.h"
+#include "CriterionUJTyp.h"
+#include "CriterionVzdelaniePocet.h"
+#include "CriterionUJVekovaSkupinaPocet.h"
+
+
 class HlavnyProgam {
 	
 
@@ -128,12 +135,36 @@ public:
 		std::cout << "# Moznosti volby Uzemnej jednotky: " << std::endl;
 		std::cout << "#" << std::endl;
 		std::cout << "# Zvol CISLO Uzemnej jednotky" << std::endl;
+		std::cout << "# 999 # " << "Zrusit vyhladavanie" << std::endl;
+		std::cout << "# " << 0 << " # " << "Vyhodnot pre cele Slovensko" << std::endl;
+		volbaUzemnejJednotkyKraj();
 
-		UzemnaJednotka* kraj;
-		UzemnaJednotka* okres;
-		UzemnaJednotka* obec;
+		
+
+	}
 
 
+	void vypisBodovehoVyhladavania(UzemnaJednotka* uzemnaJednotka) {
+		UzemnaJednotka* zvolenaUJ = uzemnaJednotka;
+
+		//CriterionUJNazov<T>* kritNazov = new CriterionUJNazov();
+		
+		system("cls");
+		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí";
+		int i = 1;
+		while (zvolenaUJ != nullptr) {
+			std::cout << "# " << i << ".       # " << zvolenaUJ;
+			std::cout << "# Typ  UJ # ";
+
+
+
+			zvolenaUJ = zvolenaUJ->getVyssiaUJRodic();
+			i++;
+		}
+	}
+
+	void volbaUzemnejJednotkyKraj() {
+		UzemnaJednotka* zvolenyKraj;
 
 		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJKraje = new structures::Array<UzemnaJednotka*>(slovensko_->getUzemneJednotkyChildren()->size());
 		std::string vstup = "x";
@@ -151,16 +182,16 @@ public:
 				CiselnyzoznamUJKraje->at(i - 1) = item->accessData();
 			}
 
-			
 
 
-			std::cout << "# UJ zvol napisanim daneho nazvu " << std::endl;
+
+			std::cout << "# UJ Kraj zvol napisanim cisla " << std::endl;
 			std::cout << "# VSTUP: ";
 			std::cin >> vstup;
 
 			if (isNumber(vstup)) {
 				vstupInt = std::stoi(vstup);
-				if (vstupInt > 0  && vstupInt << slovensko_->getUzemneJednotkyChildren()->size())
+				if (vstupInt >= 0 && vstupInt <= slovensko_->getUzemneJednotkyChildren()->size() || vstupInt == 999)
 				{
 					break;
 				}
@@ -171,8 +202,6 @@ public:
 					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 					system("pause");
 				}
-
-				
 			}
 
 			system("cls");
@@ -182,38 +211,172 @@ public:
 			system("pause");
 		}
 
-
-		vstup = CiselnyzoznamUJKraje->at(vstupInt-1)->getNazov();
-
-
-
-		system("cls");
-		if (!slovensko_->getUzemneJednotkyChildren()->containsKey(vstup))
+		if (vstupInt == 999)
 		{
-			std::cout << "# ERROR #" << std::endl;
-			std::cout << "# Zvoleny nazov pre kraj neexistuje " << std::endl;
-			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-			system("pause");
+			zvolCinnost();
+		}
+
+		if (vstupInt == 0)
+		{
 			system("cls");
-			bodoveVyhladavnie();
+			vypisBodovehoVyhladavania(slovensko_);
 		}
 		else {
-			// ked sa najde dany kraj
+			zvolenyKraj = CiselnyzoznamUJKraje->at(vstupInt - 1);
 
-
-
-
-
-
-
-
-
-
-			std::cout << "# NAJDENE #" << std::endl;
-			std::cout << vstup << std::endl;
-			system("pause");
 			system("cls");
-			bodoveVyhladavnie();
+			volbaUzemnejJednotkyOkres(zvolenyKraj);
+		}
+
+	}
+
+
+	void volbaUzemnejJednotkyOkres(UzemnaJednotka* zvolenyKraj) {
+		UzemnaJednotka* zvolenyOkres;
+
+
+		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJOkresy = new structures::Array<UzemnaJednotka*>(zvolenyKraj->getUzemneJednotkyChildren()->size());
+		std::string vstup = "x";
+		int vstupInt = -1;
+
+
+		while (true)
+		{
+
+			
+
+
+			std::cout << "# Moznosti volby Uzemnej jednotky: " << std::endl;
+			std::cout << "#" << std::endl;
+			std::cout << "# Zvol CISLO Uzemnej jednotky" << std::endl;
+			std::cout << "# 999 # " << "Zrusit vyhladavanie" << std::endl;
+			std::cout << "# " << 0 << " # " << "Vyhodnot pre cely " << zvolenyKraj->getNazov() << std::endl;
+
+			int i = 0;
+			for (TableItem<std::string, UzemnaJednotka*>* item : *zvolenyKraj->getUzemneJednotkyChildren())
+			{
+				i++;
+				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
+				CiselnyzoznamUJOkresy->at(i - 1) = item->accessData();
+			}
+
+			std::cout << "# UJ Okres zvol napisanim daneho nazvu " << std::endl;
+			std::cout << "# VSTUP: ";
+			std::cin >> vstup;
+
+			if (isNumber(vstup)) {
+				vstupInt = std::stoi(vstup);
+				if (vstupInt >= 0 && vstupInt <= zvolenyKraj->getUzemneJednotkyChildren()->size() || vstupInt == 999)
+				{
+					break;
+				}
+				else {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Musis Napisat CISLO zo zoznamu, ktory ti bol vypisany" << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+			}
+
+			system("cls");
+			std::cout << "# ERROR # " << std::endl;
+			std::cout << "# Musis Napisat CISLO" << std::endl;
+			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+			system("pause");
+		}
+
+		if (vstupInt == 999)
+		{
+			zvolCinnost();
+		}
+
+		if (vstupInt == 0)
+		{
+			system("cls");
+			vypisBodovehoVyhladavania(zvolenyKraj);
+		}
+		else {
+			zvolenyOkres = CiselnyzoznamUJOkresy->at(vstupInt - 1);
+			system("cls");
+			volbaUzemnejJednotkyObec(zvolenyOkres);
+		}
+
+	}
+
+
+
+
+	void volbaUzemnejJednotkyObec(UzemnaJednotka* zvolenyOkres) {
+		UzemnaJednotka* zvolenaObec;
+
+
+		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJObce = new structures::Array<UzemnaJednotka*>(zvolenyOkres->getUzemneJednotkyChildren()->size());
+		std::string vstup = "x";
+		int vstupInt = -1;
+
+
+		while (true)
+		{
+
+
+
+
+			std::cout << "# Moznosti volby Uzemnej jednotky: " << std::endl;
+			std::cout << "#" << std::endl;
+			std::cout << "# Zvol CISLO Uzemnej jednotky" << std::endl;
+			std::cout << "# 999 # " << "Zrusit vyhladavanie" << std::endl;
+			std::cout << "# " << 0 << " # " << "Vyhodnot pre cely Okres" << zvolenyOkres->getNazov() << std::endl;
+
+			int i = 0;
+			for (TableItem<std::string, UzemnaJednotka*>* item : *zvolenyOkres->getUzemneJednotkyChildren())
+			{
+				i++;
+				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
+				CiselnyzoznamUJObce->at(i - 1) = item->accessData();
+			}
+
+			std::cout << "# UJ Obec zvol napisanim daneho nazvu " << std::endl;
+			std::cout << "# VSTUP: ";
+			std::cin >> vstup;
+
+			if (isNumber(vstup)) {
+				vstupInt = std::stoi(vstup);
+				if (vstupInt >= 0 && vstupInt <= zvolenyOkres->getUzemneJednotkyChildren()->size() || vstupInt == 999)
+				{
+					break;
+				}
+				else {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Musis Napisat CISLO zo zoznamu, ktory ti bol vypisany" << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+			}
+
+			system("cls");
+			std::cout << "# ERROR # " << std::endl;
+			std::cout << "# Musis Napisat CISLO" << std::endl;
+			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+			system("pause");
+		}
+
+		if (vstupInt == 999)
+		{
+			zvolCinnost();
+		}
+
+		if (vstupInt == 0)
+		{
+			system("cls");
+			vypisBodovehoVyhladavania(zvolenyOkres);
+			
+		}
+		else {
+			zvolenaObec = CiselnyzoznamUJObce->at(vstupInt - 1);
+			system("cls");
+			vypisBodovehoVyhladavania(zvolenaObec);
 		}
 
 	}
