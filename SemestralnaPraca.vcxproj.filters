@@ -55,6 +55,9 @@
     <Filter Include="Source Files\Criterions">
       <UniqueIdentifier>{913e1236-c417-4d27-9f30-7ce64d31af7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Filters">
+      <UniqueIdentifier>{40d444be-1022-413a-9bbe-d359b96ef073}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="CriterionUJNadradena.h">
       <Filter>Source Files\Criterions</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter.h">
+      <Filter>Source Files\Filters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

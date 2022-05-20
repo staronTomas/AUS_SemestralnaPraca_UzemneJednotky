@@ -12,19 +12,21 @@
 #include <unistd.h>
 #endif
 
+#include "structures/list/linked_list.h"
+#include "structures/heap_monitor.h"
+
+#include "UzemnaJednotka.h"
+#include "Vzdelanie.h"
+#include "Vek.h"
+#include "CsvReader.h"
+#include "Filter.h"
+
+
 #include "enum_UzemnaJednotka.h"
 #include "enum_VyssiCelok.h"
 #include "enum_TypVzdelania.h"
 #include "enum_Pohlavie.h"
 #include "enum_EVS.h"
-#include "structures/list/linked_list.h"
-
-
-#include "structures/heap_monitor.h"
-
-#include "UzemnaJednotka.h"
-#include "CsvReader.h"
-
 
 class HlavnyProgam {
 	
@@ -53,7 +55,27 @@ public:
 		Sleep(1500);
 		system("CLS");
 		nacitajVsetkyData();
+		zvolCinnost();
+
+
+
+
 	}
+
+
+
+	void zvolCinnost() {
+		std::cout << "# Zvol cislo cinnosti, ktoru chces vykonat: " << std::endl;
+		std::cout << "# 1 # Bodove Vyhladavanie " << std::endl;
+		std::cout << "# 2 # Filtorvanie " << std::endl;
+		std::cout << "# 3 # Zobrazit vsetky Uzemne Jednotky hierarchicky (Slovensko > kraje > okresy > obce) " << std::endl;
+		std::cout << "# 4 # Ukoncit program. " << std::endl;
+		std::string vstup = "";
+		std::cin >> vstup;
+		std::cout << vstup;
+	}
+
+
 
 
 	void nacitajVsetkyData() {
@@ -105,12 +127,12 @@ public:
 
 			slovensko_->getUzemneJednotkyChildren()->insert(nazovUjKraj, novyKraj);
 
-			//system("CLS");
+			system("CLS");
 			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
-			//std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
-			//std::cout << "#" << std::endl;
-			//std::cout << "# Prebieha ukladanie dat v Uzemnej jednotke -> " << nazovUjKraj << " a jeho okresoch a obciach." << std::endl;
-			//std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;
+			std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
+			std::cout << "#" << std::endl;
+			std::cout << "# Prebieha ukladanie dat v Uzemnej jednotke -> " << nazovUjKraj << " a jeho okresoch a obciach." << std::endl;
+			std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
@@ -145,6 +167,8 @@ public:
 							novyOkres->getUzemneJednotkyChildren()->insert(obecNazovUj, novaObec);
 
 
+							// pokial sa dana obec nachadzala v CSV Vek tak jej priradim jej udaje a takisto jej vyssim uzemnym jednotkam.
+							// Chybala tam jedna obec tak preto overujem ešte aj cez containsKey()
 							if (vzdelanieZoSuborov->containsKey(obecKodUJ)) {
 								Vzdelanie* vzd = vzdelanieZoSuborov->find(obecKodUJ);
 								novaObec->setVzdelanie(vzd);
@@ -158,24 +182,12 @@ public:
 
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
-
-
-								int result = 0;
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::STREDNE);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA);
-								result += vzd->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE);
-								std::cout << result << std::endl;
-
-								
+							
 
 							}	
 
-
+							// pokial sa dana obec nachadzala v CSV Vek tak jej priradim jej udaje a takisto jej vyssim uzemnym jednotkam.
+							// Chybala tam jedna obec tak preto overujem ešte aj cez containsKey()
 							if (vekZoSuborov->containsKey(obecKodUJ)) {
 								Vek* vek = vekZoSuborov->find(obecKodUJ);
 								novaObec->setVekObyvatelov(vek);
@@ -189,23 +201,7 @@ public:
 
 								slovensko_->getVekObyvatelov()->navysPocetVekCelkovo(vek);
 								slovensko_->getVekObyvatelov()->navysPocetEvsSkupin(vek);
-
-								
-								/*
-								int result = 0;
-								for (int i = 0; i < vek->getArrayVekMuzi()->size(); i++)
-								{
-									result += vek->getArrayVekMuzi()->at(i);
-								}
-								for (int i = 0; i < vek->getArrayVekZeny()->size(); i++)
-								{
-									result += vek->getArrayVekZeny()->at(i);
-								}
-								std::cout << result << std::endl;
-
-								*/
 							}
-
 						}
 					}
 				}
@@ -214,16 +210,12 @@ public:
 
 		system("CLS");
 		std::cout << "# Nacitavanie dat bolo uspesne dokoncene." << std::endl;
+		std::cout << "#" << std::endl;
+		std::cout << "# Pri obsluhe programe nepouzivaj diakritiku." << std::endl;
 		Sleep(1000);
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
-
-
-		std::cout << slovensko_->getUzemneJednotkyChildren()->find("Kosicky kraj")->getUzemneJednotkyChildren()->find("Trebisov")->getUzemneJednotkyChildren()->find("Zemplinsky Branc")->getPocetObyvatelov();
-	
 	}
-
-
 
 
 	UzemnaJednotka* getSlovensko() {
@@ -233,54 +225,4 @@ public:
 
 
 
-
-
-
-
-
 };
-
-
-
-
-/*
-
-Kod cez ktory som si zistoval ci je vsade kazdy obyvatel zapocitany
-
-
-
-
-std::cout << "Poèet obyvatelov v SK: " << slovensko_->getPocetObyvatelov() << std::endl;
-		std::cout << "Poèet obyvatelov v SK z poctu vzdelania: " << slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::STREDNE) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA) +
-			slovensko_->getVzdelanie()->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE) << std::endl;
-
-
-		std::cout << "Poèet obyvatelov v SK z poctu Ekonomickych VekovychSkupin: " << slovensko_->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(EVS::PREDPRODUKTIVNI) +
-			slovensko_->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(EVS::PRODUKTIVNI) +
-			slovensko_->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(EVS::POPRODUKTIVNY) << std::endl;
-
-
-		int resultMuzi = 0;
-		int resultZeny = 0;
-
-		for (int i = 0; i < slovensko_->getVekObyvatelov()->getArrayVekMuzi()->size(); i++)
-		{
-			resultMuzi += slovensko_->getVekObyvatelov()->getArrayVekMuzi()->at(i);
-		}
-		for (int i = 0; i < slovensko_->getVekObyvatelov()->getArrayVekZeny()->size(); i++)
-		{
-			resultMuzi += slovensko_->getVekObyvatelov()->getArrayVekZeny()->at(i);
-		}
-		int result = resultZeny + resultMuzi;
-		std::cout << "Pocet obyvatelov v SK cez vek: " << result << std::endl;
-		system("pause");
-
-
-
-*/

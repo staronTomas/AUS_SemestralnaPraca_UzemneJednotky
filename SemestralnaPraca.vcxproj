@@ -45,6 +45,7 @@
     <ClInclude Include="enum_UzemnaJednotka.h" />
     <ClInclude Include="enum_VyssiCelok.h" />
     <ClInclude Include="CriterionUJNazov.h" />
+    <ClInclude Include="Filter.h" />
     <ClInclude Include="HlavnyProgram.h" />
     <ClInclude Include="structures\array\array.h" />
     <ClInclude Include="structures\data_item.h" />

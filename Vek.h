@@ -6,6 +6,7 @@
 #include "structures/array/array.h"
 
 #include "enum_Pohlavie.h"
+#include "enum_EVS.h"
 
 
 class Vek {
@@ -198,10 +199,10 @@ public:
 			return ekoVekSkupinyMuzi_->at(0) + ekoVekSkupinyZeny_->at(0);
 			break;
 		case EVS::PRODUKTIVNI:
-			return ekoVekSkupinyMuzi_->at(1) + ekoVekSkupinyZeny_->at(2);
+			return ekoVekSkupinyMuzi_->at(1) + ekoVekSkupinyZeny_->at(1);
 			break;
 		case EVS::POPRODUKTIVNY:
-			return ekoVekSkupinyMuzi_->at(2) + ekoVekSkupinyZeny_->at(1);
+			return ekoVekSkupinyMuzi_->at(2) + ekoVekSkupinyZeny_->at(2);
 			break;
 		default:
 			break;

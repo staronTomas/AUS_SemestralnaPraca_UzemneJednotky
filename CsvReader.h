@@ -198,8 +198,6 @@ public:
 
 		delete texty;
 
-
-
 		return result;
 	}
 
