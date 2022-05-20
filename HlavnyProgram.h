@@ -12,6 +12,7 @@
 #include <unistd.h>
 #endif
 
+#include "structures/array/array.h"
 #include "structures/list/linked_list.h"
 #include "structures/heap_monitor.h"
 
@@ -71,6 +72,7 @@ public:
 		std::cout << "# 2 # Filtorvanie " << std::endl;
 		std::cout << "# 3 # Zobrazit vsetky Uzemne Jednotky hierarchicky (Slovensko > kraje > okresy > obce) " << std::endl;
 		std::cout << "# 4 # Ukoncit program " << std::endl;
+		std::cout << "# VSTUP:  ";
 		std::string vstup = "";
 		std::cin >> vstup;
 
@@ -89,6 +91,7 @@ public:
 			switch (vstupInt)
 			{
 			case 1:
+				bodoveVyhladavnie();
 				break;
 
 			case 2:
@@ -116,6 +119,104 @@ public:
 	}
 
 
+	void bodoveVyhladavnie() {
+		system("CLS");
+		std::cout << "### BODOVE VYHLADAVANIE ###" << std::endl;
+		std::cout << "# POPIS:" << std::endl;
+		std::cout << "# V bodovom vyhladavani si mozes zvolit uzemnu jednotku o ktorej chces ziskat informacie o vzdelani pre nu a pre jej nadradene Uzemne Jednotky." << std::endl;
+		std::cout << "#" << std::endl;
+		std::cout << "# Moznosti volby Uzemnej jednotky: " << std::endl;
+		std::cout << "#" << std::endl;
+		std::cout << "# Zvol CISLO Uzemnej jednotky" << std::endl;
+
+		UzemnaJednotka* kraj;
+		UzemnaJednotka* okres;
+		UzemnaJednotka* obec;
+
+
+
+		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJKraje = new structures::Array<UzemnaJednotka*>(slovensko_->getUzemneJednotkyChildren()->size());
+		std::string vstup = "x";
+		int vstupInt = -1;
+
+
+		while (true)
+		{
+
+			int i = 0;
+			for (TableItem<std::string, UzemnaJednotka*>* item : *slovensko_->getUzemneJednotkyChildren())
+			{
+				i++;
+				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
+				CiselnyzoznamUJKraje->at(i - 1) = item->accessData();
+			}
+
+			
+
+
+			std::cout << "# UJ zvol napisanim daneho nazvu " << std::endl;
+			std::cout << "# VSTUP: ";
+			std::cin >> vstup;
+
+			if (isNumber(vstup)) {
+				vstupInt = std::stoi(vstup);
+				if (vstupInt > 0  && vstupInt << slovensko_->getUzemneJednotkyChildren()->size())
+				{
+					break;
+				}
+				else {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Musis Napisat CISLO zo zoznamu, ktory ti bol vypisany" << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+
+				
+			}
+
+			system("cls");
+			std::cout << "# ERROR # " << std::endl;
+			std::cout << "# Musis Napisat CISLO" << std::endl;
+			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+			system("pause");
+		}
+
+
+		vstup = CiselnyzoznamUJKraje->at(vstupInt-1)->getNazov();
+
+
+
+		system("cls");
+		if (!slovensko_->getUzemneJednotkyChildren()->containsKey(vstup))
+		{
+			std::cout << "# ERROR #" << std::endl;
+			std::cout << "# Zvoleny nazov pre kraj neexistuje " << std::endl;
+			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+			system("pause");
+			system("cls");
+			bodoveVyhladavnie();
+		}
+		else {
+			// ked sa najde dany kraj
+
+
+
+
+
+
+
+
+
+
+			std::cout << "# NAJDENE #" << std::endl;
+			std::cout << vstup << std::endl;
+			system("pause");
+			system("cls");
+			bodoveVyhladavnie();
+		}
+
+	}
 
 
 	void nacitajVsetkyData() {
