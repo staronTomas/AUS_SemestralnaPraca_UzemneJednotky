@@ -65,14 +65,54 @@ public:
 
 
 	void zvolCinnost() {
-		std::cout << "# Zvol cislo cinnosti, ktoru chces vykonat: " << std::endl;
+		system("cls");
+		std::cout << "# Zvol cislo cinnosti, ktoru chces vykonat # " << std::endl;
 		std::cout << "# 1 # Bodove Vyhladavanie " << std::endl;
 		std::cout << "# 2 # Filtorvanie " << std::endl;
 		std::cout << "# 3 # Zobrazit vsetky Uzemne Jednotky hierarchicky (Slovensko > kraje > okresy > obce) " << std::endl;
-		std::cout << "# 4 # Ukoncit program. " << std::endl;
+		std::cout << "# 4 # Ukoncit program " << std::endl;
 		std::string vstup = "";
 		std::cin >> vstup;
-		std::cout << vstup;
+
+		if (!isNumber(vstup))
+		{
+			system("cls");
+			std::cout << "# ERROR # " << std::endl;
+			std::cout << "# Musis Napisat CISLO " << std::endl;
+			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+			system("pause");
+			zvolCinnost();
+		}
+		else {
+			int vstupInt = std::stoi(vstup);
+
+			switch (vstupInt)
+			{
+			case 1:
+				break;
+
+			case 2:
+				break;
+
+			case 3:
+				break;
+
+			case 4:
+				system("cls");
+				std::cout << "# Aplikacia bola ukoncena. " << std::endl;
+				exit(0);
+				break;
+
+			default:
+				system("cls");
+				std::cout << "# ERROR # " << std::endl;
+				std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+				std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+				system("pause");
+				break;
+			}
+		}
+		zvolCinnost();
 	}
 
 
@@ -224,5 +264,13 @@ public:
 
 
 
+
+
+	bool isNumber(const std::string& s)
+	{
+		std::string::const_iterator it = s.begin();
+		while (it != s.end() && std::isdigit(*it)) ++it;
+		return !s.empty() && it == s.end();
+	}
 
 };
