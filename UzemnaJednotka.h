@@ -75,6 +75,27 @@ public:
 		return typUzemnejJednotky_;
 	}
 
+	std::string getStringTypUzemnejJednotky() {
+		switch (typUzemnejJednotky_)
+		{
+		case UZEMNA_JEDNOTKA::STAT:
+			return "Stat";
+			break;
+		case UZEMNA_JEDNOTKA::KRAJ:
+			return "Kraj";
+			break;
+		case UZEMNA_JEDNOTKA::OKRES:
+			return "Okres";
+			break;
+		case UZEMNA_JEDNOTKA::OBEC:
+			return "Obec";
+			break;
+		default:
+			return "Neznamy typ UJ";
+			break;
+		}
+	}
+
 	std::string getKodUJ() {
 		return kodUJ_;
 	}

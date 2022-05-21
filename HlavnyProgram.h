@@ -140,9 +140,6 @@ public:
 		std::cout << "# 999 # " << "Zrusit vyhladavanie" << std::endl;
 		std::cout << "# " << 0 << " # " << "Vyhodnot pre cele Slovensko" << std::endl;
 		volbaUzemnejJednotkyKraj();
-
-		
-
 	}
 
 
@@ -150,19 +147,22 @@ public:
 		UzemnaJednotka* zvolenaUJ = uzemnaJednotka;
 
 		CriterionUJNazov* kritNazov = new CriterionUJNazov();
+		CriterionUJTyp* kritTyp = new CriterionUJTyp();
+		CriterionUJVzdelaniePocet* kritVzdPocet = new CriterionUJVzdelaniePocet();
 	
 		system("cls");
-		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí";
+		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí" << std::endl << std::endl;
 		int i = 1;
 		while (zvolenaUJ != nullptr) {
-			std::cout << "# " << i << ".       # " << zvolenaUJ;
-			std::cout << "# Typ  UJ # ";
+			std::cout << "### " << i << ".    # " << kritNazov->evaluate(zvolenaUJ) << std::endl;;
+			std::cout << "# Typ  UJ # " << getStringTypUJ(kritTyp->evaluate(uzemnaJednotka)) << std::endl;
 
 
-
+			std::cout << "########################################" << std::endl;
 			zvolenaUJ = zvolenaUJ->getVyssiaUJRodic();
 			i++;
 		}
+		system("pause");
 	}
 
 	void volbaUzemnejJednotkyKraj() {
@@ -175,7 +175,6 @@ public:
 
 		while (true)
 		{
-
 			int i = 0;
 			for (TableItem<std::string, UzemnaJednotka*>* item : *slovensko_->getUzemneJednotkyChildren())
 			{
@@ -183,9 +182,6 @@ public:
 				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
 				CiselnyzoznamUJKraje->at(i - 1) = item->accessData();
 			}
-
-
-
 
 			std::cout << "# UJ Kraj zvol napisanim cisla " << std::endl;
 			std::cout << "# VSTUP: ";
@@ -537,6 +533,28 @@ public:
 		std::string::const_iterator it = s.begin();
 		while (it != s.end() && std::isdigit(*it)) ++it;
 		return !s.empty() && it == s.end();
+	}
+
+
+	std::string getStringTypUJ(UZEMNA_JEDNOTKA typ) {
+		switch (typ)
+		{
+		case UZEMNA_JEDNOTKA::STAT:
+			return "Stat";
+			break;
+		case UZEMNA_JEDNOTKA::KRAJ:
+			return "Kraj";
+			break;
+		case UZEMNA_JEDNOTKA::OKRES:
+			return "Okres";
+			break;
+		case UZEMNA_JEDNOTKA::OBEC:
+			return "Obec";
+			break;
+		default:
+			return "Neznamy typ UJ";
+			break;
+		}
 	}
 
 };
