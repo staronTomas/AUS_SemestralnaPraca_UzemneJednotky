@@ -1,24 +1,17 @@
 #pragma once
 
 #include "CriterionUJ.h"
-
-template<typename T>
-
-class CriterionUJTyp : public CriterionUJ<T> {
-
-private:
+#include "enum_UzemnaJednotka.h"
 
 
+class CriterionUJTyp : public CriterionUJ<UZEMNA_JEDNOTKA> {
 
 public:
 
-	CriterionUJTyp() {};
-	~CriterionUJTyp() {};
-
-	UZEMNA_JEDNOTKA evaluate(UzemnaJednotka* object) {
-		return object->getTypUzemnejJednotky();
-	}
-
-
+	UZEMNA_JEDNOTKA evaluate(UzemnaJednotka* object);
 
 };
+
+inline UZEMNA_JEDNOTKA CriterionUJTyp::evaluate(UzemnaJednotka* object) {
+	return object->getTypUzemnejJednotky();
+}

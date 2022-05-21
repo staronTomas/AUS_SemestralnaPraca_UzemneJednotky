@@ -2,20 +2,16 @@
 
 #include "CriterionUJ.h"
 
-template<typename T>
 
-class CriterionUJNadradena : public CriterionUJ<T> {
-
-private:
-
-
+class CriterionUJNadradena : public CriterionUJ<UzemnaJednotka*> {
 public:
 
-	CriterionUJNadradena() {};
-	~CriterionUJNadradena() {};
-
-	UzemnaJednotka* evaluate(UzemnaJednotka* object) {
-		return object->getVyssiaUJRodic();
-	}
+	UzemnaJednotka* evaluate(UzemnaJednotka* object) override;
 
 };
+
+inline UzemnaJednotka* CriterionUJNadradena::evaluate(UzemnaJednotka* object) {
+	return object->getVyssiaUJRodic();
+}
+
+

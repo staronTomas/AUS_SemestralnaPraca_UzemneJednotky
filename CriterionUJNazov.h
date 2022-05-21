@@ -1,8 +1,6 @@
 #pragma once
 
 #include "CriterionUJ.h"
-#include "UzemnaJednotka.h"
-
 
 class CriterionUJNazov : public CriterionUJ<std::string> {
 
