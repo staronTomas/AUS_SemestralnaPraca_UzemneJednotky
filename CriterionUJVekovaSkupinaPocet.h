@@ -1,21 +1,17 @@
 #pragma once
 
 #include "CriterionUJ.h"
+#include "enum_UzemnaJednotka.h"
 
-template<typename T>
 
-class CriterionUJVekovaSkupinaPocet: public CriterionUJ<T> {
-
-private:
-
+class CriterionUJVekovaSkupinaPocet : public CriterionUJ<int> {
 
 public:
 
-	CriterionUJVekovaSkupinaPocet() {};
-	~CriterionUJVekovaSkupinaPocet() {};
-
-	int evaluate(UzemnaJednotka* object, EVS evs) {
-		return object->getVekObyvatelov()->getPocetEkoVekSkupinu(evs);
-	}
+	int evaluate(UzemnaJednotka* object, EVS evs);
 
 };
+
+inline int CriterionUJVekovaSkupinaPocet::evaluate(UzemnaJednotka* object, EVS evs) {
+	return object->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(evs);
+}
