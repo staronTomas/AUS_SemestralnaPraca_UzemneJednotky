@@ -30,6 +30,7 @@
 #include "enum_EVS.h"
 
 #include "Criterion.h"
+#include "CriterionUJ.h"
 #include "CriterionUJNazov.h"
 #include "CriterionUJTyp.h"
 #include "CriterionVzdelaniePocet.h"
@@ -148,7 +149,7 @@ public:
 	void vypisBodovehoVyhladavania(UzemnaJednotka* uzemnaJednotka) {
 		UzemnaJednotka* zvolenaUJ = uzemnaJednotka;
 
-
+		CriterionUJNazov* kritNazov = new CriterionUJNazov();
 	
 		system("cls");
 		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí";

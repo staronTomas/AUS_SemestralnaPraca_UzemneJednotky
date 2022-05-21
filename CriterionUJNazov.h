@@ -6,7 +6,7 @@ class CriterionUJNazov : public CriterionUJ<std::string> {
 
 public:
 
-	std::string evaluate(UzemnaJednotka* object) override;
+	std::string evaluate(UzemnaJednotka* object);
 
 };
 
