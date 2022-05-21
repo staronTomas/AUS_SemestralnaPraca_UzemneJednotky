@@ -7,7 +7,7 @@ class Criterion {
 
 public:
 
-	virtual T evaluate(O* o) = 0;
+	virtual T evaluate(O o) = 0;
 
 };
 
