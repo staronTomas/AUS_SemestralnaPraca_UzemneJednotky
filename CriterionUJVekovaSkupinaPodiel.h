@@ -1,28 +1,24 @@
 #pragma once
 
 #include "CriterionUJ.h"
+#include "enum_UzemnaJednotka.h"
 
-template<typename T>
 
-class CriterionUJVekovaSkupinaPodiel : public CriterionUJ<T> {
-
-private:
-
+class CriterionUJVekovaSkupinaPodiel : public CriterionUJ<double> {
 
 public:
 
-	CriterionUJVekovaSkupinaPodiel() {};
-	~CriterionUJVekovaSkupinaPodiel() {};
-
-	double evaluate(UzemnaJednotka* object, EVS evs) {
-		double result = 0;
-
-		int pocetObyvatelov = object->getPocetObyvatelov();
-		int pocetEvsVUJ = object->getVekObyvatelov()->getPocetEkoVekSkupinu(evs);
-
-		result = 100 / pocetObyvatelov * pocetEvsVUJ;
-
-		return result;
-	}
+	double evaluate(UzemnaJednotka* object, EVS evs);
 
 };
+
+inline double CriterionUJVekovaSkupinaPodiel::evaluate(UzemnaJednotka* object, EVS evs) {
+	double result = 0;
+
+	int pocetObyvatelov = object->getPocetObyvatelov();
+	int pocetEvsVUJ = object->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(evs);
+
+	result = 100.0 / pocetObyvatelov * static_cast<double>(pocetEvsVUJ);
+
+	return result;
+}
