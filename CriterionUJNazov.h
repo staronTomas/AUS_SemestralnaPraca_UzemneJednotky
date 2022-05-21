@@ -1,24 +1,21 @@
 #pragma once
 
 #include "CriterionUJ.h"
-
-template<typename T>
-
-class CriterionUJNazov : public CriterionUJ<T> {
-
-private:
+#include "UzemnaJednotka.h"
 
 
+class CriterionUJNazov : public CriterionUJ<std::string> {
 
 public:
 
-	CriterionUJNazov() {};
-	~CriterionUJNazov() {};
-
-	std::string evaluate(UzemnaJednotka* object) {
-		return object->getNazov();
-	}
-
-
+	std::string evaluate(UzemnaJednotka* object) override;
 
 };
+
+
+inline std::string CriterionUJNazov::evaluate(UzemnaJednotka* object) {
+	return object->getNazov();
+}
+
+
+

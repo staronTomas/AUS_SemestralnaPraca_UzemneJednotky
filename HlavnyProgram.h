@@ -34,6 +34,7 @@
 #include "CriterionUJTyp.h"
 #include "CriterionVzdelaniePocet.h"
 #include "CriterionUJVekovaSkupinaPocet.h"
+#include "CriterionVzdelaniePodiel.h"
 
 
 class HlavnyProgam {
@@ -147,8 +148,8 @@ public:
 	void vypisBodovehoVyhladavania(UzemnaJednotka* uzemnaJednotka) {
 		UzemnaJednotka* zvolenaUJ = uzemnaJednotka;
 
-		//CriterionUJNazov<T>* kritNazov = new CriterionUJNazov();
-		
+
+	
 		system("cls");
 		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí";
 		int i = 1;

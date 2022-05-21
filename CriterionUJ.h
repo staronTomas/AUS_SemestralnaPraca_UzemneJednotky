@@ -5,6 +5,8 @@
 
 #include "Criterion.h"
 
+#include "UzemnaJednotka.h"
+
 // includy, aby som nemusel v každej ich pisat...
 #include "UzemnaJednotka.h"
 #include "Vzdelanie.h"
@@ -19,5 +21,5 @@ template<typename T>
 class CriterionUJ : public Criterion<UzemnaJednotka*, T> {
 
 public:
-
+	virtual T evaluate(UzemnaJednotka* o) = 0;
 };
