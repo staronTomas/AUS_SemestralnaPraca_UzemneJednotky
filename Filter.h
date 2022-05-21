@@ -3,13 +3,13 @@
 #include "structures/table/sorted_sequence_table.h"
 #include "UzemnaJednotka.h"
 
-template<typename T, typename O>
+template<typename T, typename O, typename P>
 
 class Filter {
 
 protected:
 
-
+	/*
 	Criterion<T, O>* kriterium = nullptr;
 	virtual bool pass(O* object) const = 0;
 	structures::SortedSequenceTable<std::string, UzemnaJednotka*>* resultTable = nullptr;
@@ -74,6 +74,6 @@ public:
 		return this->resultTable;
 	}
 
-
+	*/
 
 };

@@ -2,6 +2,7 @@
 
 #include "CriterionUJ.h"
 
+
 class CriterionUJNazov : public CriterionUJ<std::string> {
 
 public:

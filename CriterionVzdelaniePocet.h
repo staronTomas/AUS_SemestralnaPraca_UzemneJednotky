@@ -5,12 +5,19 @@
 
 class CriterionUJVzdelaniePocet : public CriterionUJ<int> {
 
+private:
+	TYP_VZDELANIA typVzdelania_;
+
 public:
+	int evaluate(UzemnaJednotka* object);
 
-	int evaluate(UzemnaJednotka* object, TYP_VZDELANIA typVzdelania);
-
+	void setTypVzdelania(TYP_VZDELANIA typVzdelania);
 };
 
-inline int CriterionUJVzdelaniePocet::evaluate(UzemnaJednotka* object, TYP_VZDELANIA typVzdelania) {
-	return object->getVzdelanie()->getPocetVzdelanie(typVzdelania);
+inline int CriterionUJVzdelaniePocet::evaluate(UzemnaJednotka* object) {
+	return object->getVzdelanie()->getPocetVzdelanie(typVzdelania_);
+}
+
+inline void CriterionUJVzdelaniePocet::setTypVzdelania(TYP_VZDELANIA typVzdelania) {
+	typVzdelania_ = typVzdelania;
 }
