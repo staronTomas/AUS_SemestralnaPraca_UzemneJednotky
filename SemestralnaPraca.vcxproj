@@ -27,6 +27,7 @@
     <ClCompile Include="structures\_logger\logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CompositeFilter.h" />
     <ClInclude Include="Criterion.h" />
     <ClInclude Include="CriterionUJ.h" />
     <ClInclude Include="CriterionUJNadradena.h" />
@@ -46,6 +47,11 @@
     <ClInclude Include="enum_VyssiCelok.h" />
     <ClInclude Include="CriterionUJNazov.h" />
     <ClInclude Include="Filter.h" />
+    <ClInclude Include="FilterAnd.h" />
+    <ClInclude Include="FilterInternat.h" />
+    <ClInclude Include="FilterOr.h" />
+    <ClInclude Include="FilterValue.h" />
+    <ClInclude Include="FilterWithCriterionh.h" />
     <ClInclude Include="HlavnyProgram.h" />
     <ClInclude Include="structures\array\array.h" />
     <ClInclude Include="structures\data_item.h" />

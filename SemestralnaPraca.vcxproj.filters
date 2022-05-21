@@ -308,5 +308,23 @@
     <ClInclude Include="Filter.h">
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
+    <ClInclude Include="FilterWithCriterionh.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterInternat.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterValue.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="CompositeFilter.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterAnd.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterOr.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

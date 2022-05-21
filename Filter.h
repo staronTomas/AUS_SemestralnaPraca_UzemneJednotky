@@ -9,7 +9,6 @@ class Filter {
 
 protected:
 
-	/*
 	Criterion<T, O>* kriterium = nullptr;
 	virtual bool pass(O* object) const = 0;
 	structures::SortedSequenceTable<std::string, UzemnaJednotka*>* resultTable = nullptr;
@@ -18,7 +17,7 @@ public:
 	
 
 	Filter() {
-		this->vystupnaTabulka = new SortedSequenceTable<std::string, LinkedList<UzemnaJednotka*>*>();
+		resultTable = new SortedSequenceTable<std::string, LinkedList<UzemnaJednotka*>*>();
 	}
 
 	virtual ~Filter()
