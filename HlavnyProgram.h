@@ -57,6 +57,8 @@ public:
 
 	~HlavnyProgam() {
 
+		delete slovensko_;
+		delete reader_;
 	}
 
 
@@ -544,6 +546,13 @@ public:
 		Sleep(1000);
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
+
+		delete zoznamObci;
+		delete zoznamOkresov;
+		delete zoznamKrajov;
+		delete vzdelanieZoSuborov;
+		delete vekZoSuborov;
+
 	}
 
 

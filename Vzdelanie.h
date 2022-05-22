@@ -11,8 +11,6 @@ class Vzdelanie {
 
 private:
 
-
-
 	int bezUkoncenehoVzdelaniaDeti_;
 	int zakladne_;
 	int ucnovske_;

@@ -108,6 +108,7 @@ public:
 
 			result->add(list);
 		}
+		delete texty;
 		return result;
 	}
 
@@ -534,7 +535,7 @@ public:
 			vekTable->insert(kodUJ, vekVysledok);
 		}
 
-		// delete texty; hadzalo mi to nejaky error pri vymazavani, nechapem preco..
+		 //delete texty;
 
 		return vekTable;
 	}

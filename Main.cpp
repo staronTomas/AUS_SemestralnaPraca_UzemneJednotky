@@ -13,5 +13,7 @@ int main()
 	HlavnyProgam* program = new HlavnyProgam();
 
 	program->spustiProgram();
-	
+
+	delete program;
+	return 0;
 }

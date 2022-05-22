@@ -29,6 +29,13 @@ public:
 		ekoVekSkupinyZeny_ = new structures::Array<int>(3);
 	}
 
+	~Vek() {
+		delete pocetVekMuzi_;
+		delete pocetVekZeny_;
+		delete ekoVekSkupinyMuzi_;
+		delete ekoVekSkupinyZeny_;
+	}
+
 
 	
 

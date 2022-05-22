@@ -45,6 +45,19 @@ public:
 		vzdelanie_ = new Vzdelanie();
 	};
 
+	~UzemnaJednotka() {
+		nazov_ = "";
+		typUzemnejJednotky_;
+		kodUJ_ = "";
+		delete vyssiaUJRodic_;
+		delete vzdelanie_;
+		pocetObyvatelov_ = 0;
+		delete vekObyvatelov_;
+
+		delete uzemneJednotkyChildren_;
+
+	}
+
 
 
 
