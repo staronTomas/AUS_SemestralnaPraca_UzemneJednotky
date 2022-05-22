@@ -15,7 +15,7 @@ protected:
 public:
 
 	
-
+	/*
 	Filter() {
 		resultTable = new SortedSequenceTable<std::string, LinkedList<UzemnaJednotka*>*>();
 	}

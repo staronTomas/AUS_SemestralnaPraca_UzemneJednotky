@@ -8,6 +8,8 @@
 
 int main()
 {
+	initHeapMonitor();
+
 	HlavnyProgam* program = new HlavnyProgam();
 
 	program->spustiProgram();
