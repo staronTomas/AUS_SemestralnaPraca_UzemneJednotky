@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "structures/array/array.h"
+#include "structures/list/linked_list.h"
 
 #include "enum_Pohlavie.h"
 #include "enum_EVS.h"
@@ -14,19 +14,29 @@ class Vek {
 
 private:
 
-	structures::Array<int>* pocetVekMuzi_;
-	structures::Array<int>* pocetVekZeny_;
-	structures::Array<int>* ekoVekSkupinyMuzi_;
-	structures::Array<int>* ekoVekSkupinyZeny_;
+	structures::ArrayList<int>* pocetVekMuzi_;
+	structures::ArrayList<int>* pocetVekZeny_;
+	structures::ArrayList<int>* ekoVekSkupinyMuzi_;
+	structures::ArrayList<int>* ekoVekSkupinyZeny_;
 
 
 public:
 
 	Vek() {
-		pocetVekMuzi_ = new structures::Array<int>(101);
-		pocetVekZeny_ = new structures::Array<int>(101);
-		ekoVekSkupinyMuzi_ = new structures::Array<int>(3);
-		ekoVekSkupinyZeny_ = new structures::Array<int>(3);
+		pocetVekMuzi_ = new structures::ArrayList<int>;
+		pocetVekZeny_ = new structures::ArrayList<int>;
+		for (int i = 0; i < 101; i++)
+		{
+			pocetVekMuzi_->add(0);
+			pocetVekZeny_->add(0);
+		}
+		ekoVekSkupinyMuzi_ = new structures::ArrayList<int>;
+		ekoVekSkupinyZeny_ = new structures::ArrayList<int>;
+		for (int i = 0; i < 3; i++)
+		{
+			ekoVekSkupinyMuzi_->add(0);
+			ekoVekSkupinyZeny_->add(0);
+		}
 	}
 
 	~Vek() {
@@ -155,11 +165,11 @@ public:
 		}
 	}
 	
-	structures::Array<int>* getArrayVekMuzi() {
+	structures::ArrayList<int>* getArrayVekMuzi() {
 		return pocetVekMuzi_;
 	}
 
-	structures::Array<int>* getArrayVekZeny() {
+	structures::ArrayList<int>* getArrayVekZeny() {
 		return pocetVekZeny_;
 	}
 
@@ -219,11 +229,11 @@ public:
 
 	//settery
 
-	void setArrayVekMuzi(structures::Array<int>* arrayVeky) {
+	void setArrayVekMuzi(structures::ArrayList<int>* arrayVeky) {
 		pocetVekMuzi_ = arrayVeky;
 	}
 
-	void setArrayVekZeny(structures::Array<int>* arrayVeky) {
+	void setArrayVekZeny(structures::ArrayList<int>* arrayVeky) {
 		pocetVekZeny_ = arrayVeky;
 	}
 

@@ -191,6 +191,10 @@ public:
 			zvolenaUJ = zvolenaUJ->getVyssiaUJRodic();
 			i++;
 		}
+		delete kritNazov;
+		delete kritTyp;
+		delete kritVzdPocet;
+		delete kritVekSkupPocet;
 		system("pause");
 	}
 
@@ -502,7 +506,7 @@ public:
 							// Chybala tam jedna obec tak preto overujem ešte aj cez containsKey()
 							if (vzdelanieZoSuborov->containsKey(obecKodUJ)) {
 								Vzdelanie* vzd = vzdelanieZoSuborov->find(obecKodUJ);
-								novaObec->setVzdelanie(vzd);
+								novaObec->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								novaObec->navysPocetObyvatelovZoVzdelania(vzd);
 
 								novyOkres->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
@@ -513,7 +517,6 @@ public:
 
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
-							
 
 							}	
 
@@ -547,10 +550,22 @@ public:
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
 
+
+		for (int j = 0; j < zoznamObci->size(); j++){
+			delete zoznamObci->at(j);
+		}
 		delete zoznamObci;
+		for (int j = 0; j < zoznamOkresov->size(); j++) {
+			delete zoznamOkresov->at(j);
+		}
 		delete zoznamOkresov;
+		for (int j = 0; j < zoznamKrajov->size(); j++) {
+			delete zoznamKrajov->at(j);
+		}
 		delete zoznamKrajov;
+
 		delete vzdelanieZoSuborov;
+
 		delete vekZoSuborov;
 
 	}

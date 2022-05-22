@@ -54,6 +54,12 @@ public:
 		pocetObyvatelov_ = 0;
 		delete vekObyvatelov_;
 
+
+		for (TableItem<std::string, UzemnaJednotka*>* item : *uzemneJednotkyChildren_)
+		{
+			delete item->accessData();
+		}
+
 		delete uzemneJednotkyChildren_;
 
 	}
