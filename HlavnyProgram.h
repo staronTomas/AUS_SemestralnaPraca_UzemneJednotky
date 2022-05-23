@@ -80,7 +80,7 @@ public:
 		Sleep(1500);
 		system("CLS");
 		nacitajVsetkyData();
-		//zvolCinnost();
+		zvolCinnost();
 
 
 
@@ -464,8 +464,6 @@ public:
 		std::cout << "# Citany subor: vek.csv" << std::endl;
 		std::cout << "# Hotovo -> 80%" << std::endl;
 		SortedSequenceTable<std::string, Vek*>* vekZoSuborov = reader_->nacitajVek("data_bez_diakritiky/vek.csv");
-		
-		// Utriedenie duplicitnych zoznamov OBCI, priadnie na koniec nazov okresu v ktorom je
 
 		system("cls");
 		std::cout << "# Parsovanie bolo dokoncene." << std::endl;
@@ -600,8 +598,10 @@ public:
 		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
 		{
 			delete item->accessData();
+			item->accessData() = nullptr;
+			delete item;
 		}
-		delete vekZoSuborov;
+		vekZoSuborov = nullptr;
 		
 	}
 

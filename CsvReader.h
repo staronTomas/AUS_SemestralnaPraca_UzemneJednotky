@@ -533,15 +533,21 @@ public:
 		
 
 			Vek* vekVysledok = new Vek();
-			vekVysledok->setArrayVekMuzi(vekMuzi);
-			vekVysledok->setArrayVekZeny(vekZeny);
+
+			for (int i = 0; i < 101; i++)
+			{
+				vekVysledok->navysPocetVek(POHLAVIE::MUZ, i, vekMuzi->at(i));
+				vekVysledok->navysPocetVek(POHLAVIE::ZENA, i, vekZeny->at(i));
+			}
 			
 
 			vekTable->insert(kodUJ, vekVysledok);
+
+			delete vekMuzi;
+			delete vekZeny;
 		}
 
 		delete texty2;
-
 
 		return vekTable;
 	}
