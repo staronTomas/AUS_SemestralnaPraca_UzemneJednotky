@@ -435,19 +435,19 @@ public:
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: obce.csv" << std::endl;
 		std::cout << "# Hotovo -> 0%" << std::endl;
-		LinkedList<LinkedList<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
+		LinkedList<Array<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: okresy.csv" << std::endl;
 		std::cout << "# Hotovo -> 20%" << std::endl;
-		LinkedList<LinkedList<std::string>*>* zoznamOkresov = reader_->nacitajOkresy("data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
+		LinkedList<Array<std::string>*>* zoznamOkresov = reader_->nacitajOkresy("data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: kraje.csv" << std::endl;
 		std::cout << "# Hotovo -> 40%" << std::endl;
-		LinkedList<LinkedList<std::string>*>* zoznamKrajov = reader_->nacitajKraje("data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
+		LinkedList<Array<std::string>*>* zoznamKrajov = reader_->nacitajKraje("data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
@@ -567,23 +567,35 @@ public:
 		system("pause");
 
 
+		for (int i = 0; i < zoznamObci->size(); i++)
+		{
+			delete zoznamObci->at(i);
+		}
 		delete zoznamObci;
 
+		for (int i = 0; i < zoznamOkresov->size(); i++)
+		{
+			delete zoznamOkresov->at(i);
+		}
 		delete zoznamOkresov;
 
+		for (int i = 0; i < zoznamKrajov->size(); i++)
+		{
+			delete zoznamKrajov->at(i);
+		}
 		delete zoznamKrajov;
 
 
-		for (TableItem<std::string, Vzdelanie*>* item : *vzdelanieZoSuborov)
-		{
-			delete item->accessData();
-		}
+		//for (TableItem<std::string, Vzdelanie*>* item : *vzdelanieZoSuborov)
+		//{
+		//	delete item->accessData();
+		//}
 		delete vzdelanieZoSuborov;
 
-		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
-		{
-			delete item->accessData();
-		}
+		//for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
+		//{
+		//	delete item->accessData();
+		//}
 		delete vekZoSuborov;
 
 	}
