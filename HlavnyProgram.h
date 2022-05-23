@@ -142,7 +142,7 @@ public:
 				break;
 			}
 		}
-		
+
 	}
 
 
@@ -217,7 +217,7 @@ public:
 	void volbaUzemnejJednotkyKraj() {
 		UzemnaJednotka* zvolenyKraj;
 
-		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJKraje = new structures::Array<UzemnaJednotka*>(slovensko_->getUzemneJednotkyChildren()->size());
+		structures::Array<UzemnaJednotka*>* ciselnyZoznamUJKraje = new structures::Array<UzemnaJednotka*>(slovensko_->getUzemneJednotkyChildren()->size());
 		std::string vstup = "x";
 		int vstupInt = -1;
 
@@ -229,7 +229,7 @@ public:
 			{
 				i++;
 				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
-				CiselnyzoznamUJKraje->at(i - 1) = item->accessData();
+				ciselnyZoznamUJKraje->at(i - 1) = item->accessData();
 			}
 
 			std::cout << "# UJ Kraj zvol napisanim cisla " << std::endl;
@@ -269,12 +269,13 @@ public:
 			vypisBodovehoVyhladavania(slovensko_);
 		}
 		else {
-			zvolenyKraj = CiselnyzoznamUJKraje->at(vstupInt - 1);
+			zvolenyKraj = ciselnyZoznamUJKraje->at(vstupInt - 1);
 
 			system("cls");
 			volbaUzemnejJednotkyOkres(zvolenyKraj);
 		}
 
+		delete ciselnyZoznamUJKraje;
 	}
 
 
@@ -282,7 +283,7 @@ public:
 		UzemnaJednotka* zvolenyOkres;
 
 
-		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJOkresy = new structures::Array<UzemnaJednotka*>(zvolenyKraj->getUzemneJednotkyChildren()->size());
+		structures::Array<UzemnaJednotka*>* ciselnyZoznamUJOkresy = new structures::Array<UzemnaJednotka*>(zvolenyKraj->getUzemneJednotkyChildren()->size());
 		std::string vstup = "x";
 		int vstupInt = -1;
 
@@ -304,7 +305,7 @@ public:
 			{
 				i++;
 				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
-				CiselnyzoznamUJOkresy->at(i - 1) = item->accessData();
+				ciselnyZoznamUJOkresy->at(i - 1) = item->accessData();
 			}
 
 			std::cout << "# UJ Okres zvol napisanim daneho nazvu " << std::endl;
@@ -344,11 +345,12 @@ public:
 			vypisBodovehoVyhladavania(zvolenyKraj);
 		}
 		else {
-			zvolenyOkres = CiselnyzoznamUJOkresy->at(vstupInt - 1);
+			zvolenyOkres = ciselnyZoznamUJOkresy->at(vstupInt - 1);
 			system("cls");
 			volbaUzemnejJednotkyObec(zvolenyOkres);
 		}
 
+		delete ciselnyZoznamUJOkresy;
 	}
 
 
@@ -358,7 +360,7 @@ public:
 		UzemnaJednotka* zvolenaObec;
 
 
-		structures::Array<UzemnaJednotka*>* CiselnyzoznamUJObce = new structures::Array<UzemnaJednotka*>(zvolenyOkres->getUzemneJednotkyChildren()->size());
+		structures::Array<UzemnaJednotka*>* ciselnyZoznamUJObce = new structures::Array<UzemnaJednotka*>(zvolenyOkres->getUzemneJednotkyChildren()->size());
 		std::string vstup = "x";
 		int vstupInt = -1;
 
@@ -380,7 +382,7 @@ public:
 			{
 				i++;
 				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
-				CiselnyzoznamUJObce->at(i - 1) = item->accessData();
+				ciselnyZoznamUJObce->at(i - 1) = item->accessData();
 			}
 
 			std::cout << "# UJ Obec zvol napisanim daneho nazvu " << std::endl;
@@ -421,10 +423,12 @@ public:
 
 		}
 		else {
-			zvolenaObec = CiselnyzoznamUJObce->at(vstupInt - 1);
+			zvolenaObec = ciselnyZoznamUJObce->at(vstupInt - 1);
 			system("cls");
 			vypisBodovehoVyhladavania(zvolenaObec);
 		}
+
+		delete ciselnyZoznamUJObce;
 
 	}
 
@@ -435,19 +439,19 @@ public:
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: obce.csv" << std::endl;
 		std::cout << "# Hotovo -> 0%" << std::endl;
-		LinkedList<Array<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
+		LinkedList<LinkedList<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: okresy.csv" << std::endl;
 		std::cout << "# Hotovo -> 20%" << std::endl;
-		LinkedList<Array<std::string>*>* zoznamOkresov = reader_->nacitajOkresy("data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
+		LinkedList<LinkedList<std::string>*>* zoznamOkresov = reader_->nacitajOkresy("data_bez_diakritiky/okresy.csv");  // okresy mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: kraje.csv" << std::endl;
 		std::cout << "# Hotovo -> 40%" << std::endl;
-		LinkedList<Array<std::string>*>* zoznamKrajov = reader_->nacitajKraje("data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
+		LinkedList<LinkedList<std::string>*>* zoznamKrajov = reader_->nacitajKraje("data_bez_diakritiky/kraje.csv");  // kraje mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
@@ -534,6 +538,7 @@ public:
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
 
+								delete vzd;
 							}
 
 							// pokial sa dana obec nachadzala v CSV Vek tak jej priradim jej udaje a takisto jej vyssim uzemnym jednotkam.
@@ -551,6 +556,8 @@ public:
 
 								slovensko_->getVekObyvatelov()->navysPocetVekCelkovo(vek);
 								slovensko_->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+
+								delete vek;
 							}
 						}
 					}

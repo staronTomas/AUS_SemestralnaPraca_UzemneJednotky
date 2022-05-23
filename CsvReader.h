@@ -34,7 +34,7 @@ public:
 	~CsvReader() {};
 
 
-	structures::LinkedList<Array<std::string>*>* nacitajObce(std::string nazovSuboru) {
+	structures::LinkedList<LinkedList<std::string>*>* nacitajObce(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -64,7 +64,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>();
-		structures::LinkedList<Array<std::string>*>* result = new structures::LinkedList<Array<std::string>*>();
+		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>();
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -103,9 +103,9 @@ public:
 			}
 
 
-			Array<std::string>* list = new Array<std::string>(2);
-			list->at(0) = (nazovUJ);
-			list->at(1) = (kodUJ);
+			LinkedList<std::string>* list = new LinkedList<std::string>;
+			list->add(nazovUJ);
+			list->add(kodUJ);
 
 			result->add(list);
 
@@ -120,7 +120,7 @@ public:
 
 
 
-	structures::LinkedList<Array<std::string>*>* nacitajOkresy(std::string nazovSuboru) {
+	structures::LinkedList<LinkedList<std::string>*>* nacitajOkresy(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -150,7 +150,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>;
-		structures::LinkedList<Array<std::string>*>* result = new structures::LinkedList<Array<std::string>*>;
+		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>;
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -191,9 +191,9 @@ public:
 
 			nazovUJ = nazovUJ.substr(6, nazovUJ.size()); // Odstraním prvých 6 znakov z nazvov okresov "Okres "
 
-			Array<std::string>* list = new Array<std::string>(2);
-			list->at(0) = (nazovUJ);
-			list->at(1) = (kodUJ);
+			LinkedList<std::string>* list = new LinkedList<std::string>();
+			list->add(nazovUJ);
+			list->add(kodUJ);
 
 			result->add(list);
 
@@ -212,7 +212,7 @@ public:
 
 
 
-	structures::LinkedList<Array<std::string>*>* nacitajKraje(std::string nazovSuboru) {
+	structures::LinkedList<LinkedList<std::string>*>* nacitajKraje(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -242,7 +242,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>;
-		structures::LinkedList<Array<std::string>*>* result = new structures::LinkedList<Array<std::string>*>;
+		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>;
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
@@ -308,9 +308,9 @@ public:
 			i++;
 
 
-			Array<std::string>* list = new Array<std::string>(2);
-			list->at(0) = (nazovUJ);
-			list->at(1) = (kodUJ);
+			LinkedList<std::string>* list = new LinkedList<std::string>;
+			list->add(nazovUJ);
+			list->add(kodUJ);
 
 			result->add(list);
 
@@ -478,16 +478,19 @@ public:
 
 		int pocitadlo = 0;
 
+
+		
+
 		for (std::string item : *texty2) {
 			pocitadlo++;
 			if (pocitadlo == 2928) {
 				break;
 			}
 			std::string kodUJ = "";
+			
+
 			structures::Array<int>* vekMuzi = new Array<int>(101);
 			structures::Array<int>* vekZeny = new Array<int>(101);
-
-
 
 			//nacitam si kod uzemnejJednotky
 			int i = 0;
@@ -533,12 +536,10 @@ public:
 			vekVysledok->setArrayVekZeny(vekZeny);
 
 			vekTable->insert(kodUJ, vekVysledok);
-
-			delete vekMuzi;
-			delete vekZeny;
 		}
 
 		delete texty2;
+
 
 		return vekTable;
 	}
