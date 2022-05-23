@@ -16,6 +16,7 @@ typedef std::basic_string<wchar_t> wstring;
 #include "structures/list/array_list.h"
 #include "structures/list/linked_list.h"
 #include "structures/heap_monitor.h"
+#include "structures/list/double_linked_list.h"
 
 #include "Vzdelanie.h"
 #include "enum_TypVzdelania.h"
@@ -425,7 +426,7 @@ public:
 
 		return vzdelanieTable;
 	}
-
+	
 	structures::SortedSequenceTable<std::string, Vek*>* nacitajVek(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
@@ -438,6 +439,7 @@ public:
 			bool firstTime = true;
 			while (getline(file, line))
 			{
+
 				if (firstTime) {
 					firstTime = false;
 					continue;
@@ -455,7 +457,7 @@ public:
 			std::cout << "Could not open the file\n";
 		}
 
-		structures::ArrayList<std::string>* texty2 = new structures::ArrayList<std::string>;
+		structures::ArrayList<std::string*>* texty = new structures::ArrayList<std::string*>;
 		structures::SortedSequenceTable<std::string, Vek*>* vekTable = new SortedSequenceTable<std::string, Vek*>();
 
 
@@ -463,16 +465,16 @@ public:
 		for (int i = 0; i < content.size(); i++)
 		{
 
-			std::string riadok = "";
+			std::string* riadok = new std::string();
 			for (int j = 0; j < content[i].size(); j++)
 			{
-				riadok += content[i][j];
+				*riadok += content[i][j];
 			}
 
 
 
-			riadok += ";"; // pre zistovanie ukoncenia neskor
-			texty2->add(riadok);
+			*riadok += ";"; // pre zistovanie ukoncenia neskor
+			texty->add(riadok);
 		}
 
 
@@ -481,7 +483,7 @@ public:
 
 		
 
-		for (std::string item : *texty2) {
+		for (std::string* item : *texty) {
 			pocitadlo++;
 			if (pocitadlo == 2928) {
 				break;
@@ -494,13 +496,16 @@ public:
 
 			//nacitam si kod uzemnejJednotky
 			int i = 0;
-			while (item.at(i) != ';') {
-				kodUJ += item.at(i);
+
+			std::string item2 = *item;
+
+			while (item2.at(i) != ';') {
+				kodUJ += item2.at(i);
 				i++;
 			}
 			i++;
 			//preskocim nazov Uzemnej jednotky
-			while (item.at(i) != ';') {
+			while (item2.at(i) != ';') {
 				i++;
 			}
 			i++;
@@ -509,8 +514,8 @@ public:
 			for (int j = 0; j < 101; j++)
 			{
 				std::string vekPocetStr = "";
-				while (item.at(i) != ';') {
-					vekPocetStr += item.at(i);
+				while (item2.at(i) != ';') {
+					vekPocetStr += item2.at(i);
 					i++;
 				}
 				vekMuzi->at(j) = stoi(vekPocetStr);
@@ -522,8 +527,8 @@ public:
 			for (int j = 0; j < 101; j++)
 			{
 				std::string vekPocetStr = "";
-				while (item.at(i) != ';') {
-					vekPocetStr += item.at(i);
+				while (item2.at(i) != ';') {
+					vekPocetStr += item2.at(i);
 					i++;
 				}
 				vekZeny->at(j) = stoi(vekPocetStr);
@@ -546,8 +551,12 @@ public:
 			delete vekMuzi;
 			delete vekZeny;
 		}
-
-		delete texty2;
+		
+		for (int i = 0; i < texty->size(); i++)
+		{
+			delete texty->at(i);
+		}
+		delete texty;
 
 		return vekTable;
 	}

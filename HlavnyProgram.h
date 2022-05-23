@@ -552,7 +552,9 @@ public:
 
 								slovensko_->getVekObyvatelov()->navysPocetVekCelkovo(vek);
 								slovensko_->getVekObyvatelov()->navysPocetEvsSkupin(vek);
+							
 							}
+						
 						}
 					}
 				}
@@ -567,6 +569,21 @@ public:
 		Sleep(1000);
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
+
+
+
+		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
+		{
+			delete item->accessData();
+			item->accessData() = nullptr;
+
+		}
+		delete vekZoSuborov;
+		vekZoSuborov = nullptr;
+
+
+
+
 
 		
 		for (int i = 0; i < zoznamObci->size(); i++)
@@ -595,13 +612,7 @@ public:
 		delete vzdelanieZoSuborov;
 
 		
-		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
-		{
-			delete item->accessData();
-			item->accessData() = nullptr;
-			delete item;
-		}
-		vekZoSuborov = nullptr;
+		
 		
 	}
 
