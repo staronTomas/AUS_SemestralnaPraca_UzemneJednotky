@@ -1,63 +1,44 @@
 #pragma once
 #include "Criterion.h"
-#include "structures/table/sorted_sequence_table.h"
-#include "UzemnaJednotka.h"
-
-template<typename T, typename O, typename P>
+template<typename T, typename O>
 
 class Filter {
 
 protected:
 
-	Criterion<T, O>* kriterium = nullptr;
-	virtual bool pass(O* object) const = 0;
-	structures::SortedSequenceTable<std::string, UzemnaJednotka*>* resultTable = nullptr;
+
+	Criterion<T, O>* criterion_ = nullptr;
+	virtual bool pass(O* objekt) const = 0;
+	SortedSequenceTable<std::string, UzemnaJednotka*>* resultTable_ = nullptr;
 public:
 
-	
-	/*
-	Filter() {
-		resultTable = new SortedSequenceTable<std::string, LinkedList<UzemnaJednotka*>*>();
+	SortedSequenceTable<std::string, UzemnaJednotka*>* getResultTable() {
+		return this->vystupnaTabulka;
 	}
 
-	virtual ~Filter()
-	{
-
-		for (structures::TableItem<std::string, structures::LinkedList<UzemnaJednotka*>*>* item : *resultTable)
-		{
-			std::string kluc = item->getKey();
-			delete resultTable->operator[](kluc);
-		}
-		delete resultTable;
-
-		resultTable = nullptr;
-
-	}
-
-
-	structures::SortedSequenceTable<std::string, UzemnaJednotka*>* pass(structures::SortedSequenceTable<std::string, UzemnaJednotka*>* paramTable) {
+	SortedSequenceTable<std::string, UzemnaJednotka*>* passFilter(SortedSequenceTable<std::string, UzemnaJednotka*>* inputTable) {
 		LinkedList<UzemnaJednotka*>* link;
 
-		for (TableItem<std::string, UzemnaJednotka*>* objekt : *paramTable)
+		for (TableItem<std::string, UzemnaJednotka*>* objekt : *inputTable)
 		{
 
 
 			for (int i = 0; i < objekt->accessData()->size(); i++)
 			{
-				if (splnaFilter(objekt->accessData()->operator[](i))) {
+				if (passFilter(objekt->accessData()->operator[](i))) {
 
 					std::string nazov = objekt->accessData()->operator[](i)->getNazov();
 
 
-					if (!this->vystupnaTabulka->containsKey(nazov))
+					if (!this->resultTable_->containsKey(nazov))
 					{
 						link = new LinkedList<UzemnaJednotka*>;
-						this->vystupnaTabulka->insert(objekt->accessData()->operator[](i)->getNazov(), link);
+						this->resultTable_->insert(objekt->accessData()->operator[](i)->getNazov(), link);
 						UzemnaJednotka* pridavanyObjekt = objekt->accessData()->operator[](i);
 						link->add(pridavanyObjekt);
 					}
 					else {
-						link = this->vystupnaTabulka->operator[](objekt->accessData()->operator[](i)->getNazov());
+						link = this->resultTable_->operator[](objekt->accessData()->operator[](i)->getNazov());
 						link->add(objekt->accessData()->operator[](i));
 					}
 
@@ -65,14 +46,28 @@ public:
 			}
 		}
 
-		return this->vystupnaTabulka;
+		return this->resultTable_;
 	};
 
-
-	structures::SortedSequenceTable<std::string, UzemnaJednotka*>* getResultTable() {
-		return this->resultTable;
+	Filter() {
+		this->resultTable_ = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 	}
 
-	*/
+	virtual ~Filter()
+	{
+
+		for (TableItem<std::string, UzemnaJednotka*>* item : *resultTable_)
+		{
+			std::string key = item->getKey();
+			delete resultTable_->operator[](key);
+		}
+		delete resultTable_;
+
+		resultTable_ = nullptr;
+
+	}
+
+
+
 
 };

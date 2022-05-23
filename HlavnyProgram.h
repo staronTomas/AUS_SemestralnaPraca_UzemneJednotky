@@ -560,13 +560,49 @@ public:
 				}
 			}
 		}
+
+
+		SortedSequenceTable<std::string, UzemnaJednotka*>* tabulkaDupl = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+
+		int counter = 0;
+		for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko_->getUzemneJednotkyChildren())
+		{
+
+			system("CLS");
+			std::cout << "# Prehladavanie duplicitnych nazvov a odlišovanie." << std::endl;
+			std::cout << "#" << std::endl;
+			int hotovo = 100 / slovensko_->getUzemneJednotkyChildren()->size() * counter;
+			std::cout << "# Hotovo -> " << hotovo <<  " % " << std::endl;
+
+			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
+			{
+				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
+				{
+					if (tabulkaDupl->containsKey(obec->accessData()->getNazov())) {
+
+						std::string novyNazovVTabulkeUJ = obec->accessData()->getNazov() + " --> Okres " + tabulkaDupl->find(obec->accessData()->getNazov())->getVyssiaUJRodic()->getNazov();
+						std::string novyNazovVCykleUJ = obec->accessData()->getNazov() + " --> Okres " + obec->accessData()->getVyssiaUJRodic()->getNazov();
+
+						tabulkaDupl->find(obec->accessData()->getNazov())->setNazov(novyNazovVTabulkeUJ);
+						obec->accessData()->setNazov(novyNazovVCykleUJ);
+						
+						tabulkaDupl->insert(novyNazovVCykleUJ, obec->accessData());
+					}
+					else {
+						tabulkaDupl->insert(obec->accessData()->getNazov(), obec->accessData());
+					}
+				}
+			}
+			counter++;
+		}
+
+		delete tabulkaDupl;
 		
 		
 		system("CLS");
 		std::cout << "# Nacitavanie dat bolo uspesne dokoncene." << std::endl;
 		std::cout << "#" << std::endl;
 		std::cout << "# Pri obsluhe programe nepouzivaj diakritiku." << std::endl;
-		Sleep(1000);
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
 
