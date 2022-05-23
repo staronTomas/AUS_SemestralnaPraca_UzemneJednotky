@@ -80,7 +80,7 @@ public:
 		Sleep(1500);
 		system("CLS");
 		nacitajVsetkyData();
-		zvolCinnost();
+		//zvolCinnost();
 
 
 
@@ -464,7 +464,7 @@ public:
 		std::cout << "# Citany subor: vek.csv" << std::endl;
 		std::cout << "# Hotovo -> 80%" << std::endl;
 		SortedSequenceTable<std::string, Vek*>* vekZoSuborov = reader_->nacitajVek("data_bez_diakritiky/vek.csv");
-
+		
 		// Utriedenie duplicitnych zoznamov OBCI, priadnie na koniec nazov okresu v ktorom je
 
 		system("cls");
@@ -537,8 +537,6 @@ public:
 
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
-
-								delete vzd;
 							}
 
 							// pokial sa dana obec nachadzala v CSV Vek tak jej priradim jej udaje a takisto jej vyssim uzemnym jednotkam.
@@ -556,15 +554,14 @@ public:
 
 								slovensko_->getVekObyvatelov()->navysPocetVekCelkovo(vek);
 								slovensko_->getVekObyvatelov()->navysPocetEvsSkupin(vek);
-
-								delete vek;
 							}
 						}
 					}
 				}
 			}
 		}
-
+		
+		
 		system("CLS");
 		std::cout << "# Nacitavanie dat bolo uspesne dokoncene." << std::endl;
 		std::cout << "#" << std::endl;
@@ -573,7 +570,7 @@ public:
 		std::cout << "# Pre pokracovanie stlac lubovolnu klavesu." << std::endl;
 		system("pause");
 
-
+		
 		for (int i = 0; i < zoznamObci->size(); i++)
 		{
 			delete zoznamObci->at(i);
@@ -585,7 +582,7 @@ public:
 			delete zoznamOkresov->at(i);
 		}
 		delete zoznamOkresov;
-
+		
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
 			delete zoznamKrajov->at(i);
@@ -593,18 +590,19 @@ public:
 		delete zoznamKrajov;
 
 
-		//for (TableItem<std::string, Vzdelanie*>* item : *vzdelanieZoSuborov)
-		//{
-		//	delete item->accessData();
-		//}
+		for (TableItem<std::string, Vzdelanie*>* item : *vzdelanieZoSuborov)
+		{
+			delete item->accessData();
+		}
 		delete vzdelanieZoSuborov;
 
-		//for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
-		//{
-		//	delete item->accessData();
-		//}
+		
+		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
+		{
+			delete item->accessData();
+		}
 		delete vekZoSuborov;
-
+		
 	}
 
 

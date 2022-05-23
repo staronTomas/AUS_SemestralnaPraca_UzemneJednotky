@@ -530,10 +530,12 @@ public:
 
 				i++;
 			}
+		
 
 			Vek* vekVysledok = new Vek();
 			vekVysledok->setArrayVekMuzi(vekMuzi);
 			vekVysledok->setArrayVekZeny(vekZeny);
+			
 
 			vekTable->insert(kodUJ, vekVysledok);
 		}
