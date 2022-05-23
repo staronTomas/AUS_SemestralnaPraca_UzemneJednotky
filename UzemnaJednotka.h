@@ -28,7 +28,7 @@ private:
 	Vzdelanie* vzdelanie_;
 	int pocetObyvatelov_;
 	Vek* vekObyvatelov_;
-	
+
 	SortedSequenceTable<std::string, UzemnaJednotka*>* uzemneJednotkyChildren_;
 
 public:
@@ -57,6 +57,9 @@ public:
 		vyssiaUJRodic_ = nullptr;
 
 		// samostatne UzemneJednotky deletnem na konci programu
+		for (TableItem<std::string, UzemnaJednotka*>* item : *uzemneJednotkyChildren_) {
+			delete item;
+		}
 		delete uzemneJednotkyChildren_;
 		uzemneJednotkyChildren_ = nullptr;
 	}
@@ -69,14 +72,14 @@ public:
 	}
 
 	void navysPocetObyvatelovZoVzdelania(Vzdelanie* vzd) {
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::STREDNE);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA);
-		 pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::ZAKLADNE);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::UCNOVSKE);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::STREDNE);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSSIE);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::VYSOKOSKOLSKE);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_VZDELANIA);
+		pocetObyvatelov_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::NEZISTENE);
 	}
 
 
@@ -155,7 +158,7 @@ public:
 		vyssiaUJRodic_ = vyssiaUJRodic;
 	}
 
-	void setChildren(SortedSequenceTable<std::string, UzemnaJednotka*>*  newChildren) {
+	void setChildren(SortedSequenceTable<std::string, UzemnaJednotka*>* newChildren) {
 		uzemneJednotkyChildren_ = newChildren;
 	}
 
@@ -172,4 +175,3 @@ public:
 	}
 
 };
-

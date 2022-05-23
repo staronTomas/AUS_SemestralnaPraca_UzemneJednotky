@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 #include <iostream>
@@ -39,7 +39,7 @@
 
 
 class HlavnyProgam {
-	
+
 
 
 private:
@@ -56,20 +56,20 @@ public:
 	}
 
 	~HlavnyProgam() {
-		
+
 		delete reader_;
 
-		for (TableItem<std::string, UzemnaJednotka*>* kraj: *slovensko_->getUzemneJednotkyChildren())
+		for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko_->getUzemneJednotkyChildren())
 		{
 			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
 			{
 				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
 				{
-					delete obec;
+					delete obec->accessData();
 				}
-				delete okres;
+				delete okres->accessData();
 			}
-			delete kraj;
+			delete kraj->accessData();
 		}
 		delete slovensko_;
 	}
@@ -165,9 +165,9 @@ public:
 		CriterionUJTyp* kritTyp = new CriterionUJTyp();
 		CriterionUJVzdelaniePocet* kritVzdPocet = new CriterionUJVzdelaniePocet();
 		CriterionUJVekovaSkupinaPocet* kritVekSkupPocet = new CriterionUJVekovaSkupinaPocet();
-	
+
 		system("cls");
-		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí" << std::endl << std::endl;
+		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorÃ½ch patrÃ­" << std::endl << std::endl;
 		int i = 1;
 		while (zvolenaUJ != nullptr) {
 			std::cout << "### " << i << ".    # " << kritNazov->evaluate(zvolenaUJ) << std::endl;;
@@ -287,7 +287,7 @@ public:
 		while (true)
 		{
 
-			
+
 
 
 			std::cout << "# Moznosti volby Uzemnej jednotky: " << std::endl;
@@ -415,7 +415,7 @@ public:
 		{
 			system("cls");
 			vypisBodovehoVyhladavania(zvolenyOkres);
-			
+
 		}
 		else {
 			zvolenaObec = CiselnyzoznamUJObce->at(vstupInt - 1);
@@ -427,7 +427,7 @@ public:
 
 
 	void nacitajVsetkyData() {
-		
+
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: obce.csv" << std::endl;
@@ -487,8 +487,8 @@ public:
 				std::string okresNazovUj = zoznamOkresov->at(j)->at(0);
 				std::string okresKodUJ = zoznamOkresov->at(j)->at(1);
 
-				std::string subKodUjOkres = okresKodUJ.substr(0,5);
-				
+				std::string subKodUjOkres = okresKodUJ.substr(0, 5);
+
 				int porovnanie = subKodUjOkres.compare(kodUjKraj);
 
 				if (porovnanie == 0)
@@ -508,7 +508,7 @@ public:
 						int porovnanie = subKodUjObec.compare(okresKodUJ);
 
 						if (porovnanie == 0)
-						{   
+						{
 							// patri okres do tohoto kraja
 							// idem okresu priradit jeho OBCE V CYKLE
 							UzemnaJednotka* novaObec = new UzemnaJednotka(obecNazovUj, UZEMNA_JEDNOTKA::OBEC, obecKodUJ, novyOkres);
@@ -516,7 +516,7 @@ public:
 
 
 							// pokial sa dana obec nachadzala v CSV Vek tak jej priradim jej udaje a takisto jej vyssim uzemnym jednotkam.
-							// Chybala tam jedna obec tak preto overujem ešte aj cez containsKey()
+							// Chybala tam jedna obec tak preto overujem eÂšte aj cez containsKey()
 							if (vzdelanieZoSuborov->containsKey(obecKodUJ)) {
 								Vzdelanie* vzd = vzdelanieZoSuborov->find(obecKodUJ);
 								novaObec->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
@@ -531,10 +531,10 @@ public:
 								slovensko_->getVzdelanie()->navysCelkovyPocetVzdelania(vzd);
 								slovensko_->navysPocetObyvatelovZoVzdelania(vzd);
 
-							}	
+							}
 
 							// pokial sa dana obec nachadzala v CSV Vek tak jej priradim jej udaje a takisto jej vyssim uzemnym jednotkam.
-							// Chybala tam jedna obec tak preto overujem ešte aj cez containsKey()
+							// Chybala tam jedna obec tak preto overujem eÂšte aj cez containsKey()
 							if (vekZoSuborov->containsKey(obecKodUJ)) {
 								Vek* vek = vekZoSuborov->find(obecKodUJ);
 								novaObec->getVekObyvatelov()->navysPocetVekCelkovo(vek);
@@ -552,7 +552,7 @@ public:
 						}
 					}
 				}
-			}	
+			}
 		}
 
 		system("CLS");
@@ -564,7 +564,7 @@ public:
 		system("pause");
 
 
-		for (int j = 0; j < zoznamObci->size(); j++){
+		for (int j = 0; j < zoznamObci->size(); j++) {
 			delete zoznamObci->at(j);
 		}
 		delete zoznamObci;
