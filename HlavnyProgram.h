@@ -56,9 +56,22 @@ public:
 	}
 
 	~HlavnyProgam() {
-
-		delete slovensko_;
+		
 		delete reader_;
+
+		for (TableItem<std::string, UzemnaJednotka*>* kraj: *slovensko_->getUzemneJednotkyChildren())
+		{
+			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
+			{
+				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
+				{
+					delete obec;
+				}
+				delete okres;
+			}
+			delete kraj;
+		}
+		delete slovensko_;
 	}
 
 
@@ -524,7 +537,7 @@ public:
 							// Chybala tam jedna obec tak preto overujem ešte aj cez containsKey()
 							if (vekZoSuborov->containsKey(obecKodUJ)) {
 								Vek* vek = vekZoSuborov->find(obecKodUJ);
-								novaObec->setVekObyvatelov(vek);
+								novaObec->getVekObyvatelov()->navysPocetVekCelkovo(vek);
 								novaObec->getVekObyvatelov()->navysPocetEvsSkupin(vek);
 
 								novyOkres->getVekObyvatelov()->navysPocetVekCelkovo(vek);
@@ -564,8 +577,18 @@ public:
 		}
 		delete zoznamKrajov;
 
+		for (TableItem<std::string, Vzdelanie*>* item : *vzdelanieZoSuborov)
+		{
+			delete item->accessData();
+		}
+
 		delete vzdelanieZoSuborov;
 
+
+		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
+		{
+			delete item->accessData();
+		}
 		delete vekZoSuborov;
 
 	}

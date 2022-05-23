@@ -49,19 +49,16 @@ public:
 		nazov_ = "";
 		typUzemnejJednotky_;
 		kodUJ_ = "";
-		delete vyssiaUJRodic_;
 		delete vzdelanie_;
+		vzdelanie_ = nullptr;
 		pocetObyvatelov_ = 0;
 		delete vekObyvatelov_;
+		vekObyvatelov_ = nullptr;
+		vyssiaUJRodic_ = nullptr;
 
-
-		for (TableItem<std::string, UzemnaJednotka*>* item : *uzemneJednotkyChildren_)
-		{
-			delete item->accessData();
-		}
-
+		// samostatne UzemneJednotky deletnem na konci programu
 		delete uzemneJednotkyChildren_;
-
+		uzemneJednotkyChildren_ = nullptr;
 	}
 
 
