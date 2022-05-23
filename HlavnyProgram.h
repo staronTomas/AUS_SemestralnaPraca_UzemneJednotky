@@ -471,6 +471,10 @@ public:
 		std::cout << "# Hotovo -> 100%" << std::endl;
 		Sleep(1000);
 
+
+		int pocetSpracovanychOkresov = 0;
+		double percentoDokoncene = 0.0;
+
 		for (int i = 0; i < zoznamKrajov->size(); i++)
 		{
 			std::string nazovUjKraj = zoznamKrajov->at(i)->at(0);
@@ -480,24 +484,43 @@ public:
 
 			slovensko_->getUzemneJednotkyChildren()->insert(nazovUjKraj, novyKraj);
 
-			system("CLS");
+			/*system("CLS");
 			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
 			std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
 			std::cout << "#" << std::endl;
 			std::cout << "# Prebieha ukladanie dat v Uzemnej jednotke -> " << nazovUjKraj << " a jeho okresoch a obciach." << std::endl;
-			std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;
+			std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;*/
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
+				
+				
 				std::string okresNazovUj = zoznamOkresov->at(j)->at(0);
 				std::string okresKodUJ = zoznamOkresov->at(j)->at(1);
 
 				std::string subKodUjOkres = okresKodUJ.substr(0, 5);
 
+
+				double xPodiel = 100.0 / zoznamOkresov->size() * pocetSpracovanychOkresov;
+				if (xPodiel > percentoDokoncene) {
+					system("CLS");
+					percentoDokoncene = xPodiel;
+					std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
+					std::cout << "#" << std::endl;
+					std::cout << "# Kraj -> " << nazovUjKraj << std::endl;
+					std::cout << "# Okres -> " << okresNazovUj << std::endl;
+					std::cout << "#" << std::endl;
+					std::cout << "# Podiel spracovanych Uzemných Jednotiek: " << percentoDokoncene << "%" << std::endl;
+				}
+
+
+
+
 				int porovnanie = subKodUjOkres.compare(kodUjKraj);
 
 				if (porovnanie == 0)
 				{
+					pocetSpracovanychOkresov++;
 					// patri okres do tohoto kraja
 					// idem okresu priradit jeho OBCE V CYKLE
 					UzemnaJednotka* novyOkres = new UzemnaJednotka(okresNazovUj, UZEMNA_JEDNOTKA::OKRES, okresKodUJ, novyKraj);
@@ -558,6 +581,7 @@ public:
 						}
 					}
 				}
+				
 			}
 		}
 
