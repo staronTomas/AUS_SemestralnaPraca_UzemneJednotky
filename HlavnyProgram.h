@@ -116,18 +116,20 @@ public:
 			{
 			case 1:
 				bodoveVyhladavnie();
+				zvolCinnost();
 				break;
 
 			case 2:
+				zvolCinnost();
 				break;
 
 			case 3:
+				zvolCinnost();
 				break;
 
 			case 4:
 				system("cls");
 				std::cout << "# Aplikacia bola ukoncena. " << std::endl;
-				exit(0);
 				break;
 
 			default:
@@ -136,10 +138,11 @@ public:
 				std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
 				std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 				system("pause");
+				zvolCinnost();
 				break;
 			}
 		}
-		zvolCinnost();
+		
 	}
 
 
@@ -564,26 +567,18 @@ public:
 		system("pause");
 
 
-		for (int j = 0; j < zoznamObci->size(); j++) {
-			delete zoznamObci->at(j);
-		}
 		delete zoznamObci;
-		for (int j = 0; j < zoznamOkresov->size(); j++) {
-			delete zoznamOkresov->at(j);
-		}
+
 		delete zoznamOkresov;
-		for (int j = 0; j < zoznamKrajov->size(); j++) {
-			delete zoznamKrajov->at(j);
-		}
+
 		delete zoznamKrajov;
+
 
 		for (TableItem<std::string, Vzdelanie*>* item : *vzdelanieZoSuborov)
 		{
 			delete item->accessData();
 		}
-
 		delete vzdelanieZoSuborov;
-
 
 		for (TableItem<std::string, Vek*>* item : *vekZoSuborov)
 		{

@@ -57,9 +57,6 @@ public:
 		vyssiaUJRodic_ = nullptr;
 
 		// samostatne UzemneJednotky deletnem na konci programu
-		for (TableItem<std::string, UzemnaJednotka*>* item : *uzemneJednotkyChildren_) {
-			delete item;
-		}
 		delete uzemneJednotkyChildren_;
 		uzemneJednotkyChildren_ = nullptr;
 	}

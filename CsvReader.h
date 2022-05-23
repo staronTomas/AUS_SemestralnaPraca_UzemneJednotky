@@ -108,6 +108,7 @@ public:
 			list->add(kodUJ);
 
 			result->add(list);
+
 		}
 		delete texty;
 		return result;
@@ -533,7 +534,7 @@ public:
 
 			vekTable->insert(kodUJ, vekVysledok);
 		}
-		
+
 		delete texty2;
 
 		return vekTable;
