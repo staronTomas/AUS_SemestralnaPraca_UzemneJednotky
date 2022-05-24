@@ -524,7 +524,7 @@ public:
 					std::cout << "# Kraj -> " << nazovUjKraj << std::endl;
 					std::cout << "# Okres -> " << okresNazovUj << std::endl;
 					std::cout << "#" << std::endl;
-					std::cout << "# Podiel spracovanych Uzemných Jednotiek: " << percentoDokoncene << "%" << std::endl;
+					std::cout << "# Podiel spracovanych Uzemnych Jednotiek: " << percentoDokoncene << "%" << std::endl;
 				}
 
 

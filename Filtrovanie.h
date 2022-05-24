@@ -8,6 +8,7 @@
 #include "FilterValue.h"
 #include "CompositeFilter.h"
 #include "FilterAnd.h"
+#include "structures/heap_monitor.h"
 
 #include "FUJPrislusnost.h"
 #include "FUJTyp.h"
@@ -31,8 +32,6 @@ public:
 
 	void zapniFiltrovanie(UzemnaJednotka* slovensko) {
 		int pocetAplikovanychFiltrov = 0;
-
-		SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* tabulkaUJ = new SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>();
 
 
 		system("cls");
@@ -100,12 +99,10 @@ public:
 				std::cout << "Filtre potvrdene..." << std::endl;
 				Sleep(1000);
 				vlozParametreFiltrov(slovensko);
-				system("pause");
 				break;
 			case 1:
 				if (fujTypAktivovany){fujTypAktivovany = false;} 
 				else { fujTypAktivovany = true;}
-				fujTypAktivovany = true;
 				zapniFiltrovanie(slovensko);
 				break;
 
@@ -156,7 +153,9 @@ public:
 				
 
 				system("cls");
+				std::cout << "#####  FUJTYP  #####" << std::endl;
 				std::cout << "# Zvol parameter filtra FUJTYP" << std::endl;
+				std::cout << "# Vysvetlenie filtra: Vyfiltruju sa uzemne jednotky, ktore nebudu zvoleneho typu" << std::endl;
 				std::cout << "#" << std::endl;
 				std::cout << "# 1 # " << "Kraj" << std::endl;
 				std::cout << "# 2 # " << "Okres" << std::endl;
@@ -172,11 +171,7 @@ public:
 
 				if (!isNumber(vstup))
 				{
-					system("cls");
-					std::cout << "# ERROR # " << std::endl;
-					std::cout << "# Musis Napisat CISLO " << std::endl;
-					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-					system("pause");
+					nieJeCisloMessage();
 					zapniFiltrovanie(slovensko);
 				}
 				else {
@@ -184,21 +179,16 @@ public:
 					switch (vstupInt)
 					{
 					case 1:
-						std::cout << "zvoleny kraj" << std::endl;
 						fujTYP = UZEMNA_JEDNOTKA::KRAJ;
 						breaknut = true;
-						system("pause");
 						break;
 					case 2:
-						std::cout << "zvoleny okres" << std::endl;
 						fujTYP = UZEMNA_JEDNOTKA::OKRES;
-						system("pause");
+						breaknut = true;
 						break;
 					case 3:
-						std::cout << "zvolena obec" << std::endl;
 						fujTYP = UZEMNA_JEDNOTKA::OBEC;
 						breaknut = true;
-						system("pause");
 						break;
 
 					default:
@@ -216,6 +206,8 @@ public:
 				}
 			}
 		}
+
+
 		if (fujPrislusnostAktivovany)
 		{
 			std::string vstup = "x";
@@ -225,15 +217,14 @@ public:
 
 			bool breaknut = false;
 
-			while (!isNumber(vstup)) {
+			while (true) {
 
 				system("cls");
+				std::cout << "#####  FUJPrislusnost  #####" << std::endl;
 				std::cout << "# Zvol parameter filtra FUJPrislusnost -  1. TYP UzemnejJednotky, ktora je paramterom prislusnosti" << std::endl;
 				std::cout << "#" << std::endl;
 				std::cout << "# 1 # " << "Kraj" << std::endl;
 				std::cout << "# 2 # " << "Okres" << std::endl;
-
-
 				std::cout << std::endl << "VSTUP -> ";
 
 				std::string vstup = "";
@@ -243,12 +234,7 @@ public:
 
 				if (!isNumber(vstup))
 				{
-					system("cls");
-					std::cout << "# ERROR # " << std::endl;
-					std::cout << "# Musis Napisat CISLO " << std::endl;
-					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-					system("pause");
-					zapniFiltrovanie(slovensko);
+					nieJeCisloMessage();
 				}
 				else {
 					int vstupInt = std::stoi(vstup);
@@ -257,12 +243,10 @@ public:
 					case 1:
 						zvolenyKraj = true;
 						breaknut = true;
-						system("pause");
 						break;
 					case 2:
 						zvolenyOkres = true;
 						breaknut = true;
-						system("pause");
 						break;
 					default:
 						system("cls");
@@ -270,6 +254,7 @@ public:
 						std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
 						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 						system("pause");
+						system("cls");
 						break;
 					}
 
@@ -329,11 +314,7 @@ public:
 
 				if (!isNumber(vstup))
 				{
-					system("cls");
-					std::cout << "# ERROR # " << std::endl;
-					std::cout << "# Musis Napisat CISLO " << std::endl;
-					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-					system("pause");
+					nieJeCisloMessage();
 				}
 				else {
 					int vstupInt = std::stoi(vstup);
@@ -341,12 +322,107 @@ public:
 					{
 						breaknut = true;
 						povinnaPrislusnostUJ = listVyberUJ->at(vstupInt);
+
 					}else {
 						system("cls");
 						std::cout << "# ERROR # " << std::endl;
 						std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
 						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 						system("pause");
+						system("cls");
+					}
+
+				}
+
+				if (breaknut)
+				{
+					delete listVyberUJ;
+					break;
+				}
+			}
+
+		}
+		if (fujVzdelaniePocetAktivovany)
+		{
+			std::string vstup = "x";
+
+			int zadanyMin = 0;
+			int zadanyMax = 0;
+
+			TYP_VZDELANIA zvolenyTypVzdelania;
+
+			bool breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVzdelaniePocet  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVzdelaniePocet - 1. Zvol typ Vzdelania " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << "# 1 # Bez Vzdelanie DETI " << std::endl;
+				std::cout << "# 2 # Zakladne Vzdelanie " << std::endl;
+				std::cout << "# 3 # Ucnovske Vzdelanie " << std::endl;
+				std::cout << "# 4 # Stredoskolske Vzdelanie  " << std::endl;
+				std::cout << "# 5 # Vyssie Vzdelanie  " << std::endl;
+				std::cout << "# 6 # Vysokoskolske Vzdelanie  " << std::endl;
+				std::cout << "# 7 # Bez Vzdelanie " << std::endl;
+				std::cout << "# 8 # Nezistene Vzdelanie" << std::endl;
+				std::cout << std::endl << "VSTUP -> ";
+
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+					int vstupInt = std::stoi(vstup);
+					switch (vstupInt)
+					{
+					case 1:
+						zvolenyTypVzdelania = TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI;
+						breaknut = true;
+						break;
+					case 2:
+						zvolenyTypVzdelania = TYP_VZDELANIA::ZAKLADNE;
+						breaknut = true;
+						break;
+					case 3:
+						zvolenyTypVzdelania = TYP_VZDELANIA::UCNOVSKE;
+						breaknut = true;
+						break;
+					case 4:
+						zvolenyTypVzdelania = TYP_VZDELANIA::STREDNE;
+						breaknut = true;
+						break;
+					case 5:
+						zvolenyTypVzdelania = TYP_VZDELANIA::VYSSIE;
+						breaknut = true;
+						break;
+					case 6:
+						zvolenyTypVzdelania = TYP_VZDELANIA::VYSOKOSKOLSKE;
+						breaknut = true;
+						break;
+					case 7:
+						zvolenyTypVzdelania = TYP_VZDELANIA::BEZ_VZDELANIA;
+						breaknut = true;
+						break;
+					case 8:
+						zvolenyTypVzdelania = TYP_VZDELANIA::NEZISTENE;
+						breaknut = true;
+						break;
+					default:
+
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+						system("cls");
+						break;
 					}
 
 				}
@@ -358,13 +434,82 @@ public:
 			}
 
 
-		}
-		if (fujVzdelaniePocetAktivovany)
-		{
+			//Zadanie minima a maxima
 
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "# Zvol parameter filtra FUJVzdelaniePocet - 2. Zvol MINIMUM poctu zvoleneho Vzdelania " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP minimum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+					zadanyMin = stoi(vstup);
+					breaknut = true;
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "# Zvol parameter filtra FUJVzdelaniePocet - 3. Zvol MAXIMUM poctu zvoleneho Vzdelania " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP maximum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+
+					if (zadanyMin <= stoi(vstup))
+					{
+						zadanyMax = stoi(vstup);
+						breaknut = true;
+					}
+					else {
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Maximum musi byt vacsi alebo rovny minimumu " << std::endl;
+						std::cout << "# Minimum -> " << zadanyMin << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+					}
+
+					
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
 		}
 		if (fujVzdelaniePodielAktivovany)
 		{
+			std::cout << "#####  FUJVzdelaniePocet  #####" << std::endl;
 
 		}
 	}
@@ -376,5 +521,13 @@ public:
 		return !s.empty() && it == s.end();
 	}
 
+
+	void nieJeCisloMessage() {
+		system("cls");
+		std::cout << "# ERROR # " << std::endl;
+		std::cout << "# Musis Napisat CISLO " << std::endl;
+		std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+		system("pause");
+	}
 	
 };
