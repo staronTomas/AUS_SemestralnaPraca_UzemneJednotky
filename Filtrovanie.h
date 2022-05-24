@@ -347,7 +347,6 @@ public:
 					break;
 				}
 			}
-
 			fujPrislusnost = new FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>(povinnaPrislusnostUJ);
 		}
 		if (fujVzdelaniePocetAktivovany)

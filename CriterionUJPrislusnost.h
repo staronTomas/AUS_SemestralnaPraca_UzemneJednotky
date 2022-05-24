@@ -11,6 +11,10 @@ private:
 
 public:
 
+	CriterionUJPrislusnost(UzemnaJednotka* prislusnostVyssi) {
+		vyssiCelok_ = prislusnostVyssi;
+	}
+
 	bool evaluate(UzemnaJednotka* object);
 
 	void setVyssiCelok(UzemnaJednotka* vyssiCelok);
