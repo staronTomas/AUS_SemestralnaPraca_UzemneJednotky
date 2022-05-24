@@ -14,7 +14,7 @@ class FUJPrislusnost : public FilterValue<UzemnaJednotka*, UzemnaJednotka*> {
 public:
 
 	FUJPrislusnost(UzemnaJednotka* prislusnost) : FilterValue(new CriterionUJPrislusnost(), prislusnost) {
-		
+
 	}
 
 	virtual ~FUJPrislusnost() = default;

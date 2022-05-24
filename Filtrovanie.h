@@ -517,7 +517,7 @@ public:
 				}
 			}
 
-			fujVzdelaniePocet = new FUJVzdelaniePocet<UzemnaJednotka*, int>()
+			fujVzdelaniePocet = new FUJVzdelaniePocet<UzemnaJednotka*, int>(zvolenyTypVzdelania, zadanyMin, zadanyMax);
 		}
 		if (fujVzdelaniePodielAktivovany)
 		{
