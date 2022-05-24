@@ -29,6 +29,7 @@
 #include "enum_Pohlavie.h"
 #include "enum_EVS.h"
 
+
 #include "Criterion.h"
 #include "CriterionUJ.h"
 #include "CriterionUJNazov.h"
@@ -84,7 +85,6 @@ public:
 
 
 
-
 	}
 
 
@@ -121,6 +121,7 @@ public:
 				break;
 
 			case 2:
+				filtrovanie();
 				zvolCinnost();
 				break;
 			case 3:
@@ -151,6 +152,73 @@ public:
 		}
 
 	}
+
+
+	void filtrovanie() {
+
+		int pocetAplikovanychFiltrov = 0;
+
+		SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* tabulkaUJ = new SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>();
+
+
+		system("cls");
+		std::cout << "### FILTROVANIE ###" << std::endl;
+		std::cout << "# POPIS:" << std::endl;
+		std::cout << "# Vo filtrovani si mozes vyfiltrovat uzemne jednotky podla vlastnych filtrov." << std::endl;
+		std::cout << "# " << std::endl;
+		std::cout << "# Zvol o ktorom type Uzemnej Jednotky bdues chciet vypisovat udaje" << std::endl;
+		std::cout << "# 999 # Ukoncit filtrovanie" << std::endl;
+		std::cout << "# 1 # Kraje" << std::endl;
+		std::cout << "# 2 # Okresy" << std::endl;
+		std::cout << "# 3 # Obce" << std::endl;
+		std::cout << std::endl << "VSTUP -> ";
+
+		std::string vstup = "";
+
+		std::cin >> vstup;
+		system("cls");
+
+		if (!isNumber(vstup))
+		{
+			system("cls");
+			std::cout << "# ERROR # " << std::endl;
+			std::cout << "# Musis Napisat CISLO " << std::endl;
+			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+			system("pause");
+			filtrovanie();
+		}
+		else {
+			int vstupInt = std::stoi(vstup);
+
+			switch (vstupInt)
+			{
+			case 999:
+				filtrovanie();
+				break;
+			case 1:
+
+				break;
+
+			case 2:
+
+				break;
+			case 3:
+
+				break;
+
+			default:
+				system("cls");
+				std::cout << "# ERROR # " << std::endl;
+				std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+				std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+				system("pause");
+				filtrovanie();
+				break;
+			}
+		}
+
+	}
+
 
 
 	void bodoveVyhladavnie() {

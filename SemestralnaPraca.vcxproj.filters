@@ -308,10 +308,10 @@
     <ClInclude Include="Filter.h">
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="FilterWithCriterionh.h">
+    <ClInclude Include="FilterWithCriterion.h">
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
-    <ClInclude Include="FilterInternat.h">
+    <ClInclude Include="FilterInterval.h">
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
     <ClInclude Include="FilterValue.h">
@@ -321,6 +321,18 @@
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
     <ClInclude Include="FilterAnd.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FUJVzdelaniePocet.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FUJTyp.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FUJPrislusnost.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FUJVzdelaniePodiel.h">
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
     <ClInclude Include="FilterOr.h">
