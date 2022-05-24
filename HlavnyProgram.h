@@ -94,8 +94,9 @@ public:
 		std::cout << "# Zvol cislo cinnosti, ktoru chces vykonat # " << std::endl;
 		std::cout << "# 1 # Bodove Vyhladavanie " << std::endl;
 		std::cout << "# 2 # Filtorvanie " << std::endl;
-		std::cout << "# 3 # Zobrazit vsetky Uzemne Jednotky hierarchicky (Slovensko > kraje > okresy > obce) " << std::endl;
-		std::cout << "# 4 # Ukoncit program " << std::endl;
+		std::cout << "# 3 # Triedenie " << std::endl;
+		std::cout << "# 4 # Zobrazit vsetky Uzemne Jednotky hierarchicky (Slovensko > kraje > okresy > obce) " << std::endl;
+		std::cout << "# 5 # Ukoncit program " << std::endl;
 		std::cout << "# VSTUP:  ";
 		std::string vstup = "";
 		std::cin >> vstup;
@@ -122,12 +123,18 @@ public:
 			case 2:
 				zvolCinnost();
 				break;
-
 			case 3:
 				zvolCinnost();
 				break;
 
 			case 4:
+				vypisVsetkyUzemneJednotky();
+				system("pause");
+				system("cls");
+				zvolCinnost();
+				break;
+
+			case 5:
 				system("cls");
 				std::cout << "# Aplikacia bola ukoncena. " << std::endl;
 				break;
@@ -228,6 +235,7 @@ public:
 			for (TableItem<std::string, UzemnaJednotka*>* item : *slovensko_->getUzemneJednotkyChildren())
 			{
 				i++;
+				
 				std::cout << "# " << i << " # " << item->accessData()->getNazov() << std::endl;
 				ciselnyZoznamUJKraje->at(i - 1) = item->accessData();
 			}
@@ -248,14 +256,9 @@ public:
 					std::cout << "# Musis Napisat CISLO zo zoznamu, ktory ti bol vypisany" << std::endl;
 					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 					system("pause");
+					system("cls");
 				}
 			}
-
-			system("cls");
-			std::cout << "# ERROR # " << std::endl;
-			std::cout << "# Musis Napisat CISLO" << std::endl;
-			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-			system("pause");
 		}
 
 		if (vstupInt == 999)
@@ -711,6 +714,31 @@ public:
 		default:
 			return "Neznamy typ UJ";
 			break;
+		}
+	}
+
+
+
+	void vypisVsetkyUzemneJednotky() {
+
+		std::cout << "### ZOZNAM VSETKYCH UZEMNYCH JEDNOTIEK HIERARCHICKY ###" << std::endl << std::endl;
+		std::cout << "### SLOVENSKO ###" << std::endl;
+
+		for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko_->getUzemneJednotkyChildren())
+		{
+			std::cout << "   ## " << kraj->accessData()->getNazov() << std::endl;
+			
+			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren()) 
+			{
+				std::cout << "      # " << okres->accessData()->getNazov() << std::endl;
+
+				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren()) 
+				{
+					std::cout << "         - " << obec->accessData()->getNazov() << std::endl;
+
+				}
+			}
+			std::cout << std::endl;
 		}
 	}
 

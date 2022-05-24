@@ -6,19 +6,29 @@
 
 class CriterionUJVzdelaniePodiel : public CriterionUJ<double> {
 
+
+private:
+	TYP_VZDELANIA typVzdelania_;
+
 public:
 
-	double evaluate(UzemnaJednotka* object, TYP_VZDELANIA typVzdelania);
+	double evaluate(UzemnaJednotka* object);
+
+	void setTypVzdelania(TYP_VZDELANIA typVzdelania);
 
 };
 
-inline double CriterionUJVzdelaniePodiel::evaluate(UzemnaJednotka* object, TYP_VZDELANIA typVzdelania) {
+inline double CriterionUJVzdelaniePodiel::evaluate(UzemnaJednotka* object) {
 	double result = 0;
 
-	int pocetVzdelanych = object->getVzdelanie()->getPocetVzdelanie(typVzdelania);
+	int pocetVzdelanych = object->getVzdelanie()->getPocetVzdelanie(typVzdelania_);
 	int celkovyPocetObyv = object->getPocetObyvatelov();
 
 	result = 100.0 / celkovyPocetObyv * static_cast<double>(pocetVzdelanych);
 
 	return result;
+}
+
+inline void CriterionUJVzdelaniePodiel::setTypVzdelania(TYP_VZDELANIA typVzdelania) {
+	typVzdelania_ = typVzdelania;
 }
