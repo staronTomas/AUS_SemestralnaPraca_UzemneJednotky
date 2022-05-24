@@ -23,7 +23,7 @@ public:
 
 
 	bool pass(const O object) override {
-		return passFilter(criterion_->evaluate(object));
+		return passFilter(kriterium_->evaluate(object));
 	}
 
 protected:

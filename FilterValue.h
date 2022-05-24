@@ -12,7 +12,7 @@ private:
 public:
 
 	FilterValue(Criterion<O, ValueType>* criterion, ValueType hodnota) : FilterWithCriterion<O, ValueType>(criterion) {
-		hodnota_ = hodnota
+		hodnota_ = hodnota;
 	}
 
 	virtual ~FilterValue() = default;

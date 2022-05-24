@@ -8,15 +8,13 @@ class FilterAnd : public CompositeFilter<O> {
 
 bool pass(O& object) override;
 
-
-
 };
 
 template<typename O>
 inline bool FilterAnd<O>::pass(O& object) {
 
 
-	for (Filter<O>* filter : *filters_)
+	for (Filter<O>* filter : *CompositeFilter::filters_)
 	{
 		if (!filter->pass(object)) {
 			return false;

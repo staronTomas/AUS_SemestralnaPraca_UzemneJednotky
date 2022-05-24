@@ -9,11 +9,11 @@
 
 template<typename O, typename ValueType>
 
-class FUJVzdelaniePocet : public FilterInterval<UzemnaJednotka*, int, int> {
+class FUJVzdelaniePocet : public FilterInterval<UzemnaJednotka*, int> {
 
 public:
 
-	FUJVzdelaniePocet(int min, int max) : FilterInterval(new CriterionVzdelaniePocet(), min, max) {
+	FUJVzdelaniePocet(int min, int max) : FilterInterval(new CriterionUJVzdelaniePocet(), min, max) {
 
 	}
 

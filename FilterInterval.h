@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Filter.h"
+#include "FilterWithCriterion.h"
 
 template<typename O, typename ValueType>
 
@@ -20,7 +20,7 @@ public:
 	virtual ~FilterInterval() = default;
 
 	bool passFilter(ValueType hodnota) {
-		if (value >= min_ && value <= max_)
+		if (hodnota >= min_ && hodnota <= max_)
 		{
 			return true;
 		}
@@ -30,12 +30,12 @@ public:
 	}
 
 
-	void setMin(T min) {
-		min_ = max_;
+	void setMin(ValueType min) {
+		min_ = min;
 	}
 
 
-	void setMax(T max) {
+	void setMax(ValueType max) {
 		max_ = max;
 	}
 

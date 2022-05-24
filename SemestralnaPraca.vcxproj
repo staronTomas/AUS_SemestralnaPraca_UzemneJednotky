@@ -27,6 +27,7 @@
     <ClCompile Include="structures\_logger\logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BodoveVyhladavanie.h" />
     <ClInclude Include="CompositeFilter.h" />
     <ClInclude Include="Criterion.h" />
     <ClInclude Include="CriterionUJ.h" />
@@ -52,6 +53,7 @@
     <ClInclude Include="FilterOr.h" />
     <ClInclude Include="FilterValue.h" />
     <ClInclude Include="FilterWithCriterion.h" />
+    <ClInclude Include="Filtrovanie.h" />
     <ClInclude Include="FUJPrislusnost.h" />
     <ClInclude Include="FUJTyp.h" />
     <ClInclude Include="FUJVzdelaniePocet.h" />

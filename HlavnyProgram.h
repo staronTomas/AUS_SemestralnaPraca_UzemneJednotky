@@ -21,6 +21,7 @@
 #include "Vek.h"
 #include "CsvReader.h"
 #include "Filter.h"
+#include "Filtrovanie.h"
 
 
 #include "enum_UzemnaJednotka.h"
@@ -47,13 +48,14 @@ private:
 
 	UzemnaJednotka* slovensko_;
 	CsvReader* reader_;
+	Filtrovanie* filter_;
 
 public:
 
 	HlavnyProgam() {
 		slovensko_ = new UzemnaJednotka("Slovensko", UZEMNA_JEDNOTKA::STAT, "SK", nullptr);
 		reader_ = new CsvReader();
-
+		filter_ = new Filtrovanie();
 	}
 
 	~HlavnyProgam() {
@@ -73,6 +75,8 @@ public:
 			delete kraj->accessData();
 		}
 		delete slovensko_;
+
+		delete filter_;
 	}
 
 
@@ -121,7 +125,7 @@ public:
 				break;
 
 			case 2:
-				filtrovanie();
+				filter_->zapniFiltrovanie(slovensko_);
 				zvolCinnost();
 				break;
 			case 3:
@@ -147,72 +151,6 @@ public:
 				std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 				system("pause");
 				zvolCinnost();
-				break;
-			}
-		}
-
-	}
-
-
-	void filtrovanie() {
-
-		int pocetAplikovanychFiltrov = 0;
-
-		SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>* tabulkaUJ = new SortedSequenceTable<UZEMNA_JEDNOTKA, SortedSequenceTable<std::string, UzemnaJednotka*>*>();
-
-
-		system("cls");
-		std::cout << "### FILTROVANIE ###" << std::endl;
-		std::cout << "# POPIS:" << std::endl;
-		std::cout << "# Vo filtrovani si mozes vyfiltrovat uzemne jednotky podla vlastnych filtrov." << std::endl;
-		std::cout << "# " << std::endl;
-		std::cout << "# Zvol o ktorom type Uzemnej Jednotky bdues chciet vypisovat udaje" << std::endl;
-		std::cout << "# 999 # Ukoncit filtrovanie" << std::endl;
-		std::cout << "# 1 # Kraje" << std::endl;
-		std::cout << "# 2 # Okresy" << std::endl;
-		std::cout << "# 3 # Obce" << std::endl;
-		std::cout << std::endl << "VSTUP -> ";
-
-		std::string vstup = "";
-
-		std::cin >> vstup;
-		system("cls");
-
-		if (!isNumber(vstup))
-		{
-			system("cls");
-			std::cout << "# ERROR # " << std::endl;
-			std::cout << "# Musis Napisat CISLO " << std::endl;
-			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-			system("pause");
-			filtrovanie();
-		}
-		else {
-			int vstupInt = std::stoi(vstup);
-
-			switch (vstupInt)
-			{
-			case 999:
-				filtrovanie();
-				break;
-			case 1:
-
-				break;
-
-			case 2:
-
-				break;
-			case 3:
-
-				break;
-
-			default:
-				system("cls");
-				std::cout << "# ERROR # " << std::endl;
-				std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
-				std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-				system("pause");
-				filtrovanie();
 				break;
 			}
 		}
@@ -247,40 +185,44 @@ public:
 		system("cls");
 		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí" << std::endl << std::endl;
 		int i = 1;
+
+		std::cout << "### " << i << ".    # " << kritNazov->evaluate(zvolenaUJ) << std::endl;;
+		std::cout << "# Typ  UJ # " << getStringTypUJ(kritTyp->evaluate(zvolenaUJ)) << std::endl << std::endl;
+
+		std::cout << "# VZDELANIE    #" << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
+		std::cout << "# Bez Vzdelanie DETI    # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::ZAKLADNE);
+		std::cout << "# Zakladne Vzdelanie    # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::UCNOVSKE);
+		std::cout << "# Ucnovske              # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::STREDNE);
+		std::cout << "# Stredoskolske         # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::VYSSIE);
+		std::cout << "# Vyssie Vzdelanie      # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::VYSOKOSKOLSKE);
+		std::cout << "# Vysokoskolske         # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::BEZ_VZDELANIA);
+		std::cout << "# Bez Vzdelania Dospely # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::NEZISTENE);
+		std::cout << "# Nezistene Vzdelanie   # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "# Ekonomicke vekove skupiny  #" << std::endl;
+		kritVekSkupPocet->setTypEvs(EVS::PREDPRODUKTIVNI);
+		std::cout << "# Pocet Predproduktivnych    # " << kritVekSkupPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVekSkupPocet->setTypEvs(EVS::PRODUKTIVNI);
+		std::cout << "# Pocet Produktivnych        # " << kritVekSkupPocet->evaluate(zvolenaUJ) << std::endl;
+		kritVekSkupPocet->setTypEvs(EVS::POPRODUKTIVNY);
+		std::cout << "# Pocet Poproduktivnyc       # " << kritVekSkupPocet->evaluate(zvolenaUJ) << std::endl;
+
+		std::cout << "########################################" << std::endl << std::endl;
+		zvolenaUJ = zvolenaUJ->getVyssiaUJRodic();
+		
 		while (zvolenaUJ != nullptr) {
+			i++;
 			std::cout << "### " << i << ".    # " << kritNazov->evaluate(zvolenaUJ) << std::endl;;
 			std::cout << "# Typ  UJ # " << getStringTypUJ(kritTyp->evaluate(zvolenaUJ)) << std::endl << std::endl;
-
-			std::cout << "# VZDELANIE    #" << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
-			std::cout << "# Bez Vzdelanie DETI    # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::ZAKLADNE);
-			std::cout << "# Zakladne Vzdelanie    # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::UCNOVSKE);
-			std::cout << "# Ucnovske              # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::STREDNE);
-			std::cout << "# Stredoskolske         # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::VYSSIE);
-			std::cout << "# Vyssie Vzdelanie      # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::VYSOKOSKOLSKE);
-			std::cout << "# Vysokoskolske         # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::BEZ_VZDELANIA);
-			std::cout << "# Bez Vzdelania Dospely # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVzdPocet->setTypVzdelania(TYP_VZDELANIA::NEZISTENE);
-			std::cout << "# Nezistene Vzdelanie   # " << kritVzdPocet->evaluate(zvolenaUJ) << std::endl;
-			std::cout << std::endl;
-
-			std::cout << "# Ekonomicke vekove skupiny  #" << std::endl;
-			kritVekSkupPocet->setTypEvs(EVS::PREDPRODUKTIVNI);
-			std::cout << "# Pocet Predproduktivnych    # " << kritVekSkupPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVekSkupPocet->setTypEvs(EVS::PRODUKTIVNI);
-			std::cout << "# Pocet Produktivnych        # " << kritVekSkupPocet->evaluate(zvolenaUJ) << std::endl;
-			kritVekSkupPocet->setTypEvs(EVS::POPRODUKTIVNY);
-			std::cout << "# Pocet Poproduktivnyc       # " << kritVekSkupPocet->evaluate(zvolenaUJ) << std::endl;
-
-			std::cout << "########################################" << std::endl << std::endl;
-			zvolenaUJ = zvolenaUJ->getVyssiaUJRodic();
-			i++;
 		}
 		delete kritNazov;
 		delete kritTyp;

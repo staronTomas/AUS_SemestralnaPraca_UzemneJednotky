@@ -12,6 +12,7 @@ private:
 
 public:
 
+	
 	double evaluate(UzemnaJednotka* object);
 
 	void setTypVzdelania(TYP_VZDELANIA typVzdelania);
