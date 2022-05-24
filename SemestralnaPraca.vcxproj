@@ -27,7 +27,6 @@
     <ClCompile Include="structures\_logger\logger.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BodoveVyhladavanie.h" />
     <ClInclude Include="CompositeFilter.h" />
     <ClInclude Include="Criterion.h" />
     <ClInclude Include="CriterionUJ.h" />

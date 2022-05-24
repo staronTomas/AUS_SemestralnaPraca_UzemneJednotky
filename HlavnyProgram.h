@@ -223,6 +223,7 @@ public:
 			i++;
 			std::cout << "### " << i << ".    # " << kritNazov->evaluate(zvolenaUJ) << std::endl;;
 			std::cout << "# Typ  UJ # " << getStringTypUJ(kritTyp->evaluate(zvolenaUJ)) << std::endl << std::endl;
+			zvolenaUJ = zvolenaUJ->getVyssiaUJRodic();
 		}
 		delete kritNazov;
 		delete kritTyp;
