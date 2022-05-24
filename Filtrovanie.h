@@ -141,6 +141,11 @@ public:
 
 		UZEMNA_JEDNOTKA fujTYP;
 		UzemnaJednotka* povinnaPrislusnostUJ;
+		
+		FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp = nullptr;
+		FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost = nullptr;
+		FUJVzdelaniePocet<UzemnaJednotka*, int>* fujVzdelaniePocet= nullptr;
+		FUJVzdelaniePodiel<UzemnaJednotka*, double>* fujVzdelaniePodiel = nullptr;
 
 
 		if (fujTypAktivovany)
@@ -205,6 +210,7 @@ public:
 					break;
 				}
 			}
+			fujTyp = new FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>(UZEMNA_JEDNOTKA::OBEC);
 		}
 
 
@@ -274,6 +280,7 @@ public:
 			while (!isNumber(vstup)) {
 
 				system("cls");
+				std::cout << "#####  FUJPrislusnost  #####" << std::endl;
 				std::cout << "# Zvol parameter filtra FUJPrislusnost - 2. Názov UzemnejJednotky, ktora je paramterom prislusnosti" << std::endl;
 				std::cout << "#" << std::endl;
 
@@ -341,6 +348,7 @@ public:
 				}
 			}
 
+			fujPrislusnost = new FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>(povinnaPrislusnostUJ);
 		}
 		if (fujVzdelaniePocetAktivovany)
 		{
@@ -442,6 +450,7 @@ public:
 			while (true) {
 
 				system("cls");
+				std::cout << "#####  FUJVzdelaniePocet  #####" << std::endl;
 				std::cout << "# Zvol parameter filtra FUJVzdelaniePocet - 2. Zvol MINIMUM poctu zvoleneho Vzdelania " << std::endl;
 				std::cout << "#" << std::endl;
 				std::cout << std::endl << "VSTUP minimum -> ";
@@ -471,6 +480,7 @@ public:
 			while (true) {
 
 				system("cls");
+				std::cout << "#####  FUJVzdelaniePocet  #####" << std::endl;
 				std::cout << "# Zvol parameter filtra FUJVzdelaniePocet - 3. Zvol MAXIMUM poctu zvoleneho Vzdelania " << std::endl;
 				std::cout << "#" << std::endl;
 				std::cout << std::endl << "VSTUP maximum -> ";
@@ -506,10 +516,191 @@ public:
 					break;
 				}
 			}
+
+			fujVzdelaniePocet = new FUJVzdelaniePocet<UzemnaJednotka*, int>()
 		}
 		if (fujVzdelaniePodielAktivovany)
 		{
-			std::cout << "#####  FUJVzdelaniePocet  #####" << std::endl;
+			std::string vstup = "x";
+
+			int zadanyMin = 0;
+			int zadanyMax = 0;
+
+			TYP_VZDELANIA zvolenyTypVzdelania;
+
+			bool breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVzdelaniePodiel  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVzdelaniePodiel - 1. Zvol typ Vzdelania " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << "# 1 # Bez Vzdelanie DETI " << std::endl;
+				std::cout << "# 2 # Zakladne Vzdelanie " << std::endl;
+				std::cout << "# 3 # Ucnovske Vzdelanie " << std::endl;
+				std::cout << "# 4 # Stredoskolske Vzdelanie  " << std::endl;
+				std::cout << "# 5 # Vyssie Vzdelanie  " << std::endl;
+				std::cout << "# 6 # Vysokoskolske Vzdelanie  " << std::endl;
+				std::cout << "# 7 # Bez Vzdelanie " << std::endl;
+				std::cout << "# 8 # Nezistene Vzdelanie" << std::endl;
+				std::cout << std::endl << "VSTUP -> ";
+
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+					int vstupInt = std::stoi(vstup);
+					switch (vstupInt)
+					{
+					case 1:
+						zvolenyTypVzdelania = TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI;
+						breaknut = true;
+						break;
+					case 2:
+						zvolenyTypVzdelania = TYP_VZDELANIA::ZAKLADNE;
+						breaknut = true;
+						break;
+					case 3:
+						zvolenyTypVzdelania = TYP_VZDELANIA::UCNOVSKE;
+						breaknut = true;
+						break;
+					case 4:
+						zvolenyTypVzdelania = TYP_VZDELANIA::STREDNE;
+						breaknut = true;
+						break;
+					case 5:
+						zvolenyTypVzdelania = TYP_VZDELANIA::VYSSIE;
+						breaknut = true;
+						break;
+					case 6:
+						zvolenyTypVzdelania = TYP_VZDELANIA::VYSOKOSKOLSKE;
+						breaknut = true;
+						break;
+					case 7:
+						zvolenyTypVzdelania = TYP_VZDELANIA::BEZ_VZDELANIA;
+						breaknut = true;
+						break;
+					case 8:
+						zvolenyTypVzdelania = TYP_VZDELANIA::NEZISTENE;
+						breaknut = true;
+						break;
+					default:
+
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+						system("cls");
+						break;
+					}
+
+				}
+
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+			//Zadanie minima a maxima
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVzdelaniePodiel  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVzdelaniePodiel - 2. Zvol MINIMUM poctu zvoleneho Vzdelania v PERCENTACH 0-100 " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP minimum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else if (stoi(vstup) < 0 || stoi(vstup) > 100) {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Cislo musi byt v intervale <0, 100> " << std::endl;
+					std::cout << "# Minimum -> " << zadanyMin << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+				else {
+					zadanyMin = stoi(vstup);
+					breaknut = true;
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVzdelaniePodiel  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVzdelaniePodiel - 3. Zvol MAXIMUM poctu zvoleneho Vzdelania v PERCENTACH 0-100 " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP maximum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else if (stoi(vstup) < 0 || stoi(vstup) > 100) {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Cislo musi byt v intervale <0, 100> " << std::endl;
+					std::cout << "# Minimum -> " << zadanyMin << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+				else {
+
+					if (zadanyMin < stoi(vstup))
+					{
+						zadanyMax = stoi(vstup);
+						breaknut = true;
+					}
+					else {
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Maximum musi byt vacsi než minimum " << std::endl;
+						std::cout << "# Minimum -> " << zadanyMin << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+					}
+
+
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
 
 		}
 	}

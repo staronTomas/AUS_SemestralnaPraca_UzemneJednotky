@@ -20,3 +20,5 @@ public:
 	virtual ~FUJVzdelaniePocet() = default;
 
 };
+
+
