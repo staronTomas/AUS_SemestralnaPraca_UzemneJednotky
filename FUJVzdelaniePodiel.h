@@ -13,7 +13,7 @@ class FUJVzdelaniePodiel : public FilterInterval<UzemnaJednotka*, double> {
 
 public:
 
-	FUJVzdelaniePodiel(TYP_VZDELANIA vzd, double min, double max) : FilterInterval(new CriterionUJVzdelaniePodiel(vzd), min, max) {
+	FUJVzdelaniePodiel(TYP_VZDELANIA typVzd, double min, double max) : FilterInterval(new CriterionUJVzdelaniePodiel(typVzd), min, max) {
 
 	}
 

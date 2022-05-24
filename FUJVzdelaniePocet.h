@@ -14,7 +14,7 @@ class FUJVzdelaniePocet : public FilterInterval<UzemnaJednotka*, int> {
 
 public:
 
-	FUJVzdelaniePocet(TYP_VZDELANIA vzd, int min, int max) : FilterInterval(new CriterionUJVzdelaniePocet(vzd), min, max) {
+	FUJVzdelaniePocet(TYP_VZDELANIA typVzd, int min, int max) : FilterInterval(new CriterionUJVzdelaniePocet(typVzd), min, max) {
 
 	}
 

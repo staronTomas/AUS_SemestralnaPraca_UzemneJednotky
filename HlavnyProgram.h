@@ -179,7 +179,7 @@ public:
 
 		CriterionUJNazov* kritNazov = new CriterionUJNazov();
 		CriterionUJTyp* kritTyp = new CriterionUJTyp();
-		CriterionUJVzdelaniePocet* kritVzdPocet = new CriterionUJVzdelaniePocet();
+		CriterionUJVzdelaniePocet* kritVzdPocet = new CriterionUJVzdelaniePocet(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
 		CriterionUJVekovaSkupinaPocet* kritVekSkupPocet = new CriterionUJVekovaSkupinaPocet();
 
 		system("cls");
@@ -257,7 +257,7 @@ public:
 
 			if (isNumber(vstup)) {
 				vstupInt = std::stoi(vstup);
-				if (vstupInt >= 0 && vstupInt <= slovensko_->getUzemneJednotkyChildren()->size() || vstupInt == 999)
+				if (vstupInt >= 0 && unsigned(vstupInt) <= slovensko_->getUzemneJednotkyChildren()->size() || vstupInt == 999)
 				{
 					break;
 				}

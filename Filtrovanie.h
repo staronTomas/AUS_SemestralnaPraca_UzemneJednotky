@@ -142,10 +142,10 @@ public:
 		UZEMNA_JEDNOTKA fujTYP;
 		UzemnaJednotka* povinnaPrislusnostUJ;
 		
-		FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp = nullptr;
-		FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost = nullptr;
-		FUJVzdelaniePocet<UzemnaJednotka*, int>* fujVzdelaniePocet= nullptr;
-		FUJVzdelaniePodiel<UzemnaJednotka*, double>* fujVzdelaniePodiel = nullptr;
+		FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp;
+		FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost;
+		FUJVzdelaniePocet<UzemnaJednotka*, int>* fujVzdelaniePocet;
+		FUJVzdelaniePodiel<UzemnaJednotka*, double>* fujVzdelaniePodiel;
 
 
 		if (fujTypAktivovany)
@@ -701,7 +701,7 @@ public:
 					break;
 				}
 			}
-
+			fujVzdelaniePodiel = new FUJVzdelaniePodiel<UzemnaJednotka*, double>(zvolenyTypVzdelania, zadanyMin, zadanyMax);
 		}
 	}
 

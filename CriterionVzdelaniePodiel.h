@@ -12,7 +12,10 @@ private:
 
 public:
 
-	
+	CriterionUJVzdelaniePodiel (TYP_VZDELANIA vzdelanie) {
+		typVzdelania_ = vzdelanie;
+	};
+
 	double evaluate(UzemnaJednotka* object);
 
 	void setTypVzdelania(TYP_VZDELANIA typVzdelania);

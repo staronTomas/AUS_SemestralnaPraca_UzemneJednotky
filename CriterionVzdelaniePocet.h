@@ -9,6 +9,11 @@ private:
 	TYP_VZDELANIA typVzdelania_;
 
 public:
+
+	CriterionUJVzdelaniePocet(TYP_VZDELANIA vzdelanie) {
+		typVzdelania_ = vzdelanie;
+	};
+
 	int evaluate(UzemnaJednotka* object);
 
 	void setTypVzdelania(TYP_VZDELANIA typVzdelania);

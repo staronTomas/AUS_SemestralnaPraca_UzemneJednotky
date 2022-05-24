@@ -6,7 +6,6 @@
 #include "UzemnaJednotka.h"
 #include "enum_UzemnaJednotka.h"
 
-
 template<typename O, typename ValueType>
 
 class FUJPrislusnost : public FilterValue<UzemnaJednotka*, UzemnaJednotka*> {
