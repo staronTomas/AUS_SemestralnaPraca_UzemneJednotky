@@ -544,37 +544,46 @@ public:
 				std::cout << "#####  FUJVzdelaniePocet  #####" << std::endl;
 				std::cout << "# Zvol parameter filtra FUJVzdelaniePocet - 3. Zvol MAXIMUM poctu zvoleneho Vzdelania " << std::endl;
 				std::cout << "#" << std::endl;
+				std::cout << "# Pokial chces bez limitu, napis slovo -> maximum" << std::endl;
 				std::cout << std::endl << "VSTUP maximum -> ";
 				std::string vstup = "";
 
 				std::cin >> vstup;
 				system("cls");
 
-				if (!isNumber(vstup))
+				if (vstup.compare("maximum") == 0)
 				{
-					nieJeCisloMessage();
+					zadanyMax = INT_MAX;
+					break;
 				}
 				else {
 
-					if (zadanyMin <= stoi(vstup))
+					if (!isNumber(vstup))
 					{
-						zadanyMax = stoi(vstup);
-						breaknut = true;
+						nieJeCisloMessage();
 					}
 					else {
-						system("cls");
-						std::cout << "# ERROR # " << std::endl;
-						std::cout << "# Maximum musi byt vacsi alebo rovny minimumu " << std::endl;
-						std::cout << "# Minimum -> " << zadanyMin << std::endl;
-						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
-						system("pause");
-					}
 
-					
-				}
-				if (breaknut)
-				{
-					break;
+						if (zadanyMin <= stoi(vstup))
+						{
+							zadanyMax = stoi(vstup);
+							breaknut = true;
+						}
+						else {
+							system("cls");
+							std::cout << "# ERROR # " << std::endl;
+							std::cout << "# Maximum musi byt vacsi alebo rovny minimumu " << std::endl;
+							std::cout << "# Minimum -> " << zadanyMin << std::endl;
+							std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+							system("pause");
+						}
+
+
+					}
+					if (breaknut)
+					{
+						break;
+					}
 				}
 			}
 			kritVzdelaniePocet= new CriterionUJVzdelaniePocet(zvolenyTypVzdelania);
@@ -815,8 +824,6 @@ public:
 
 	void vypisVyslednehoVyfiltrovania(SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje, SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy, SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce) {
 		system("cls");
-		std::cout << "filtre true/false" << fujPrislusnostAktivovany << fujTypAktivovany << fujVzdelaniePocetAktivovany << fujVzdelaniePodielAktivovany << std::endl;
-
 
 		std::cout << "### VYSLEDNY VYPIS PO FILTROVANI ###" << std::endl;
 		std::cout << "#" << std::endl;
@@ -838,7 +845,7 @@ public:
 			{
 				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(kraj->accessData()) << std::endl;
 			}
-			std::cout << std::endl << "# Vyssie Uzemne Jednotky:" << std::endl;
+			std::cout <<  "### Vyssie Uzemne Jednotky:" << std::endl;
 			std::cout << "1. Nazov -> " << kraj->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << kraj->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
 		}
 		std::cout << "# Vypisane OKRESY: " << std::endl;
@@ -857,7 +864,7 @@ public:
 			{
 				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(okres->accessData()) << std::endl;
 			}
-			std::cout << std::endl << "# Vyssie Uzemne Jednotky:" << std::endl;
+			std::cout  << "### Vyssie Uzemne Jednotky:" << std::endl;
 			std::cout << "1. Nazov -> " << okres->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << okres->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
 			std::cout << "2. Nazov -> " << okres->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << okres->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
 		}
@@ -877,7 +884,7 @@ public:
 			{
 				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(obec->accessData()) << std::endl;
 			}
-			std::cout << std::endl <<  "# Vyssie Uzemne Jednotky:" << std::endl;
+			std::cout << "### Vyssie Uzemne Jednotky:" << std::endl;
 			std::cout << "1. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
 			std::cout << "2. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
 			std::cout << "3. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
@@ -902,7 +909,7 @@ public:
 		}
 		if (fujPrislusnost != nullptr)
 		{
-			if (!fujPrislusnost->pass(uzemnaJednotka))
+			if (!fujPrislusnost->pass(uzemnaJednotka) && !fujPrislusnost->pass(uzemnaJednotka->getVyssiaUJRodic()))
 			{
 				return false;
 			}
