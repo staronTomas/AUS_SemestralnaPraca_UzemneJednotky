@@ -341,5 +341,8 @@
     <ClInclude Include="Filtrovanie.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="BodoveVyhladavanie.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

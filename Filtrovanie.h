@@ -51,6 +51,7 @@ public:
 		fujVzdelaniePocet = nullptr;
 		fujVzdelaniePodiel = nullptr;
 	};
+
 	~Filtrovanie() {
 		delete fujTyp;
 		delete fujPrislusnost;
@@ -586,7 +587,7 @@ public:
 					}
 				}
 			}
-			kritVzdelaniePocet= new CriterionUJVzdelaniePocet(zvolenyTypVzdelania);
+			kritVzdelaniePocet = new CriterionUJVzdelaniePocet(zvolenyTypVzdelania);
 			fujVzdelaniePocet = new FUJVzdelaniePocet<UzemnaJednotka*, int>(zvolenyTypVzdelania, zadanyMin, zadanyMax);
 		}
 		if (fujVzdelaniePodielAktivovany)
