@@ -618,8 +618,8 @@ public:
 				{
 					if (tabulkaDupl->containsKey(obec->accessData()->getNazov())) {
 
-						std::string novyNazovVTabulkeUJ = obec->accessData()->getNazov() + " --> Okres " + tabulkaDupl->find(obec->accessData()->getNazov())->getVyssiaUJRodic()->getNazov();
-						std::string novyNazovVCykleUJ = obec->accessData()->getNazov() + " --> Okres " + obec->accessData()->getVyssiaUJRodic()->getNazov();
+						std::string novyNazovVTabulkeUJ = obec->accessData()->getNazov() + " (Okres " + tabulkaDupl->find(obec->accessData()->getNazov())->getVyssiaUJRodic()->getNazov() + ")";
+						std::string novyNazovVCykleUJ = obec->accessData()->getNazov() + " (Okres " + obec->accessData()->getVyssiaUJRodic()->getNazov() + ")";
 
 						tabulkaDupl->find(obec->accessData()->getNazov())->setNazov(novyNazovVTabulkeUJ);
 						obec->accessData()->setNazov(novyNazovVCykleUJ);

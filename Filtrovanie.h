@@ -15,6 +15,11 @@
 #include "FUJVzdelaniePocet.h"
 #include "FUJVzdelaniePodiel.h"
 
+#include "CriterionUJTyp.h"
+#include "CriterionUJPrislusnost.h"
+#include "CriterionUJVekPocet.h"
+#include "CriterionUJVekPodiel.h"
+
 class Filtrovanie {
 
 private:
@@ -24,13 +29,70 @@ private:
 	bool fujVzdelaniePocetAktivovany = false;
 	bool fujVzdelaniePodielAktivovany = false;
 
+
+
+	FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp;
+	FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost;
+	FUJVzdelaniePocet<UzemnaJednotka*, int>* fujVzdelaniePocet;
+	FUJVzdelaniePodiel<UzemnaJednotka*, double>* fujVzdelaniePodiel;
+
+	CriterionUJPrislusnost* kritPrislusnost = nullptr;
+	CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
+	CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
+
+
+
+
 public:
 
-	Filtrovanie() {};
-	~Filtrovanie() {};
+	Filtrovanie() {
+		fujTyp = nullptr;
+		fujPrislusnost = nullptr;
+		fujVzdelaniePocet = nullptr;
+		fujVzdelaniePodiel = nullptr;
+	};
+	~Filtrovanie() {
+		delete fujTyp;
+		delete fujPrislusnost;
+		delete fujVzdelaniePocet;
+		delete fujVzdelaniePodiel;
+
+
+		delete kritPrislusnost;
+		delete kritVzdelaniePocet;
+		delete kritVzdelaniePodiel;
+	};
 
 
 	void zapniFiltrovanie(UzemnaJednotka* slovensko) {
+		fujPrislusnostAktivovany = false;
+		fujTypAktivovany = false;
+		fujVzdelaniePocetAktivovany = false;
+		fujVzdelaniePodielAktivovany = false;
+
+		kritPrislusnost = nullptr;
+		CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
+		CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
+
+		delete fujTyp;
+		delete fujPrislusnost;
+		delete fujVzdelaniePocet;
+		delete fujVzdelaniePodiel;
+
+		fujTyp = nullptr;
+		fujPrislusnost = nullptr;
+		fujVzdelaniePocet = nullptr;
+		fujVzdelaniePodiel = nullptr;
+
+		zacniFiltrovanie(slovensko);
+	}
+
+
+
+	void zacniFiltrovanie(UzemnaJednotka* slovensko) {
+
+	
+
 		int pocetAplikovanychFiltrov = 0;
 
 
@@ -85,7 +147,7 @@ public:
 			std::cout << "# Musis Napisat CISLO " << std::endl;
 			std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 			system("pause");
-			zapniFiltrovanie(slovensko);
+			zacniFiltrovanie(slovensko);
 		}
 		else {
 			int vstupInt = std::stoi(vstup);
@@ -103,23 +165,23 @@ public:
 			case 1:
 				if (fujTypAktivovany){fujTypAktivovany = false;} 
 				else { fujTypAktivovany = true;}
-				zapniFiltrovanie(slovensko);
+				zacniFiltrovanie(slovensko);
 				break;
 
 			case 2:
 				if (fujPrislusnostAktivovany) { fujPrislusnostAktivovany = false; }
 				else { fujPrislusnostAktivovany = true; }
-				zapniFiltrovanie(slovensko);
+				zacniFiltrovanie(slovensko);
 				break;
 			case 3:
 				if (fujVzdelaniePocetAktivovany) { fujVzdelaniePocetAktivovany = false; }
 				else { fujVzdelaniePocetAktivovany = true; }
-				zapniFiltrovanie(slovensko);
+				zacniFiltrovanie(slovensko);
 				break;
 			case 4:
 				if (fujVzdelaniePodielAktivovany) { fujVzdelaniePodielAktivovany = false; }
 				else { fujVzdelaniePodielAktivovany = true; }
-				zapniFiltrovanie(slovensko);
+				zacniFiltrovanie(slovensko);
 				break;
 
 			default:
@@ -128,7 +190,7 @@ public:
 				std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
 				std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 				system("pause");
-				zapniFiltrovanie(slovensko);
+				zacniFiltrovanie(slovensko);
 				break;
 			}
 		}
@@ -142,10 +204,7 @@ public:
 		UZEMNA_JEDNOTKA fujTYP;
 		UzemnaJednotka* povinnaPrislusnostUJ = nullptr;
 		
-		FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp;
-		FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost;
-		FUJVzdelaniePocet<UzemnaJednotka*, int>* fujVzdelaniePocet;
-		FUJVzdelaniePodiel<UzemnaJednotka*, double>* fujVzdelaniePodiel;
+		
 
 
 		if (fujTypAktivovany)
@@ -177,7 +236,7 @@ public:
 				if (!isNumber(vstup))
 				{
 					nieJeCisloMessage();
-					zapniFiltrovanie(slovensko);
+					zacniFiltrovanie(slovensko);
 				}
 				else {
 					int vstupInt = std::stoi(vstup);
@@ -210,7 +269,8 @@ public:
 					break;
 				}
 			}
-			fujTyp = new FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>(UZEMNA_JEDNOTKA::OBEC);
+
+			fujTyp = new FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>(fujTYP);
 		}
 
 
@@ -348,6 +408,7 @@ public:
 				}
 			}
 
+			kritPrislusnost = new CriterionUJPrislusnost(povinnaPrislusnostUJ);
 			fujPrislusnost = new FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>(povinnaPrislusnostUJ, true);
 		}
 		if (fujVzdelaniePocetAktivovany)
@@ -516,7 +577,7 @@ public:
 					break;
 				}
 			}
-
+			kritVzdelaniePocet= new CriterionUJVzdelaniePocet(zvolenyTypVzdelania);
 			fujVzdelaniePocet = new FUJVzdelaniePocet<UzemnaJednotka*, int>(zvolenyTypVzdelania, zadanyMin, zadanyMax);
 		}
 		if (fujVzdelaniePodielAktivovany)
@@ -701,9 +762,167 @@ public:
 					break;
 				}
 			}
+
+			kritVzdelaniePodiel = new CriterionUJVzdelaniePodiel(zvolenyTypVzdelania);
+
 			fujVzdelaniePodiel = new FUJVzdelaniePodiel<UzemnaJednotka*, double>(zvolenyTypVzdelania, zadanyMin, zadanyMax);
 		}
+
+		aplikujFiltre(slovensko);
+
+
 	}
+
+	void aplikujFiltre(UzemnaJednotka* slovensko) {
+		
+		SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+		SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+		SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+		
+		for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko->getUzemneJednotkyChildren())
+		{
+			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
+			{
+				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
+				{
+					if (vyfiltrujUJ(obec->accessData()))
+					{
+						vyfiltrovaneObce->insert(obec->accessData()->getNazov(), obec->accessData());
+					}
+				}
+				if (vyfiltrujUJ(okres->accessData()))
+				{
+					vyfiltrovaneOkresy->insert(okres->accessData()->getNazov(), okres->accessData());
+				}
+			}
+			if (vyfiltrujUJ(kraj->accessData()))
+			{
+				vyfiltrovaneKraje->insert(kraj->accessData()->getNazov(), kraj->accessData());
+			}
+		}
+
+		std::cout << "Velkost krajov " << vyfiltrovaneKraje->size() << std::endl;
+		std::cout << "Velkost okresov " << vyfiltrovaneOkresy->size() << std::endl;
+		std::cout << "Velkost obci " << vyfiltrovaneObce->size() << std::endl;
+
+		system("pause");
+		vypisVyslednehoVyfiltrovania(vyfiltrovaneKraje, vyfiltrovaneOkresy, vyfiltrovaneObce);
+
+		delete vyfiltrovaneKraje;
+		delete vyfiltrovaneOkresy;
+		delete vyfiltrovaneObce;
+	}
+
+	void vypisVyslednehoVyfiltrovania(SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje, SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy, SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce) {
+		system("cls");
+		std::cout << "filtre true/false" << fujPrislusnostAktivovany << fujTypAktivovany << fujVzdelaniePocetAktivovany << fujVzdelaniePodielAktivovany << std::endl;
+
+
+		std::cout << "### VYSLEDNY VYPIS PO FILTROVANI ###" << std::endl;
+		std::cout << "#" << std::endl;
+		std::cout << "# Vypisane KRAJE: " << std::endl;
+
+		for (TableItem<std::string, UzemnaJednotka*>* kraj : *vyfiltrovaneKraje) {
+
+			std::cout << std::endl << std::endl << "## Nazov Uzemnej Jednotky -> " << kraj->accessData()->getNazov();
+
+			if (fujTyp != nullptr)
+			{
+				std::cout << "# Typ Uzemnej Jednotky -> " << kraj->accessData()->getStringTypUzemnejJednotky() << std::endl;
+			}
+			if (fujVzdelaniePocet != nullptr)
+			{
+				std::cout << "# Vzdelanie POCET -> " << vratTextTypuVzdelania(fujVzdelaniePocet->getTypVzdelania()) << " : " << kraj->accessData()->getVzdelanie()->getPocetVzdelanie(fujVzdelaniePocet->getTypVzdelania()) << std::endl;
+			}
+			if (fujVzdelaniePodiel != nullptr)
+			{
+				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(kraj->accessData()) << std::endl;
+			}
+			std::cout << std::endl << "# Vyssie Uzemne Jednotky:" << std::endl;
+			std::cout << "1. Nazov -> " << kraj->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << kraj->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
+		}
+		std::cout << "# Vypisane OKRESY: " << std::endl;
+		for (TableItem<std::string, UzemnaJednotka*>* okres : *vyfiltrovaneOkresy) {
+			std::cout << std::endl << "## Nazov Uzemnej Jednotky -> " << okres->accessData()->getNazov();
+
+			if (fujTyp != nullptr)
+			{
+				std::cout << "# Typ Uzemnej Jednotky -> " << okres->accessData()->getStringTypUzemnejJednotky() << std::endl;
+			}
+			if (fujVzdelaniePocet != nullptr)
+			{
+				std::cout << "# Vzdelanie POCET -> " << vratTextTypuVzdelania(fujVzdelaniePocet->getTypVzdelania()) << " : " << okres->accessData()->getVzdelanie()->getPocetVzdelanie(fujVzdelaniePocet->getTypVzdelania()) << std::endl;
+			}
+			if (fujVzdelaniePodiel != nullptr)
+			{
+				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(okres->accessData()) << std::endl;
+			}
+			std::cout << std::endl << "# Vyssie Uzemne Jednotky:" << std::endl;
+			std::cout << "1. Nazov -> " << okres->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << okres->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
+			std::cout << "2. Nazov -> " << okres->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << okres->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
+		}
+		std::cout << "# Vypisane OBCE: " << std::endl;
+		for (TableItem<std::string, UzemnaJednotka*>* obec : *vyfiltrovaneObce) {
+			std::cout << std::endl << "## Nazov Uzemnej Jednotky -> " << obec->accessData()->getNazov() << std::endl;
+
+			if (fujTyp != nullptr)
+			{
+				std::cout << "# Typ Uzemnej Jednotky -> " << obec->accessData()->getStringTypUzemnejJednotky() << std::endl;
+			}
+			if (fujVzdelaniePocet != nullptr)
+			{
+				std::cout << "# Vzdelanie POCET -> " << vratTextTypuVzdelania(fujVzdelaniePocet->getTypVzdelania()) << " : " << obec->accessData()->getVzdelanie()->getPocetVzdelanie(fujVzdelaniePocet->getTypVzdelania()) << std::endl;
+			}
+			if (fujVzdelaniePodiel != nullptr)
+			{
+				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(obec->accessData()) << std::endl;
+			}
+			std::cout << std::endl <<  "# Vyssie Uzemne Jednotky:" << std::endl;
+			std::cout << "1. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
+			std::cout << "2. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
+			std::cout << "3. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getVyssiaUJRodic()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
+		}
+		system("pause");
+		system("cls");
+	}
+
+	
+
+
+	bool vyfiltrujUJ(UzemnaJednotka* uzemnaJednotka) {
+
+		if (fujTyp!=nullptr)
+		{
+			if (!fujTyp->pass(uzemnaJednotka))
+			{
+				return false;
+			}
+		}
+		if (fujPrislusnost != nullptr)
+		{
+			if (!fujPrislusnost->pass(uzemnaJednotka))
+			{
+				return false;
+			}
+		}
+		if (fujVzdelaniePocet != nullptr)
+		{
+			if (!fujVzdelaniePocet->pass(uzemnaJednotka))
+			{
+				return false;
+			}
+		}
+		if (fujVzdelaniePodiel != nullptr)
+		{
+			if (!fujVzdelaniePodiel->pass(uzemnaJednotka))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 
 	bool isNumber(const std::string& s)
 	{
@@ -720,5 +939,39 @@ public:
 		std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 		system("pause");
 	}
-	
+
+
+	std::string vratTextTypuVzdelania(TYP_VZDELANIA typVzd) {
+		switch (typVzd) {
+
+		case TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI:
+			return "Bez ukonceneho vzdelania DETI : ";
+			break;
+		case TYP_VZDELANIA::ZAKLADNE:
+			return "Zakladne vzdelanie : ";
+			break;
+		case TYP_VZDELANIA::UCNOVSKE:
+			return "Ucnovske vzdelania : ";
+			break;
+		case TYP_VZDELANIA::STREDNE:
+			return "Stredne vzdelania : ";
+			break;
+		case TYP_VZDELANIA::VYSSIE:
+			return "Vyssie vzdelania : ";
+			break;
+		case TYP_VZDELANIA::VYSOKOSKOLSKE:
+			return "Vysokoskolske vzdelanie : ";
+			break;
+		case TYP_VZDELANIA::BEZ_VZDELANIA:
+			return "Bez vzdelania : ";
+			break;
+		case TYP_VZDELANIA::NEZISTENE:
+			return "Nezistene vzdelanie : ";
+			break;
+
+		default:
+			break;
+		}
+	}
+
 };

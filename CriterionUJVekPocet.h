@@ -28,5 +28,5 @@ inline void CriterionUJVekPocet::setVek(int vek) {
 }
 
 inline void CriterionUJVekPocet::setPohlavie(POHLAVIE pohlavie) {
-	pohlavie_ = pohlavie
+	pohlavie_ = pohlavie;
 }
