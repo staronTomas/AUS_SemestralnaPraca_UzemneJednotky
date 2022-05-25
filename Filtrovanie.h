@@ -140,7 +140,7 @@ public:
 	void vlozParametreFiltrov(UzemnaJednotka* slovensko) {
 
 		UZEMNA_JEDNOTKA fujTYP;
-		UzemnaJednotka* povinnaPrislusnostUJ;
+		UzemnaJednotka* povinnaPrislusnostUJ = nullptr;
 		
 		FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp;
 		FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost;
@@ -347,7 +347,8 @@ public:
 					break;
 				}
 			}
-			fujPrislusnost = new FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>(povinnaPrislusnostUJ);
+
+			fujPrislusnost = new FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>(povinnaPrislusnostUJ, true);
 		}
 		if (fujVzdelaniePocetAktivovany)
 		{

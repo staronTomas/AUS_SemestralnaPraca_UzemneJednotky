@@ -17,7 +17,7 @@ public:
 
 	virtual ~FilterValue() = default;
 
-	bool passFilter(ValueType hodnota) {
+	bool passFilter(ValueType hodnota) override {
 		if (hodnota == hodnota_)
 		{
 			return true;

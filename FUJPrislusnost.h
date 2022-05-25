@@ -8,11 +8,11 @@
 
 template<typename O, typename ValueType>
 
-class FUJPrislusnost : public FilterValue<UzemnaJednotka*, UzemnaJednotka*> {
+class FUJPrislusnost : public FilterValue<UzemnaJednotka*, bool> {
 
 public:
 
-	FUJPrislusnost(UzemnaJednotka* prislusnost) : FilterValue(new CriterionUJPrislusnost(prislusnost)) {
+	FUJPrislusnost(UzemnaJednotka* prislusnost, bool prislucha) : FilterValue(new CriterionUJPrislusnost(prislusnost), prislucha) {
 
 	}
 

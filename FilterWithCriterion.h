@@ -13,7 +13,7 @@ private:
 
 public:
 
-	FilterWithCriterion(Criterion<O, ValueType> kriterium) {
+	FilterWithCriterion(Criterion<O, ValueType>* kriterium) {
 		kriterium_ = kriterium;
 	}
 
