@@ -741,7 +741,7 @@ public:
 				}
 				else {
 
-					if (zadanyMin < stoi(vstup))
+					if (zadanyMin <= stoi(vstup))
 					{
 						zadanyMax = stoi(vstup);
 						breaknut = true;
@@ -749,7 +749,7 @@ public:
 					else {
 						system("cls");
 						std::cout << "# ERROR # " << std::endl;
-						std::cout << "# Maximum musi byt vacsi než minimum " << std::endl;
+						std::cout << "# Maximum musi byt vacsi alebo rovny ako minimum " << std::endl;
 						std::cout << "# Minimum -> " << zadanyMin << std::endl;
 						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
 						system("pause");
