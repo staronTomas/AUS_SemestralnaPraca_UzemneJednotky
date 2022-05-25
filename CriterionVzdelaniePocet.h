@@ -14,6 +14,7 @@ public:
 		typVzdelania_ = vzdelanie;
 	};
 
+
 	int evaluate(UzemnaJednotka* object);
 
 	void setTypVzdelania(TYP_VZDELANIA typVzdelania);
