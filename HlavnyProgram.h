@@ -14,6 +14,7 @@
 
 #include "structures/array/array.h"
 #include "structures/list/linked_list.h"
+#include "structures/list/double_linked_list.h"
 #include "structures/heap_monitor.h"
 
 #include "UzemnaJednotka.h"
@@ -453,7 +454,7 @@ public:
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
 		std::cout << "# Citany subor: obce.csv" << std::endl;
 		std::cout << "# Hotovo -> 0%" << std::endl;
-		LinkedList<LinkedList<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
+		DoubleLinkedList<LinkedList<std::string>*>* zoznamObci = reader_->nacitajObce("data_bez_diakritiky/obce.csv");  // Obce mi nacita:   NazovUJ;KodUJ
 
 		system("cls");
 		std::cout << "# Parsujem data z CSV suborov." << std::endl;
@@ -498,12 +499,6 @@ public:
 
 			slovensko_->getUzemneJednotkyChildren()->insert(nazovUjKraj, novyKraj);
 
-			/*system("CLS");
-			int percentoDokoncene = 100 / zoznamKrajov->size() * i;
-			std::cout << "# Prebieha vkladanie dat do uzemnych jednotiek." << std::endl;
-			std::cout << "#" << std::endl;
-			std::cout << "# Prebieha ukladanie dat v Uzemnej jednotke -> " << nazovUjKraj << " a jeho okresoch a obciach." << std::endl;
-			std::cout << "# Dokoncene: " << percentoDokoncene << "%" << std::endl;*/
 
 			for (int j = 0; j < zoznamOkresov->size(); j++)
 			{
@@ -515,6 +510,7 @@ public:
 				std::string subKodUjOkres = okresKodUJ.substr(0, 5);
 
 
+				// informacny vypis na konzolu
 				double xPodiel = 100.0 / zoznamOkresov->size() * pocetSpracovanychOkresov;
 				if (xPodiel > percentoDokoncene) {
 					system("CLS");
@@ -525,7 +521,7 @@ public:
 					std::cout << "# Okres -> " << okresNazovUj << std::endl;
 					std::cout << "#" << std::endl;
 					std::cout << "# Podiel spracovanych Uzemnych Jednotiek: " << percentoDokoncene << "%" << std::endl;
-				}
+				}// informacny vypis na konzolu
 
 
 
@@ -600,6 +596,8 @@ public:
 		}
 
 
+
+		// kontrola duplicitnych obci -> ak existuje duplicita, pridelim 
 		SortedSequenceTable<std::string, UzemnaJednotka*>* tabulkaDupl = new SortedSequenceTable<std::string, UzemnaJednotka*>();
 
 		int counter = 0;

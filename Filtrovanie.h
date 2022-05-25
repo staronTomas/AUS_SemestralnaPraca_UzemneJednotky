@@ -891,6 +891,8 @@ public:
 
 	bool vyfiltrujUJ(UzemnaJednotka* uzemnaJednotka) {
 
+		bool jeDobra = false;
+
 		if (fujTyp!=nullptr)
 		{
 			if (!fujTyp->pass(uzemnaJednotka))

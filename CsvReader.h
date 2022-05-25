@@ -35,7 +35,7 @@ public:
 	~CsvReader() {};
 
 
-	structures::LinkedList<LinkedList<std::string>*>* nacitajObce(std::string nazovSuboru) {
+	structures::DoubleLinkedList<LinkedList<std::string>*>* nacitajObce(std::string nazovSuboru) {
 
 		std::vector<std::vector<std::string>> content;
 		std::vector<std::string> row;
@@ -65,7 +65,7 @@ public:
 		}
 
 		structures::LinkedList<std::string>* texty = new structures::LinkedList<std::string>();
-		structures::LinkedList<LinkedList<std::string>*>* result = new structures::LinkedList<LinkedList<std::string>*>();
+		structures::DoubleLinkedList<LinkedList<std::string>*>* result = new structures::DoubleLinkedList<LinkedList<std::string>*>();
 
 		// nacitam vsetky texty z csv file
 		for (int i = 0; i < content.size(); i++)
