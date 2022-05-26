@@ -14,50 +14,56 @@ private:
 
 	Filtrovanie* filter_;
 
+	UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneUJ_;
+
 public:
 	
 	Triedenie() {
 		filter_ = new Filtrovanie();
+		vyfiltrovaneUJ_ = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
 	};
 
 	~Triedenie() {
 		delete filter_;
+
+		delete vyfiltrovaneUJ_;
 	};
 
 
 	void spustiTriedenie(UzemnaJednotka* slovensko) {
 
+
+		// toto sa mi pomaly strasne moc nacita
 		structures::LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>* vyfiltrovaneTabulky = filter_->zapniFiltrovanieSTriedenim(slovensko);
 
-		UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = vyfiltrovaneTabulky->at(0);
-		UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = vyfiltrovaneTabulky->at(1);
-		UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = vyfiltrovaneTabulky->at(2);
+		
+		spojTabulky(vyfiltrovaneTabulky);
 
-
-
-		for (TableItem<std::string, UzemnaJednotka*>* kraj : *vyfiltrovaneKraje) {
-
-			std::cout << std::endl << std::endl << "## Nazov Uzemnej Jednotky -> " << kraj->accessData()->getNazov();
-		}
-		std::cout << "# Vypisane OKRESY: " << std::endl;
-		for (TableItem<std::string, UzemnaJednotka*>* okres : *vyfiltrovaneOkresy) {
-			std::cout << std::endl << "## Nazov Uzemnej Jednotky -> " << okres->accessData()->getNazov();
-		}
-		std::cout << "# Vypisane OBCE: " << std::endl;
-		for (TableItem<std::string, UzemnaJednotka*>* obec : *vyfiltrovaneObce) {
-			std::cout << std::endl << "## Nazov Uzemnej Jednotky -> " << obec->accessData()->getNazov() << std::endl;
-
-		}
-
-
-
-		std::cout << "som tuuuuuu";
-		system("pause");
-
+		Array<bool>* aktFiltre = filter_->vratZoznamAktivovanychFiltrov();
 		
 
 
 
+		delete aktFiltre;
+	}
+
+
+	void spojTabulky(structures::LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>* tab) {
+
+		std::cout << "kebaaab" << std::endl;
+
+		for (int i = 0; i < tab->size(); i++)
+		{
+			if (tab->at(i) != nullptr)
+			{
+				for (TableItem<std::string, UzemnaJednotka*>* item : *tab->at(i))
+				{
+					vyfiltrovaneUJ_->insert(item->getKey(), item->accessData());
+				}
+			}
+		}
+
+		
 	}
 
 };

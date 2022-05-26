@@ -162,9 +162,18 @@ public:
 
 
 		system("cls");
-		std::cout << "### FILTROVANIE ###" << std::endl;
-		std::cout << "# POPIS:" << std::endl;
-		std::cout << "# Vo filtrovani si mozes vyfiltrovat uzemne jednotky podla vlastnych filtrov." << std::endl;
+		if (ajTriedenie_)
+		{
+			std::cout << "### FILTROVANIE S TRIEDENIM ###" << std::endl;
+			std::cout << "# POPIS:" << std::endl;
+			std::cout << "# Vyfiltruj si pod¾a vlastných filtrov uzemne jednotky a potom utriet." << std::endl;
+		}
+		else {
+			std::cout << "### FILTROVANIE ###" << std::endl;
+			std::cout << "# POPIS:" << std::endl;
+			std::cout << "# Vo filtrovani si mozes vyfiltrovat uzemne jednotky podla vlastnych filtrov." << std::endl;
+		}
+		
 		std::cout << "# " << std::endl;
 		std::cout << "# Postupne pis cisla filtrov, ktore chces uplatnit, pokial si s vyberom spokojny, potvrd vybrate filtre a pokracuj dalej." << std::endl;
 		std::cout << "# 999 # Ukoncit filtrovanie" << std::endl << std::endl;
@@ -885,11 +894,6 @@ public:
 		}
 		else {
 
-
-			std::cout << "aplikovanie filtrov s triedenim" << std::endl;
-			system("pause");
-			system("cls");
-
 			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
 			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
 			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
@@ -1086,4 +1090,16 @@ public:
 		}
 	}
 
+
+
+	structures::Array<bool>* vratZoznamAktivovanychFiltrov() {
+		Array<bool>* aktFiltre = new Array<bool>(4);
+		aktFiltre->at(0) = fujTypAktivovany;
+		aktFiltre->at(1) = fujPrislusnostAktivovany;
+
+		aktFiltre->at(2) = fujVzdelaniePocetAktivovany;
+		aktFiltre->at(3) = fujVzdelaniePodielAktivovany;
+
+		return aktFiltre;
+	}
 };
