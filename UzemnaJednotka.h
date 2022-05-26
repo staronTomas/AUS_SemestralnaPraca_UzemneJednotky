@@ -171,4 +171,18 @@ public:
 		vekObyvatelov_ = vek;
 	}
 
+
+
+	double getPodielVzdelanie(TYP_VZDELANIA vzd) {
+
+		double result = 0;
+
+		double pocetVzdelanych = getVzdelanie()->getPocetVzdelanie(vzd);
+		double celkovyPocetObyv = getPocetObyvatelov();
+
+		result = 100.0 / celkovyPocetObyv * static_cast<double>(pocetVzdelanych);
+
+		return result;
+	}
+
 };

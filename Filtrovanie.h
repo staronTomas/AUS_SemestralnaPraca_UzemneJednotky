@@ -47,7 +47,7 @@ private:
 	
 
 	//pre triedenie tabulka na return
-	structures::LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>* vyfiltrovanaTabulkaNaTriedenie = nullptr;
+	SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovanaTabulkaNaTriedenie = nullptr;
 
 
 
@@ -77,10 +77,6 @@ public:
 
 		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
 		{
-			for (int i = 0; i < vyfiltrovanaTabulkaNaTriedenie->size(); i++)
-			{
-				delete vyfiltrovanaTabulkaNaTriedenie->at(i);
-			}
 			delete vyfiltrovanaTabulkaNaTriedenie;
 		}
 		
@@ -88,16 +84,12 @@ public:
 	};
 
 
-	structures::LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>* zapniFiltrovanieSTriedenim(UzemnaJednotka* slovensko) {
+	SortedSequenceTable<std::string, UzemnaJednotka*>* zapniFiltrovanieSTriedenim(UzemnaJednotka* slovensko) {
 
 		ajTriedenie_ = true;
 
 		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
 		{
-			for (int i = 0; i < vyfiltrovanaTabulkaNaTriedenie->size(); i++) {
-				delete vyfiltrovanaTabulkaNaTriedenie->at(i);
-			}
-
 			delete vyfiltrovanaTabulkaNaTriedenie;
 		}
 		
@@ -167,16 +159,17 @@ public:
 			std::cout << "### FILTROVANIE S TRIEDENIM ###" << std::endl;
 			std::cout << "# POPIS:" << std::endl;
 			std::cout << "# Vyfiltruj si pod¾a vlastných filtrov uzemne jednotky a potom utriet." << std::endl;
+			std::cout << "# " << std::endl;
+			std::cout << "# Postupne pis cisla filtrov, ktore chces uplatnit, pokial si s vyberom spokojny, potvrd vybrate filtre a pokracuj dalej." << std::endl;
 		}
 		else {
 			std::cout << "### FILTROVANIE ###" << std::endl;
 			std::cout << "# POPIS:" << std::endl;
 			std::cout << "# Vo filtrovani si mozes vyfiltrovat uzemne jednotky podla vlastnych filtrov." << std::endl;
+			std::cout << "# " << std::endl;
+			std::cout << "# Postupne pis cisla filtrov, ktore chces uplatnit, pokial si s vyberom spokojny, potvrd vybrate filtre a pokracuj dalej." << std::endl;
+			std::cout << "# 999 # Ukoncit filtrovanie" << std::endl << std::endl;
 		}
-		
-		std::cout << "# " << std::endl;
-		std::cout << "# Postupne pis cisla filtrov, ktore chces uplatnit, pokial si s vyberom spokojny, potvrd vybrate filtre a pokracuj dalej." << std::endl;
-		std::cout << "# 999 # Ukoncit filtrovanie" << std::endl << std::endl;
 		std::cout << "# 0 # POTVRDIT VYBER FILTROV" << std::endl << std::endl;
 
 		if (fujTypAktivovany)
@@ -229,7 +222,14 @@ public:
 			switch (vstupInt)
 			{
 			case 999:
+				if (!ajTriedenie_)
+				{
+					// v triedeni nechcem povolit zrusenie a navrat, treba mi este osetrit rozne scenare..
+					break;
+				}
+				zacniFiltrovanie(slovensko);
 				break;
+
 			case 0:
 				system("cls");
 				std::cout << "Filtre potvrdene..." << std::endl;
@@ -894,9 +894,8 @@ public:
 		}
 		else {
 
-			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
-			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
-			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
+			vyfiltrovanaTabulkaNaTriedenie = new SortedSequenceTable<std::string, UzemnaJednotka*>;
+			
 
 			for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko->getUzemneJednotkyChildren())
 			{
@@ -906,25 +905,19 @@ public:
 					{
 						if (vyfiltrujUJ(obec->accessData()))
 						{
-							vyfiltrovaneObce->insert(obec->accessData()->getNazov(), obec->accessData());
+							vyfiltrovanaTabulkaNaTriedenie->insert(obec->accessData()->getKodUJ(), obec->accessData());
 						}
 					}
 					if (vyfiltrujUJ(okres->accessData()))
 					{
-						vyfiltrovaneOkresy->insert(okres->accessData()->getNazov(), okres->accessData());
+						vyfiltrovanaTabulkaNaTriedenie->insert(okres->accessData()->getKodUJ(), okres->accessData());
 					}
 				}
 				if (vyfiltrujUJ(kraj->accessData()))
 				{
-					vyfiltrovaneKraje->insert(kraj->accessData()->getNazov(), kraj->accessData());
+					vyfiltrovanaTabulkaNaTriedenie->insert(kraj->accessData()->getKodUJ(), kraj->accessData());
 				}
 			}
-
-			vyfiltrovanaTabulkaNaTriedenie = new LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>();
-
-			vyfiltrovanaTabulkaNaTriedenie->add(vyfiltrovaneKraje);
-			vyfiltrovanaTabulkaNaTriedenie->add(vyfiltrovaneOkresy);
-			vyfiltrovanaTabulkaNaTriedenie->add(vyfiltrovaneObce);
 
 		}		
 	}

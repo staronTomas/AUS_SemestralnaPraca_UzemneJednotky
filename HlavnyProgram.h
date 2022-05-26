@@ -331,7 +331,7 @@ public:
 			system("CLS");
 			std::cout << "# Prehladavanie duplicitnych nazvov a odlišovanie." << std::endl;
 			std::cout << "#" << std::endl;
-			int hotovo = 100 / slovensko_->getUzemneJednotkyChildren()->size() * counter;
+			int hotovo = 50 / slovensko_->getUzemneJednotkyChildren()->size() * counter;
 			std::cout << "# Hotovo -> " << hotovo <<  " % " << std::endl;
 
 			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())

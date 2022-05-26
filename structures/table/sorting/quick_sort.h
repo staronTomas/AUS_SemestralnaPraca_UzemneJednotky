@@ -15,7 +15,7 @@ namespace structures
 		/// <summary> Utriedi tabulku triedenim Quick sort. </summary>
 		/// <param name = "table"> NonortedSequenceTable, ktoru ma utriedit. </param>
 		void sort(UnsortedSequenceTable<K, T>& table) override;
-			void sortHelper(UnsortedSequenceTable<K, T>& table, int min, int max);
+		void sortHelper(UnsortedSequenceTable<K, T>& table, int min, int max);
 	};
 
 	template<typename K, typename T>
@@ -25,7 +25,7 @@ namespace structures
 	}
 
 	template<typename K, typename T>
-	inline void QuickSort<K, T>::sortHelper(UnsortedSequenceTable<K, T>&table, int min, int max) {
+	inline void QuickSort<K, T>::sortHelper(UnsortedSequenceTable<K, T>& table, int min, int max) {
 
 		K hlavnyKluc = table.getItemAtIndex((min + max) / 2).getKey();
 

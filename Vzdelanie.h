@@ -78,6 +78,7 @@ public:
 		}
 	}
 
+
 	void navysCelkovyPocetVzdelania(Vzdelanie* vzd) {
 
 		bezUkoncenehoVzdelaniaDeti_ += vzd->getPocetVzdelanie(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
