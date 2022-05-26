@@ -23,15 +23,12 @@ private:
 	bool triedVzostupne;
 	bool triedZostupne;
 
-	UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneUJ_;
-
 	QuickSort<std::string, UzemnaJednotka*>* sorter_;
 
 public:
 	
 	Triedenie() {
 		filter_ = new Filtrovanie();
-		vyfiltrovaneUJ_ = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
 
 		triedPodlaNazvu = false;
 		triedVzdelaniePocet = false;
@@ -45,7 +42,6 @@ public:
 	~Triedenie() {
 		delete filter_;
 
-		delete vyfiltrovaneUJ_;
 
 	};
 
@@ -177,24 +173,30 @@ public:
 			utriedenaTabulka->insert(item->getKey(), item->accessData());
 		}
 
-
-		std::cout << "Zacal som triedit" << std::endl;
-
+		std::cout << "Triedim Uzemne Jednotky...";
 		TYP_VZDELANIA typVzd = pouzivatelVyberTypVzdelania();
 
 		sort(*utriedenaTabulka, triedVzostupne, triedPodlaNazvu, triedVzdelaniePocet, triedVzdelaniePodiel, typVzd);
-		
+
 		system("cls");
-		std::cout << "Triedenie ukoncene" << std::endl;
-		std::cout << "Pre vypis vysledku stlac lubovolne tlacidlo" << std::endl;
-		system("pause");
+		std::cout << "### Vypis utriedenych uzemnych jednotiek ###" << std::endl;
 
 		for (TableItem<std::string, UzemnaJednotka*>* item : *utriedenaTabulka)
 		{
-			std::cout << item->accessData()->getNazov() << "   -  pocet vzdelania: " << item->accessData()->getPodielVzdelanie(typVzd) << std::endl;
+			std::cout << "# Nazov - " << item->accessData()->getNazov() << std::endl;
+			if (triedVzdelaniePocet)
+			{
+				std::cout << "# Vzdelanie pocet " << vratTextTypuVzdelania(typVzd) << item->accessData()->getVzdelanie()->getPocetVzdelanie(typVzd) << std::endl;
+			}
+			if (triedVzdelaniePodiel)
+			{
+				std::cout << "# Vzdelanie podiel " << vratTextTypuVzdelania(typVzd) << item->accessData()->getPodielVzdelanie(typVzd) << " %" << std::endl;
+			}
+			std::cout << std::endl;
 		}
 		system("pause");
 		delete aktFiltre;
+		delete utriedenaTabulka;
 	}
 
 
@@ -461,6 +463,41 @@ public:
 			{
 				break;
 			}
+		}
+	}
+
+
+
+	std::string vratTextTypuVzdelania(TYP_VZDELANIA typVzd) {
+		switch (typVzd) {
+
+		case TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI:
+			return "Bez ukonceneho vzdelania DETI : ";
+			break;
+		case TYP_VZDELANIA::ZAKLADNE:
+			return "Zakladne vzdelanie : ";
+			break;
+		case TYP_VZDELANIA::UCNOVSKE:
+			return "Ucnovske vzdelania : ";
+			break;
+		case TYP_VZDELANIA::STREDNE:
+			return "Stredne vzdelania : ";
+			break;
+		case TYP_VZDELANIA::VYSSIE:
+			return "Vyssie vzdelania : ";
+			break;
+		case TYP_VZDELANIA::VYSOKOSKOLSKE:
+			return "Vysokoskolske vzdelanie : ";
+			break;
+		case TYP_VZDELANIA::BEZ_VZDELANIA:
+			return "Bez vzdelania : ";
+			break;
+		case TYP_VZDELANIA::NEZISTENE:
+			return "Nezistene vzdelanie : ";
+			break;
+
+		default:
+			break;
 		}
 	}
 };
