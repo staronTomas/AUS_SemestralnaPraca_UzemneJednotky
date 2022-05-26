@@ -71,7 +71,7 @@ namespace structures
 	template<typename K, typename T>
 	inline TableItem<K, T>& UnsortedSequenceTable<K, T>::getItemAtIndex(int index)
 	{
-		return *list_->at(index);
+		return *SequenceTable<K,T>::list_->at(index);
 	}
 
 	template<typename K, typename T>

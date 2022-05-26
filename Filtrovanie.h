@@ -10,6 +10,9 @@
 #include "FilterAnd.h"
 #include "structures/heap_monitor.h"
 
+#include "structures/array/array.h"
+#include "structures/table/unsorted_sequence_table.h"
+
 #include "FUJPrislusnost.h"
 #include "FUJTyp.h"
 #include "FUJVzdelaniePocet.h"
@@ -29,6 +32,8 @@ private:
 	bool fujVzdelaniePocetAktivovany = false;
 	bool fujVzdelaniePodielAktivovany = false;
 
+	bool ajTriedenie_ = false;
+
 
 
 	FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp;
@@ -39,7 +44,10 @@ private:
 	CriterionUJPrislusnost* kritPrislusnost = nullptr;
 	CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
 	CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
+	
 
+	//pre triedenie tabulka na return
+	structures::LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>* vyfiltrovanaTabulkaNaTriedenie = nullptr;
 
 
 
@@ -50,6 +58,9 @@ public:
 		fujPrislusnost = nullptr;
 		fujVzdelaniePocet = nullptr;
 		fujVzdelaniePodiel = nullptr;
+
+
+		vyfiltrovanaTabulkaNaTriedenie = nullptr;
 	};
 
 	~Filtrovanie() {
@@ -62,10 +73,63 @@ public:
 		delete kritPrislusnost;
 		delete kritVzdelaniePocet;
 		delete kritVzdelaniePodiel;
+
+
+		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
+		{
+			for (int i = 0; i < vyfiltrovanaTabulkaNaTriedenie->size(); i++)
+			{
+				delete vyfiltrovanaTabulkaNaTriedenie->at(i);
+			}
+			delete vyfiltrovanaTabulkaNaTriedenie;
+		}
+		
+		
 	};
 
 
+	structures::LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>* zapniFiltrovanieSTriedenim(UzemnaJednotka* slovensko) {
+
+		ajTriedenie_ = true;
+
+		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
+		{
+			for (int i = 0; i < vyfiltrovanaTabulkaNaTriedenie->size(); i++) {
+				delete vyfiltrovanaTabulkaNaTriedenie->at(i);
+			}
+
+			delete vyfiltrovanaTabulkaNaTriedenie;
+		}
+		
+
+		fujPrislusnostAktivovany = false;
+		fujTypAktivovany = false;
+		fujVzdelaniePocetAktivovany = false;
+		fujVzdelaniePodielAktivovany = false;
+
+		kritPrislusnost = nullptr;
+		CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
+		CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
+
+		delete fujTyp;
+		delete fujPrislusnost;
+		delete fujVzdelaniePocet;
+		delete fujVzdelaniePodiel;
+
+		fujTyp = nullptr;
+		fujPrislusnost = nullptr;
+		fujVzdelaniePocet = nullptr;
+		fujVzdelaniePodiel = nullptr;
+
+		zacniFiltrovanie(slovensko);
+
+		return vyfiltrovanaTabulkaNaTriedenie;
+	}
+
 	void zapniFiltrovanie(UzemnaJednotka* slovensko) {
+
+		bool ajTriedenie_ = false;
+
 		fujPrislusnostAktivovany = false;
 		fujTypAktivovany = false;
 		fujVzdelaniePocetAktivovany = false;
@@ -784,43 +848,81 @@ public:
 	}
 
 	void aplikujFiltre(UzemnaJednotka* slovensko) {
-		
-		SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = new SortedSequenceTable<std::string, UzemnaJednotka*>();
-		SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = new SortedSequenceTable<std::string, UzemnaJednotka*>();
-		SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = new SortedSequenceTable<std::string, UzemnaJednotka*>();
-		
-		for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko->getUzemneJednotkyChildren())
+
+		if (!ajTriedenie_)
 		{
-			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
+			SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+			SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+			SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = new SortedSequenceTable<std::string, UzemnaJednotka*>();
+
+			for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko->getUzemneJednotkyChildren())
 			{
-				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
+				for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
 				{
-					if (vyfiltrujUJ(obec->accessData()))
+					for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
 					{
-						vyfiltrovaneObce->insert(obec->accessData()->getNazov(), obec->accessData());
+						if (vyfiltrujUJ(obec->accessData()))
+						{
+							vyfiltrovaneObce->insert(obec->accessData()->getNazov(), obec->accessData());
+						}
+					}
+					if (vyfiltrujUJ(okres->accessData()))
+					{
+						vyfiltrovaneOkresy->insert(okres->accessData()->getNazov(), okres->accessData());
 					}
 				}
-				if (vyfiltrujUJ(okres->accessData()))
+				if (vyfiltrujUJ(kraj->accessData()))
 				{
-					vyfiltrovaneOkresy->insert(okres->accessData()->getNazov(), okres->accessData());
+					vyfiltrovaneKraje->insert(kraj->accessData()->getNazov(), kraj->accessData());
 				}
 			}
-			if (vyfiltrujUJ(kraj->accessData()))
-			{
-				vyfiltrovaneKraje->insert(kraj->accessData()->getNazov(), kraj->accessData());
-			}
+
+			vypisVyslednehoVyfiltrovania(vyfiltrovaneKraje, vyfiltrovaneOkresy, vyfiltrovaneObce);
+
+			delete vyfiltrovaneKraje;
+			delete vyfiltrovaneOkresy;
+			delete vyfiltrovaneObce;
 		}
+		else {
 
-		std::cout << "Velkost krajov " << vyfiltrovaneKraje->size() << std::endl;
-		std::cout << "Velkost okresov " << vyfiltrovaneOkresy->size() << std::endl;
-		std::cout << "Velkost obci " << vyfiltrovaneObce->size() << std::endl;
 
-		system("pause");
-		vypisVyslednehoVyfiltrovania(vyfiltrovaneKraje, vyfiltrovaneOkresy, vyfiltrovaneObce);
+			std::cout << "aplikovanie filtrov s triedenim" << std::endl;
+			system("pause");
+			system("cls");
 
-		delete vyfiltrovaneKraje;
-		delete vyfiltrovaneOkresy;
-		delete vyfiltrovaneObce;
+			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
+			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
+			UnsortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
+
+			for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko->getUzemneJednotkyChildren())
+			{
+				for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
+				{
+					for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
+					{
+						if (vyfiltrujUJ(obec->accessData()))
+						{
+							vyfiltrovaneObce->insert(obec->accessData()->getNazov(), obec->accessData());
+						}
+					}
+					if (vyfiltrujUJ(okres->accessData()))
+					{
+						vyfiltrovaneOkresy->insert(okres->accessData()->getNazov(), okres->accessData());
+					}
+				}
+				if (vyfiltrujUJ(kraj->accessData()))
+				{
+					vyfiltrovaneKraje->insert(kraj->accessData()->getNazov(), kraj->accessData());
+				}
+			}
+
+			vyfiltrovanaTabulkaNaTriedenie = new LinkedList<UnsortedSequenceTable<std::string, UzemnaJednotka*>*>();
+
+			vyfiltrovanaTabulkaNaTriedenie->add(vyfiltrovaneKraje);
+			vyfiltrovanaTabulkaNaTriedenie->add(vyfiltrovaneOkresy);
+			vyfiltrovanaTabulkaNaTriedenie->add(vyfiltrovaneObce);
+
+		}		
 	}
 
 	void vypisVyslednehoVyfiltrovania(SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneKraje, SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneOkresy, SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovaneObce) {

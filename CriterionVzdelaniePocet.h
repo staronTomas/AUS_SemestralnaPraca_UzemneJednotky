@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CriterionUJ.h"
+#include "enum_TypVzdelania.h"
 
 
 class CriterionUJVzdelaniePocet : public CriterionUJ<int> {

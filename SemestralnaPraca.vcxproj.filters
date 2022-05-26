@@ -344,5 +344,8 @@
     <ClInclude Include="BodoveVyhladavanie.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Triedenie.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

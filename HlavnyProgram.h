@@ -24,6 +24,7 @@
 #include "Filter.h"
 #include "Filtrovanie.h"
 #include "BodoveVyhladavanie.h"
+#include "Triedenie.h"
 
 #include "enum_UzemnaJednotka.h"
 #include "enum_VyssiCelok.h"
@@ -52,6 +53,7 @@ private:
 
 	BodoveVyhladavanie* bodoveVyhladavanie_;
 	Filtrovanie* filter_;
+	Triedenie* triedenie_;
 
 
 public:
@@ -61,6 +63,7 @@ public:
 		reader_ = new CsvReader();
 		filter_ = new Filtrovanie();
 		bodoveVyhladavanie_ = new BodoveVyhladavanie();
+		triedenie_ = new Triedenie();
 	}
 
 	~HlavnyProgam() {
@@ -84,6 +87,8 @@ public:
 		delete filter_;
 
 		delete bodoveVyhladavanie_;
+
+		delete triedenie_;
 	}
 
 
@@ -136,6 +141,7 @@ public:
 				zvolCinnost();
 				break;
 			case 3:
+				triedenie_->spustiTriedenie(slovensko_);
 				zvolCinnost();
 				break;
 
@@ -401,25 +407,6 @@ public:
 		}
 		delete vzdelanieZoSuborov;
 
-		
-		
-		
-	}
-
-
-	UzemnaJednotka* getSlovensko() {
-		return slovensko_;
-	}
-
-
-
-
-
-	bool isNumber(const std::string& s)
-	{
-		std::string::const_iterator it = s.begin();
-		while (it != s.end() && std::isdigit(*it)) ++it;
-		return !s.empty() && it == s.end();
 	}
 
 
@@ -431,12 +418,12 @@ public:
 		for (TableItem<std::string, UzemnaJednotka*>* kraj : *slovensko_->getUzemneJednotkyChildren())
 		{
 			std::cout << "   ## " << kraj->accessData()->getNazov() << std::endl;
-			
-			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren()) 
+
+			for (TableItem<std::string, UzemnaJednotka*>* okres : *kraj->accessData()->getUzemneJednotkyChildren())
 			{
 				std::cout << "      # " << okres->accessData()->getNazov() << std::endl;
 
-				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren()) 
+				for (TableItem<std::string, UzemnaJednotka*>* obec : *okres->accessData()->getUzemneJednotkyChildren())
 				{
 					std::cout << "         - " << obec->accessData()->getNazov() << std::endl;
 
@@ -446,4 +433,14 @@ public:
 		}
 	}
 
+	UzemnaJednotka* getSlovensko() {
+		return slovensko_;
+	}
+
+	bool isNumber(const std::string& s)
+	{
+		std::string::const_iterator it = s.begin();
+		while (it != s.end() && std::isdigit(*it)) ++it;
+		return !s.empty() && it == s.end();
+	}
 };
