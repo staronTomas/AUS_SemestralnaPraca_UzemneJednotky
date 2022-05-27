@@ -13,6 +13,7 @@
 #include "structures/array/array.h"
 #include "structures/table/unsorted_sequence_table.h"
 
+//UROVEN 3
 #include "FUJPrislusnost.h"
 #include "FUJTyp.h"
 #include "FUJVzdelaniePocet.h"
@@ -23,19 +24,44 @@
 #include "CriterionUJVekPocet.h"
 #include "CriterionUJVekPodiel.h"
 
+//UROVEN 4
+#include "FUJVekovaSkupinaPocet.h"
+#include "FUJVekovaSkupinaPodiel.h"
+#include "FUJVekPocet.h"
+#include "FUJVekPodiel.h"
+
+#include "CriterionUJVekovaSkupinaPocet.h"
+#include "CriterionUJVekovaSkupinaPodiel.h"
+#include "CriterionUJVekPocet.h"
+#include "CriterionUJVekPodiel.h"
+
+
+
+
 class Filtrovanie {
 
 private:
 
+	bool ajTriedenie_ = false;
+
+	//uroven 3
 	bool fujPrislusnostAktivovany = false;
 	bool fujTypAktivovany = false;
 	bool fujVzdelaniePocetAktivovany = false;
 	bool fujVzdelaniePodielAktivovany = false;
 
-	bool ajTriedenie_ = false;
+
+	//uroven 4
+	bool fujVekSkupinaPocetAktivovany = false;
+	bool fujVekSkupinaPodielAktivovany = false;
+	bool fujVekPocetAktivovany = false;
+	bool fujVekPodielAktivovany = false;
+
+	
 
 
 
+	//Uroven 3
 	FUJTyp<UzemnaJednotka*, UZEMNA_JEDNOTKA>* fujTyp;
 	FUJPrislusnost<UzemnaJednotka*, UzemnaJednotka*>* fujPrislusnost;
 	FUJVzdelaniePocet<UzemnaJednotka*, int>* fujVzdelaniePocet;
@@ -44,7 +70,19 @@ private:
 	CriterionUJPrislusnost* kritPrislusnost = nullptr;
 	CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
 	CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
+
+	//Uroven 4
+	FUJVekovaSkupinaPocet<UzemnaJednotka*, int>* fujVekSkupinaPocet;
+	FUJVekovaSkupinaPodiel<UzemnaJednotka*, double>* fujVekSkupinaPodiel;
+	FUJVekPocet<UzemnaJednotka*, int>* fujVekPocet;
+	FUJVekPodiel<UzemnaJednotka*, double>* fujVekPodiel;
+
+	CriterionUJVekovaSkupinaPocet* kritVekSkupinaPocet = nullptr;
+	CriterionUJVekovaSkupinaPodiel* kritVekSkupinaPodiel = nullptr;
+	CriterionUJVekPocet* kritVekPocet = nullptr;
+	CriterionUJVekPodiel* kritVekPodiel = nullptr;
 	
+
 
 	//pre triedenie tabulka na return
 	SortedSequenceTable<std::string, UzemnaJednotka*>* vyfiltrovanaTabulkaNaTriedenie = nullptr;
@@ -59,11 +97,18 @@ public:
 		fujVzdelaniePocet = nullptr;
 		fujVzdelaniePodiel = nullptr;
 
+		fujVekSkupinaPocet = nullptr;
+		fujVekSkupinaPodiel = nullptr;
+		fujVekPocet = nullptr;
+		fujVekPodiel = nullptr;
+
 
 		vyfiltrovanaTabulkaNaTriedenie = nullptr;
 	};
 
 	~Filtrovanie() {
+
+		//UROVEN 3
 		if (fujTyp != nullptr) { delete fujTyp; fujTyp = nullptr; }
 		if (fujPrislusnost != nullptr) { delete fujPrislusnost; fujPrislusnost = nullptr; }
 		if (fujVzdelaniePocet != nullptr) { delete fujVzdelaniePocet; fujVzdelaniePocet = nullptr; }
@@ -72,6 +117,19 @@ public:
 		if (kritPrislusnost != nullptr) { delete kritPrislusnost; kritPrislusnost = nullptr; }
 		if (kritVzdelaniePocet != nullptr) { delete kritVzdelaniePocet; kritVzdelaniePocet = nullptr; }
 		if (kritVzdelaniePodiel != nullptr) { delete kritVzdelaniePodiel; kritVzdelaniePodiel = nullptr; }
+
+
+
+		// Uroven 4
+		if (fujVekSkupinaPocet != nullptr) { delete fujVekSkupinaPocet; fujVekSkupinaPocet = nullptr; }
+		if (fujVekSkupinaPodiel != nullptr) { delete fujVekSkupinaPodiel; fujVekSkupinaPodiel = nullptr; }
+		if (fujVekPocet != nullptr) { delete fujVekPocet; fujVekPocet = nullptr; }
+		if (fujVekPodiel != nullptr) { delete fujVekPodiel; fujVekPodiel = nullptr; }
+
+		if (kritVekSkupinaPocet != nullptr) { delete kritVekSkupinaPocet; kritVekSkupinaPocet = nullptr; }
+		if (kritVekSkupinaPodiel != nullptr) { delete kritVekSkupinaPodiel; kritVekSkupinaPodiel = nullptr; }
+		if (kritVekPocet != nullptr) { delete kritVekPocet; kritVekPocet = nullptr; }
+		if (kritVekPodiel != nullptr) { delete kritVekPodiel; kritVekPodiel = nullptr; }
 
 
 		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
@@ -85,32 +143,52 @@ public:
 
 	SortedSequenceTable<std::string, UzemnaJednotka*>* zapniFiltrovanieSTriedenim(UzemnaJednotka* slovensko) {
 
-		ajTriedenie_ = true;
+		
 
 		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
 		{
 			delete vyfiltrovanaTabulkaNaTriedenie;
 		}
-		
 
+		ajTriedenie_ = true;
+
+		//uroven 3
 		fujPrislusnostAktivovany = false;
 		fujTypAktivovany = false;
 		fujVzdelaniePocetAktivovany = false;
 		fujVzdelaniePodielAktivovany = false;
-
 		kritPrislusnost = nullptr;
-		CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
-		CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
-
+		kritVzdelaniePocet = nullptr;
+		kritVzdelaniePodiel = nullptr;
 		delete fujTyp;
 		delete fujPrislusnost;
 		delete fujVzdelaniePocet;
 		delete fujVzdelaniePodiel;
-
 		fujTyp = nullptr;
 		fujPrislusnost = nullptr;
 		fujVzdelaniePocet = nullptr;
 		fujVzdelaniePodiel = nullptr;
+
+		//uroven 4
+		fujVekSkupinaPocetAktivovany = false;
+		fujVekSkupinaPodielAktivovany = false;
+		fujVekPocetAktivovany = false;
+		fujVekPodielAktivovany = false;
+		kritVekSkupinaPocet = nullptr;
+		kritVekSkupinaPodiel = nullptr;
+		kritVekPocet = nullptr;
+		kritVekPodiel = nullptr;
+		delete fujVekSkupinaPocet;
+		delete fujVekSkupinaPodiel;
+		delete fujVekPocet;
+		delete fujVekPodiel;
+		fujTyp = nullptr;
+		fujPrislusnost = nullptr;
+		fujVzdelaniePocet = nullptr;
+		fujVzdelaniePodiel = nullptr;
+
+
+
 
 		zacniFiltrovanie(slovensko);
 
@@ -121,20 +199,36 @@ public:
 
 		bool ajTriedenie_ = false;
 
+		//uroven 3
 		fujPrislusnostAktivovany = false;
 		fujTypAktivovany = false;
 		fujVzdelaniePocetAktivovany = false;
 		fujVzdelaniePodielAktivovany = false;
-
 		kritPrislusnost = nullptr;
-		CriterionUJVzdelaniePocet* kritVzdelaniePocet = nullptr;
-		CriterionUJVzdelaniePodiel* kritVzdelaniePodiel = nullptr;
-
+		kritVzdelaniePocet = nullptr;
+		kritVzdelaniePodiel = nullptr;
 		delete fujTyp;
 		delete fujPrislusnost;
 		delete fujVzdelaniePocet;
 		delete fujVzdelaniePodiel;
+		fujTyp = nullptr;
+		fujPrislusnost = nullptr;
+		fujVzdelaniePocet = nullptr;
+		fujVzdelaniePodiel = nullptr;
 
+		//uroven 4
+		fujVekSkupinaPocetAktivovany = false;
+		fujVekSkupinaPodielAktivovany = false;
+		fujVekPocetAktivovany = false;
+		fujVekPodielAktivovany = false;
+		kritVekSkupinaPocet = nullptr;
+		kritVekSkupinaPodiel = nullptr;
+		kritVekPocet = nullptr;
+		kritVekPodiel = nullptr;
+		delete fujVekSkupinaPocet;
+		delete fujVekSkupinaPodiel;
+		delete fujVekPocet;
+		delete fujVekPodiel;
 		fujTyp = nullptr;
 		fujPrislusnost = nullptr;
 		fujVzdelaniePocet = nullptr;
@@ -199,6 +293,34 @@ public:
 		else {
 			std::cout << "# 4 # VYPNUTY # Filter UJ Vzdelanie Podiel" << std::endl;
 		}
+		if (fujVekSkupinaPocetAktivovany)
+		{
+			std::cout << "# 5 # ZAPNUTY # Filter UJ Vekova Skupina Pocet" << std::endl;
+		}
+		else {
+			std::cout << "# 5 # VYPNUTY # Filter UJ Vekova Skupina Pocet" << std::endl;
+		}
+		if (fujVekSkupinaPodielAktivovany)
+		{
+			std::cout << "# 6 # ZAPNUTY # Filter UJ Vekova Skupina Podiel" << std::endl;
+		}
+		else {
+			std::cout << "# 6 # VYPNUTY # Filter UJ Vekova Skupina Podiel" << std::endl;
+		}
+		if (fujVekPocetAktivovany)
+		{
+			std::cout << "# 7 # ZAPNUTY # Filter UJ Vek Pocet" << std::endl;
+		}
+		else {
+			std::cout << "# 7 # VYPNUTY # Filter UJ Vek Pocet" << std::endl;
+		}
+		if (fujVekPodielAktivovany)
+		{
+			std::cout << "# 8 # ZAPNUTY # Filter UJ Vek Podiel" << std::endl;
+		}
+		else {
+			std::cout << "# 8 # VYPNUTY # Filter UJ Vek Podiel" << std::endl;
+		}
 		std::cout << std::endl << "VSTUP -> ";
 
 		std::string vstup = "";
@@ -254,6 +376,26 @@ public:
 			case 4:
 				if (fujVzdelaniePodielAktivovany) { fujVzdelaniePodielAktivovany = false; }
 				else { fujVzdelaniePodielAktivovany = true; }
+				zacniFiltrovanie(slovensko);
+				break;
+			case 5:
+				if (fujVekSkupinaPocetAktivovany) { fujVekSkupinaPocetAktivovany = false; }
+				else { fujVekSkupinaPocetAktivovany = true; }
+				zacniFiltrovanie(slovensko);
+				break;
+			case 6:
+				if (fujVekSkupinaPodielAktivovany) { fujVekSkupinaPodielAktivovany = false; }
+				else { fujVekSkupinaPodielAktivovany = true; }
+				zacniFiltrovanie(slovensko);
+				break;
+			case 7:
+				if (fujVekPocetAktivovany) { fujVekPocetAktivovany = false; }
+				else { fujVekPocetAktivovany = true; }
+				zacniFiltrovanie(slovensko);
+				break;
+			case 8:
+				if (fujVekPodielAktivovany) { fujVekPodielAktivovany = false; }
+				else { fujVekPodielAktivovany = true; }
 				zacniFiltrovanie(slovensko);
 				break;
 
