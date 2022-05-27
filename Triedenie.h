@@ -90,23 +90,29 @@ public:
 			if (aktFiltre->at(3))
 			{
 				std::cout << "# " << x << " # KriteriumUJ Vzdelanie Podiel" << std::endl;
+				x++;
 			}
 			else {
 				std::cout << "# " << x << " # KriteriumUJ Vzdelanie Podiel - NIE JE MOZNE AKTIVOVAT" << std::endl;
+				x++;
 			}
 			if (aktFiltre->at(4))
 			{
 				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina Pocet" << std::endl;
+				x++;
 			}
 			else {
 				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina Pocet - NIE JE MOZNE AKTIVOVAT" << std::endl;
+				x++;
 			}
 			if (aktFiltre->at(5))
 			{
 				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina Podiel" << std::endl;
+				x++;
 			}
 			else {
 				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina - NIE JE MOZNE AKTIVOVAT" << std::endl;
+				x++;
 			}
 			std::cout << "VSTUP -> ";
 			vstup = "";
@@ -169,6 +175,38 @@ public:
 		}
 
 		system("cls");
+
+
+		UnsortedSequenceTable<std::string, UzemnaJednotka*>* utriedenaTabulka = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
+		for (TableItem<std::string, UzemnaJednotka*>* item : *vyfiltrovaneTabulky) {
+			utriedenaTabulka->insert(item->getKey(), item->accessData());
+		}
+
+		std::cout << "Triedim Uzemne Jednotky...";
+
+		TYP_VZDELANIA typVzd;
+		EVS typEvs;
+
+		if (triedVzdelaniePocet || triedVzdelaniePodiel)
+		{
+			typVzd = pouzivatelVyberTypVzdelania();
+		}
+		else {
+			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
+			typVzd = TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI;
+		}
+
+		if (triedVekSkupinaPocet || triedVekSkupinaPodiel) {
+			typEvs = pouzivatelVyberTypEVS();
+		}
+		else {
+			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
+			typEvs = EVS::PREDPRODUKTIVNI;
+		}
+
+
+
+		system("cls");
 		std::cout << "### TRIEDENIE ###" << std::endl;
 		std::cout << "# Triedit Vzostupne alebo Zostupne?" << std::endl;
 		std::cout << "# " << std::endl;
@@ -198,39 +236,9 @@ public:
 				system("pause");
 			}
 		}
-
-		system("cls");
-
-
-		UnsortedSequenceTable<std::string, UzemnaJednotka*>* utriedenaTabulka = new UnsortedSequenceTable<std::string, UzemnaJednotka*>();
-		for (TableItem<std::string, UzemnaJednotka*>* item : *vyfiltrovaneTabulky) {
-			utriedenaTabulka->insert(item->getKey(), item->accessData());
-		}
-
-		std::cout << "Triedim Uzemne Jednotky...";
-
-		TYP_VZDELANIA typVzd;
-		EVS typEvs;
-
-		if (!triedPodlaNazvu)
-		{
-			typVzd = pouzivatelVyberTypVzdelania();
-		}
-		else {
-			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
-			typVzd = TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI;
-		}
-
-		if (triedVekSkupinaPocet || triedVekSkupinaPodiel) {
-			typEvs = pouzivatelVyberTypEVS();
-		}
-		else {
-			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
-			typEvs = EVS::PREDPRODUKTIVNI;
-		}
 		
 
-		sort(*utriedenaTabulka, triedVzostupne, triedPodlaNazvu, triedVzdelaniePocet, triedVzdelaniePodiel, typVzd);
+		sort(*utriedenaTabulka, triedVzostupne, triedPodlaNazvu, triedVzdelaniePocet, triedVzdelaniePodiel, triedVekSkupinaPocet, triedVekSkupinaPodiel, typVzd, typEvs);
 
 		system("cls");
 		std::cout << "### Vypis utriedenych uzemnych jednotiek ###" << std::endl;
@@ -263,13 +271,13 @@ public:
 
 
 
-	void sort(UnsortedSequenceTable<std::string, UzemnaJednotka*>& table, bool vzostupne, bool triedPodlaNazvu, bool triedPodlaVzdelaniePocet, bool triedPodlaVzdelaniePodiel, TYP_VZDELANIA typVzd)
+	void sort(UnsortedSequenceTable<std::string, UzemnaJednotka*>& table, bool vzostupne, bool triedPodlaNazvu, bool triedPodlaVzdelaniePocet, bool triedPodlaVzdelaniePodiel, bool triedPodlaVekSkupinaPocet, bool triedPodlaVekSkupinaPodiel, TYP_VZDELANIA typVzd, EVS typEvs)
 	{
-		sortHelper(table, 0, table.size() - 1, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+		sortHelper(table, 0, table.size() - 1, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 	}
 
 	
-	void sortHelper(UnsortedSequenceTable<std::string, UzemnaJednotka*>& table, int min, int max, bool vzostupne, bool triedPodlaNazvu, bool triedPodlaVzdelaniePocet, bool triedPodlaVzdelaniePodiel, TYP_VZDELANIA typVzd) {
+	void sortHelper(UnsortedSequenceTable<std::string, UzemnaJednotka*>& table, int min, int max, bool vzostupne, bool triedPodlaNazvu, bool triedPodlaVzdelaniePocet, bool triedPodlaVzdelaniePodiel, bool triedPodlaVekSkupinaPocet, bool triedPodlaVekSkupinaPodiel, TYP_VZDELANIA typVzd, EVS typEvs) {
 
 
 		if (triedPodlaNazvu)
@@ -313,11 +321,11 @@ public:
 
 			if (min < pravy)
 			{
-				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 			}
 			if (lavy < max)
 			{
-				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 			}
 		}
 
@@ -364,11 +372,11 @@ public:
 
 			if (min < pravy)
 			{
-				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 			}
 			if (lavy < max)
 			{
-				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 			}
 		}
 
@@ -415,14 +423,116 @@ public:
 
 			if (min < pravy)
 			{
-				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 			}
 			if (lavy < max)
 			{
-				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, typVzd);
+				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
 			}
 		}
 
+
+		if (triedPodlaVekSkupinaPocet)
+		{
+			int hlavnyKluc = table.getItemAtIndex((min + max) / 2).accessData()->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(typEvs);
+
+			int lavy = min;
+			int pravy = max;
+
+
+			do
+			{
+				if (vzostupne)
+				{
+					while (table.getItemAtIndex(lavy).accessData()->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(typEvs) < hlavnyKluc)
+					{
+						lavy++;
+					}
+					while (table.getItemAtIndex(pravy).accessData()->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(typEvs) > hlavnyKluc)
+					{
+						pravy--;
+					}
+				}
+				else { // zostupne
+					while (table.getItemAtIndex(lavy).accessData()->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(typEvs) > hlavnyKluc)
+					{
+						lavy++;
+					}
+					while (table.getItemAtIndex(pravy).accessData()->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(typEvs) < hlavnyKluc)
+					{
+						pravy--;
+					}
+				}
+
+				if (lavy <= pravy)
+				{
+					table.swap(lavy, pravy);
+					lavy++;
+					pravy--;
+				}
+			} while (lavy <= pravy);
+
+			if (min < pravy)
+			{
+				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
+			}
+			if (lavy < max)
+			{
+				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
+			}
+		}
+
+
+
+		if (triedPodlaVekSkupinaPodiel)
+		{
+			int hlavnyKluc = table.getItemAtIndex((min + max) / 2).accessData()->getVekObyvatelov()->getPodielEvs(typEvs);
+
+			int lavy = min;
+			int pravy = max;
+
+
+			do
+			{
+				if (vzostupne)
+				{
+					while (table.getItemAtIndex(lavy).accessData()->getVekObyvatelov()->getPodielEvs(typEvs) < hlavnyKluc)
+					{
+						lavy++;
+					}
+					while (table.getItemAtIndex(pravy).accessData()->getVekObyvatelov()->getPodielEvs(typEvs) > hlavnyKluc)
+					{
+						pravy--;
+					}
+				}
+				else { // zostupne
+					while (table.getItemAtIndex(lavy).accessData()->getVekObyvatelov()->getPodielEvs(typEvs) > hlavnyKluc)
+					{
+						lavy++;
+					}
+					while (table.getItemAtIndex(pravy).accessData()->getVekObyvatelov()->getPodielEvs(typEvs) < hlavnyKluc)
+					{
+						pravy--;
+					}
+				}
+
+				if (lavy <= pravy)
+				{
+					table.swap(lavy, pravy);
+					lavy++;
+					pravy--;
+				}
+			} while (lavy <= pravy);
+
+			if (min < pravy)
+			{
+				sortHelper(table, min, pravy, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
+			}
+			if (lavy < max)
+			{
+				sortHelper(table, lavy, max, vzostupne, triedPodlaNazvu, triedPodlaVzdelaniePocet, triedPodlaVzdelaniePodiel, triedPodlaVekSkupinaPocet, triedPodlaVekSkupinaPodiel, typVzd, typEvs);
+			}
+		}
 	}
 
 
