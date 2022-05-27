@@ -486,11 +486,10 @@ public:
 
 		if (triedPodlaVekSkupinaPodiel)
 		{
-			int hlavnyKluc = table.getItemAtIndex((min + max) / 2).accessData()->getVekObyvatelov()->getPodielEvs(typEvs);
+			double hlavnyKluc = table.getItemAtIndex((min + max) / 2).accessData()->getVekObyvatelov()->getPodielEvs(typEvs);
 
-			int lavy = min;
-			int pravy = max;
-
+			double lavy = min;
+			double pravy = max;
 
 			do
 			{

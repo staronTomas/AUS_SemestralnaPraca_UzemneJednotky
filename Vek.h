@@ -221,7 +221,9 @@ public:
 	double getPodielEvs(EVS typEvs) {
 		double result = 0;
 
-		double pocetObyv = getPocetEkoVekSkupinuCelkovo(EVS::PREDPRODUKTIVNI) + getPocetEkoVekSkupinuCelkovo(EVS::PRODUKTIVNI) + getPocetEkoVekSkupinuCelkovo(EVS::POPRODUKTIVNY);
+		double pocetObyv = static_cast<double>(getPocetEkoVekSkupinuCelkovo(EVS::PREDPRODUKTIVNI)) 
+							+ static_cast<double>(getPocetEkoVekSkupinuCelkovo(EVS::PRODUKTIVNI))
+							+ static_cast<double>(getPocetEkoVekSkupinuCelkovo(EVS::POPRODUKTIVNY));
 
 		result = 100.0 / pocetObyv * static_cast<double>(getPocetEkoVekSkupinuCelkovo(typEvs));
 
