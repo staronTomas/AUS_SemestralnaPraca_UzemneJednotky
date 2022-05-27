@@ -56,6 +56,7 @@
     <ClInclude Include="Filtrovanie.h" />
     <ClInclude Include="FUJPrislusnost.h" />
     <ClInclude Include="FUJTyp.h" />
+    <ClInclude Include="FUJVekPodiel.h" />
     <ClInclude Include="FUJVzdelaniePocet.h" />
     <ClInclude Include="FUJVzdelaniePodiel.h" />
     <ClInclude Include="HlavnyProgram.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Triedenie.h" />
     <ClInclude Include="UzemnaJednotka.h" />
     <ClInclude Include="Vek.h" />
+    <ClInclude Include="FUJVekPocet.h" />
     <ClInclude Include="Vzdelanie.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

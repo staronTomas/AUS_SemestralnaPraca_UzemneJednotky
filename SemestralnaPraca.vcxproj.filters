@@ -347,5 +347,11 @@
     <ClInclude Include="Triedenie.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="FUJVekPocet.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FUJVekPodiel.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

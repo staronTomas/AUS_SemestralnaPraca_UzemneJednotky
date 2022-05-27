@@ -2,5 +2,5 @@
 
 
 enum class POHLAVIE {
-	MUZ, ZENA
+	MUZ, ZENA, VSETCI
 };
