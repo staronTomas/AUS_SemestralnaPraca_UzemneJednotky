@@ -2,6 +2,8 @@
 
 #include "CriterionUJ.h"
 #include "enum_UzemnaJednotka.h"
+#include "enum_EVS.h"
+
 
 class CriterionUJVekovaSkupinaPocet : public CriterionUJ<int> {
 
@@ -9,6 +11,10 @@ private:
 	EVS typEvs_;
 
 public:
+
+	CriterionUJVekovaSkupinaPocet(EVS typEvs) {
+		typEvs_ = typEvs;
+	};
 
 	int evaluate(UzemnaJednotka* object);
 

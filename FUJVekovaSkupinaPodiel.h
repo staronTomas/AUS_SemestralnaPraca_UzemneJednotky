@@ -28,7 +28,7 @@ public:
 	virtual ~FUJVekovaSkupinaPodiel() = default;
 
 
-	TYP_VZDELANIA getTypEvs() {
+	EVS getTypEvs() {
 		return typEvs_;
 	}
 

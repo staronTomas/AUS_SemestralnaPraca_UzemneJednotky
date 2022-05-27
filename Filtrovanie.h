@@ -307,7 +307,7 @@ public:
 		else {
 			std::cout << "# 6 # VYPNUTY # Filter UJ Vekova Skupina Podiel" << std::endl;
 		}
-		if (fujVekPocetAktivovany)
+		/*if (fujVekPocetAktivovany)
 		{
 			std::cout << "# 7 # ZAPNUTY # Filter UJ Vek Pocet" << std::endl;
 		}
@@ -320,7 +320,7 @@ public:
 		}
 		else {
 			std::cout << "# 8 # VYPNUTY # Filter UJ Vek Podiel" << std::endl;
-		}
+		}*/
 		std::cout << std::endl << "VSTUP -> ";
 
 		std::string vstup = "";
@@ -388,7 +388,7 @@ public:
 				else { fujVekSkupinaPodielAktivovany = true; }
 				zacniFiltrovanie(slovensko);
 				break;
-			case 7:
+			/*case 7:
 				if (fujVekPocetAktivovany) { fujVekPocetAktivovany = false; }
 				else { fujVekPocetAktivovany = true; }
 				zacniFiltrovanie(slovensko);
@@ -398,7 +398,7 @@ public:
 				else { fujVekPodielAktivovany = true; }
 				zacniFiltrovanie(slovensko);
 				break;
-
+				*/
 			default:
 				system("cls");
 				std::cout << "# ERROR # " << std::endl;
@@ -992,6 +992,328 @@ public:
 			fujVzdelaniePodiel = new FUJVzdelaniePodiel<UzemnaJednotka*, double>(zvolenyTypVzdelania, zadanyMin, zadanyMax);
 		}
 
+
+		if (fujVekSkupinaPocetAktivovany)
+		{
+			std::string vstup = "x";
+
+			int zadanyMin = 0;
+			int zadanyMax = 0;
+
+			EVS zvolenyTypEvs;
+
+			bool breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVekovaSkupinaPocet  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVekovaSkupinaPocet - 1. Zvol typ Vekovej Skupiny " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << "# 1 # PredProduktivni " << std::endl;
+				std::cout << "# 2 # Produktivni " << std::endl;
+				std::cout << "# 3 # PoProduktivni " << std::endl;
+
+				std::cout << std::endl << "VSTUP -> ";
+
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+					int vstupInt = std::stoi(vstup);
+					switch (vstupInt)
+					{
+					case 1:
+						zvolenyTypEvs = EVS::PREDPRODUKTIVNI;
+						breaknut = true;
+						break;
+					case 2:
+						zvolenyTypEvs = EVS::PRODUKTIVNI;
+						breaknut = true;
+						break;
+					case 3:
+						zvolenyTypEvs = EVS::POPRODUKTIVNY;
+						breaknut = true;
+						break;
+					default:
+
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+						system("cls");
+						break;
+					}
+
+				}
+
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+			//Zadanie minima a maxima
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVekovaSkupinaPocet  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVekovaSkupinaPocet - 2. Zvol MINIMUM poctu zvolenej Vekovej Skupiny " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP minimum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+					zadanyMin = stoi(vstup);
+					breaknut = true;
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVekovaSkupinaPocet  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVekovaSkupinaPocet - 3. Zvol MAXIMUM poctu zvoleneho Vekovej Skupiny " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << "# Pokial chces bez limitu, napis slovo -> maximum" << std::endl;
+				std::cout << std::endl << "VSTUP maximum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (vstup.compare("maximum") == 0)
+				{
+					zadanyMax = INT_MAX;
+					break;
+				}
+				else {
+
+					if (!isNumber(vstup))
+					{
+						nieJeCisloMessage();
+					}
+					else {
+
+						if (zadanyMin <= stoi(vstup))
+						{
+							zadanyMax = stoi(vstup);
+							breaknut = true;
+						}
+						else {
+							system("cls");
+							std::cout << "# ERROR # " << std::endl;
+							std::cout << "# Maximum musi byt vacsi alebo rovny minimumu " << std::endl;
+							std::cout << "# Minimum -> " << zadanyMin << std::endl;
+							std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+							system("pause");
+						}
+
+
+					}
+					if (breaknut)
+					{
+						break;
+					}
+				}
+			}
+			kritVekSkupinaPocet = new CriterionUJVekovaSkupinaPocet(zvolenyTypEvs);
+			fujVekSkupinaPocet = new FUJVekovaSkupinaPocet<UzemnaJednotka*, int>(zvolenyTypEvs, zadanyMin, zadanyMax);
+		}
+
+
+
+		if (fujVekSkupinaPodielAktivovany)
+		{
+			std::string vstup = "x";
+
+			int zadanyMin = 0;
+			int zadanyMax = 0;
+
+			EVS zvolenyTypEvs;
+
+			bool breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVekovaSkupinaPodiel  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVekovaSkupinaPodiel - 1. Zvol typ Vekovej skupiny " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << "# 1 # PredProduktivni " << std::endl;
+				std::cout << "# 2 # Produktivni " << std::endl;
+				std::cout << "# 3 # PoProduktivni " << std::endl;
+				std::cout << std::endl << "VSTUP -> ";
+
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else {
+					int vstupInt = std::stoi(vstup);
+					switch (vstupInt)
+					{
+					case 1:
+						zvolenyTypEvs = EVS::PREDPRODUKTIVNI;
+						breaknut = true;
+						break;
+					case 2:
+						zvolenyTypEvs = EVS::PRODUKTIVNI;
+						breaknut = true;
+						break;
+					case 3:
+						zvolenyTypEvs = EVS::POPRODUKTIVNY;
+						breaknut = true;
+						break;
+					default:
+
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+						system("cls");
+						break;
+					}
+
+				}
+
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+			//Zadanie minima a maxima
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVekovaSkupinaPodiel  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVekovaSkupinaPodiel - 2. Zvol MINIMUM poctu zvolenej Vekovej Skupiny v PERCENTACH 0-100 " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP minimum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else if (stoi(vstup) < 0 || stoi(vstup) > 100) {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Cislo musi byt v intervale <0, 100> " << std::endl;
+					std::cout << "# Minimum -> " << zadanyMin << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+				else {
+					zadanyMin = stoi(vstup);
+					breaknut = true;
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+
+
+			breaknut = false;
+
+			while (true) {
+
+				system("cls");
+				std::cout << "#####  FUJVekovaSkupinaPodiel  #####" << std::endl;
+				std::cout << "# Zvol parameter filtra FUJVekovaSkupinaPodiel - 3. Zvol MAXIMUM poctu zvoleneho Vekovej Skupiny v PERCENTACH 0-100 " << std::endl;
+				std::cout << "#" << std::endl;
+				std::cout << std::endl << "VSTUP maximum -> ";
+				std::string vstup = "";
+
+				std::cin >> vstup;
+				system("cls");
+
+				if (!isNumber(vstup))
+				{
+					nieJeCisloMessage();
+				}
+				else if (stoi(vstup) < 0 || stoi(vstup) > 100) {
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Cislo musi byt v intervale <0, 100> " << std::endl;
+					std::cout << "# Minimum -> " << zadanyMin << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+				}
+				else {
+
+					if (zadanyMin <= stoi(vstup))
+					{
+						zadanyMax = stoi(vstup);
+						breaknut = true;
+					}
+					else {
+						system("cls");
+						std::cout << "# ERROR # " << std::endl;
+						std::cout << "# Maximum musi byt vacsi alebo rovny ako minimum " << std::endl;
+						std::cout << "# Minimum -> " << zadanyMin << std::endl;
+						std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+						system("pause");
+					}
+
+
+				}
+				if (breaknut)
+				{
+					break;
+				}
+			}
+
+			kritVekSkupinaPodiel = new CriterionUJVekovaSkupinaPodiel(zvolenyTypEvs);
+
+			fujVekSkupinaPodiel = new FUJVekovaSkupinaPodiel<UzemnaJednotka*, double>(zvolenyTypEvs, zadanyMin, zadanyMax);
+		}
+
+
 		aplikujFiltre(slovensko);
 
 
@@ -1087,7 +1409,15 @@ public:
 			}
 			if (fujVzdelaniePodiel != nullptr)
 			{
-				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(kraj->accessData()) << std::endl;
+				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(kraj->accessData()) << " %" << std::endl;
+			}
+			if (fujVekSkupinaPocet != nullptr)
+			{
+				std::cout << "# VekovaSkupina Pocet -> " << vratTextTypuEVS(fujVekSkupinaPocet->getTypEvs()) << " : " << kritVekSkupinaPocet->evaluate(kraj->accessData()) << std::endl;
+			}
+			if (fujVekSkupinaPodiel != nullptr)
+			{
+				std::cout << "# VekovaSkupina PODIEL -> " << vratTextTypuEVS(fujVekSkupinaPodiel->getTypEvs()) << " : " << kritVekSkupinaPodiel->evaluate(kraj->accessData()) << " %" << std::endl;
 			}
 			std::cout <<  "### Vyssie Uzemne Jednotky:" << std::endl;
 			std::cout << "1. Nazov -> " << kraj->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << kraj->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
@@ -1106,7 +1436,15 @@ public:
 			}
 			if (fujVzdelaniePodiel != nullptr)
 			{
-				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(okres->accessData()) << std::endl;
+				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(okres->accessData()) << " %" << std::endl;
+			}
+			if (fujVekSkupinaPocet != nullptr)
+			{
+				std::cout << "# VekovaSkupina Pocet -> " << vratTextTypuEVS(fujVekSkupinaPocet->getTypEvs()) << " : " << kritVekSkupinaPocet->evaluate(okres->accessData()) << std::endl;
+			}
+			if (fujVekSkupinaPodiel != nullptr)
+			{
+				std::cout << "# VekovaSkupina PODIEL -> " << vratTextTypuEVS(fujVekSkupinaPodiel->getTypEvs()) << " : " << kritVekSkupinaPodiel->evaluate(okres->accessData()) << " %" << std::endl;
 			}
 			std::cout  << "### Vyssie Uzemne Jednotky:" << std::endl;
 			std::cout << "1. Nazov -> " << okres->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << okres->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
@@ -1126,7 +1464,15 @@ public:
 			}
 			if (fujVzdelaniePodiel != nullptr)
 			{
-				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(obec->accessData()) << std::endl;
+				std::cout << "# Vzdelanie PODIEL -> " << vratTextTypuVzdelania(fujVzdelaniePodiel->getTypVzdelania()) << " : " << kritVzdelaniePodiel->evaluate(obec->accessData()) << " %" << std::endl;
+			}
+			if (fujVekSkupinaPocet != nullptr)
+			{
+				std::cout << "# VekovaSkupina Pocet -> " << vratTextTypuEVS(fujVekSkupinaPocet->getTypEvs()) << " : " << kritVekSkupinaPocet->evaluate(obec->accessData()) << std::endl;
+			}
+			if (fujVekSkupinaPodiel != nullptr)
+			{
+				std::cout << "# VekovaSkupina PODIEL -> " << vratTextTypuEVS(fujVekSkupinaPodiel->getTypEvs()) << " : " << kritVekSkupinaPodiel->evaluate(obec->accessData()) << " %" << std::endl;
 			}
 			std::cout << "### Vyssie Uzemne Jednotky:" << std::endl;
 			std::cout << "1. Nazov -> " << obec->accessData()->getVyssiaUJRodic()->getNazov() << "  # TYP -> " << obec->accessData()->getVyssiaUJRodic()->getStringTypUzemnejJednotky() << std::endl;
@@ -1193,6 +1539,20 @@ public:
 				return false;
 			}
 		}
+		if (fujVekSkupinaPocet != nullptr)
+		{
+			if (!fujVekSkupinaPocet->pass(uzemnaJednotka))
+			{
+				return false;
+			}
+		}
+		if (fujVekSkupinaPodiel != nullptr)
+		{
+			if (!fujVekSkupinaPodiel->pass(uzemnaJednotka))
+			{
+				return false;
+			}
+		}
 
 		return true;
 	}
@@ -1250,13 +1610,55 @@ public:
 
 
 
+	std::string vratTextTypuEVS(EVS typEvs) {
+		switch (typEvs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			return "PredProduktivni : ";
+			break;
+		case EVS::PRODUKTIVNI:
+			return "Produktivni : ";
+			break;
+		case EVS::POPRODUKTIVNY:
+			return "PoProduktivni : ";
+			break;
+
+		default:
+			break;
+		}
+	}
+
+
+	std::string vratTextTypuPohlavia(POHLAVIE typPohlavia) {
+		switch (typPohlavia) {
+
+		case POHLAVIE::MUZ:
+			return "Muz : ";
+			break;
+		case POHLAVIE::ZENA:
+			return "Zena : ";
+			break;
+		case POHLAVIE::VSETCI:
+			return "MuziAjZeny : ";
+			break;
+
+		default:
+			break;
+		}
+	}
+
+
+
 	structures::Array<bool>* vratZoznamAktivovanychFiltrov() {
-		Array<bool>* aktFiltre = new Array<bool>(4);
+		Array<bool>* aktFiltre = new Array<bool>(6);
 		aktFiltre->at(0) = fujTypAktivovany;
 		aktFiltre->at(1) = fujPrislusnostAktivovany;
 
 		aktFiltre->at(2) = fujVzdelaniePocetAktivovany;
 		aktFiltre->at(3) = fujVzdelaniePodielAktivovany;
+
+		aktFiltre->at(4) = fujVekSkupinaPocetAktivovany;
+		aktFiltre->at(5) = fujVekSkupinaPodielAktivovany;
 
 		return aktFiltre;
 	}

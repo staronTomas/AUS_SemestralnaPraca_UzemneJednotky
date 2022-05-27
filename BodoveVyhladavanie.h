@@ -47,7 +47,7 @@ public:
 		CriterionUJNazov* kritNazov = new CriterionUJNazov();
 		CriterionUJTyp* kritTyp = new CriterionUJTyp();
 		CriterionUJVzdelaniePocet* kritVzdPocet = new CriterionUJVzdelaniePocet(TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI);
-		CriterionUJVekovaSkupinaPocet* kritVekSkupPocet = new CriterionUJVekovaSkupinaPocet();
+		CriterionUJVekovaSkupinaPocet* kritVekSkupPocet = new CriterionUJVekovaSkupinaPocet(EVS::PREDPRODUKTIVNI);
 
 		system("cls");
 		std::cout << "### Vysledny vypis o hladanej Uzemnej jednotke a jej vyssie jednotky do ktorých patrí" << std::endl << std::endl;

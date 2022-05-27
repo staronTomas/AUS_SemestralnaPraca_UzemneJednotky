@@ -7,6 +7,8 @@
 
 #include "structures/table/unsorted_sequence_table.h";
 
+#include "enum_EVS.h"
+
 
 class Triedenie {
 
@@ -19,6 +21,9 @@ private:
 	bool triedVzdelaniePocet;
 	bool triedVzdelaniePodiel;
 
+	bool triedVekSkupinaPocet;
+	bool triedVekSkupinaPodiel;
+
 	bool triedVzostupne;
 	bool triedZostupne;
 
@@ -30,6 +35,9 @@ public:
 		triedPodlaNazvu = false;
 		triedVzdelaniePocet = false;
 		triedVzdelaniePodiel = false;
+
+		triedVekSkupinaPocet = false;
+		triedVekSkupinaPodiel = false;
 
 		triedVzostupne = false;
 		triedZostupne = false;
@@ -48,6 +56,9 @@ public:
 		triedPodlaNazvu = false;
 		triedVzdelaniePocet = false;
 		triedVzdelaniePodiel = false;
+
+		triedVekSkupinaPocet = false;
+		triedVekSkupinaPodiel = false;
 
 		triedVzostupne = false;
 
@@ -83,6 +94,20 @@ public:
 			else {
 				std::cout << "# " << x << " # KriteriumUJ Vzdelanie Podiel - NIE JE MOZNE AKTIVOVAT" << std::endl;
 			}
+			if (aktFiltre->at(4))
+			{
+				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina Pocet" << std::endl;
+			}
+			else {
+				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina Pocet - NIE JE MOZNE AKTIVOVAT" << std::endl;
+			}
+			if (aktFiltre->at(5))
+			{
+				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina Podiel" << std::endl;
+			}
+			else {
+				std::cout << "# " << x << " # KriteriumUJ Vekova Skupina - NIE JE MOZNE AKTIVOVAT" << std::endl;
+			}
 			std::cout << "VSTUP -> ";
 			vstup = "";
 			std::cin >> vstup;
@@ -112,6 +137,18 @@ public:
 					if (aktFiltre->at(3)) {
 						spravnyVyber = true;
 						triedVzdelaniePodiel = true;
+					}
+					break;
+				case 4:
+					if (aktFiltre->at(4)) {
+						spravnyVyber = true;
+						triedVekSkupinaPocet = true;
+					}
+					break;
+				case 5:
+					if (aktFiltre->at(5)) {
+						spravnyVyber = true;
+						triedVekSkupinaPodiel = true;
 					}
 					break;
 				default:
@@ -173,6 +210,7 @@ public:
 		std::cout << "Triedim Uzemne Jednotky...";
 
 		TYP_VZDELANIA typVzd;
+		EVS typEvs;
 
 		if (!triedPodlaNazvu)
 		{
@@ -181,6 +219,14 @@ public:
 		else {
 			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
 			typVzd = TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI;
+		}
+
+		if (triedVekSkupinaPocet || triedVekSkupinaPodiel) {
+			typEvs = pouzivatelVyberTypEVS();
+		}
+		else {
+			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
+			typEvs = EVS::PREDPRODUKTIVNI;
 		}
 		
 
@@ -199,6 +245,14 @@ public:
 			if (triedVzdelaniePodiel)
 			{
 				std::cout << "# Vzdelanie podiel " << vratTextTypuVzdelania(typVzd) << item->accessData()->getPodielVzdelanie(typVzd) << " %" << std::endl;
+			}
+			if (triedVekSkupinaPocet)
+			{
+				std::cout << "# Vekova Skupina pocet " << vratTextTypuEvs(typEvs) << item->accessData()->getVekObyvatelov()->getPocetEkoVekSkupinuCelkovo(typEvs) << std::endl; // chyba tu jeee rozmyslaj este
+			}
+			if (triedVekSkupinaPodiel)
+			{
+				std::cout << "# Vekova Skupina podiel " << vratTextTypuEvs(typEvs) << item->accessData()->getVekObyvatelov()->getPodielEvs(typEvs) << " %" << std::endl;
 			}
 			std::cout << std::endl;
 		}
@@ -476,6 +530,68 @@ public:
 
 
 
+
+	EVS pouzivatelVyberTypEVS() {
+
+		bool breaknut = false;
+
+		while (true) {
+
+			system("cls");
+			std::cout << "# Zvol Typ Vekovej Skupiny podla ktoreho chces utriedit tabulku" << std::endl;
+			std::cout << "#" << std::endl;
+			std::cout << "# 1 # PredProduktivni " << std::endl;
+			std::cout << "# 2 # Produktivni " << std::endl;
+			std::cout << "# 3 # PoProduktivni " << std::endl;
+			std::cout << std::endl << "VSTUP -> ";
+
+			std::string vstup = "";
+
+			std::cin >> vstup;
+			system("cls");
+
+			if (!isNumber(vstup))
+			{
+				nieJeCisloMessage();
+			}
+			else {
+				int vstupInt = std::stoi(vstup);
+				switch (vstupInt)
+				{
+				case 1:
+					return EVS::PREDPRODUKTIVNI;
+					breaknut = true;
+					break;
+				case 2:
+					return EVS::PRODUKTIVNI;
+					breaknut = true;
+					break;
+				case 3:
+					return EVS::POPRODUKTIVNY;
+					breaknut = true;
+					break;
+				default:
+
+					system("cls");
+					std::cout << "# ERROR # " << std::endl;
+					std::cout << "# Zvolene cislo neponuka ziadnu akciu. " << std::endl;
+					std::cout << "# Pre pokracovanie stlac lubovolne tlacidlo. " << std::endl;
+					system("pause");
+					system("cls");
+					break;
+				}
+
+			}
+
+			if (breaknut)
+			{
+				break;
+			}
+		}
+	}
+
+
+
 	std::string vratTextTypuVzdelania(TYP_VZDELANIA typVzd) {
 		switch (typVzd) {
 
@@ -502,6 +618,25 @@ public:
 			break;
 		case TYP_VZDELANIA::NEZISTENE:
 			return "Nezistene vzdelanie : ";
+			break;
+
+		default:
+			break;
+		}
+	}
+
+
+	std::string vratTextTypuEvs(EVS typEvs) {
+		switch (typEvs) {
+
+		case EVS::PREDPRODUKTIVNI:
+			return "PredProduktivni : ";
+			break;
+		case EVS::PRODUKTIVNI:
+			return "Produktivni : ";
+			break;
+		case EVS::POPRODUKTIVNY:
+			return "PoProduktivni : ";
 			break;
 
 		default:

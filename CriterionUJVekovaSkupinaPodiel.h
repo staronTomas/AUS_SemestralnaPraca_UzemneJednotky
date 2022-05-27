@@ -11,6 +11,10 @@ private:
 
 public:
 
+	CriterionUJVekovaSkupinaPodiel(EVS typEvs) {
+		typEvs_ = typEvs;
+	};
+
 	double evaluate(UzemnaJednotka* object);
 
 	void setTypEvs(EVS evs);

@@ -164,6 +164,7 @@ public:
 	}
 
 
+
 	int getPocetEkoVekSkupinuZeny(EVS evs) {
 		switch (evs) {
 
@@ -214,6 +215,17 @@ public:
 		default:
 			break;
 		}
+	}
+
+
+	double getPodielEvs(EVS typEvs) {
+		double result = 0;
+
+		double pocetObyv = getPocetEkoVekSkupinuCelkovo(EVS::PREDPRODUKTIVNI) + getPocetEkoVekSkupinuCelkovo(EVS::PRODUKTIVNI) + getPocetEkoVekSkupinuCelkovo(EVS::POPRODUKTIVNY);
+
+		result = 100.0 / pocetObyv * static_cast<double>(getPocetEkoVekSkupinuCelkovo(typEvs));
+
+		return result;
 	}
 
 
