@@ -490,7 +490,7 @@ public:
 
 			double lavy = min;
 			double pravy = max;
-
+			
 			do
 			{
 				if (vzostupne)
