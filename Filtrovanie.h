@@ -64,15 +64,14 @@ public:
 	};
 
 	~Filtrovanie() {
-		delete fujTyp;
-		delete fujPrislusnost;
-		delete fujVzdelaniePocet;
-		delete fujVzdelaniePodiel;
+		if (fujTyp != nullptr) { delete fujTyp; fujTyp = nullptr; }
+		if (fujPrislusnost != nullptr) { delete fujPrislusnost; fujPrislusnost = nullptr; }
+		if (fujVzdelaniePocet != nullptr) { delete fujVzdelaniePocet; fujVzdelaniePocet = nullptr; }
+		if (fujVzdelaniePodiel != nullptr) { delete fujVzdelaniePodiel; fujVzdelaniePodiel = nullptr; }
 
-
-		delete kritPrislusnost;
-		delete kritVzdelaniePocet;
-		delete kritVzdelaniePodiel;
+		if (kritPrislusnost != nullptr) { delete kritPrislusnost; kritPrislusnost = nullptr; }
+		if (kritVzdelaniePocet != nullptr) { delete kritVzdelaniePocet; kritVzdelaniePocet = nullptr; }
+		if (kritVzdelaniePodiel != nullptr) { delete kritVzdelaniePodiel; kritVzdelaniePodiel = nullptr; }
 
 
 		if (vyfiltrovanaTabulkaNaTriedenie != nullptr)
@@ -889,8 +888,11 @@ public:
 			vypisVyslednehoVyfiltrovania(vyfiltrovaneKraje, vyfiltrovaneOkresy, vyfiltrovaneObce);
 
 			delete vyfiltrovaneKraje;
+			vyfiltrovaneKraje = nullptr;
 			delete vyfiltrovaneOkresy;
+			vyfiltrovaneOkresy = nullptr;
 			delete vyfiltrovaneObce;
+			vyfiltrovaneObce = nullptr;
 		}
 		else {
 
@@ -991,6 +993,27 @@ public:
 		}
 		system("pause");
 		system("cls");
+
+		if (fujPrislusnost != nullptr)
+		{
+			delete fujPrislusnost;
+			fujPrislusnost = nullptr;
+		}
+		if (fujTyp != nullptr)
+		{
+			delete fujTyp;
+			fujTyp = nullptr;
+		}
+		if (fujVzdelaniePocet != nullptr)
+		{
+			delete fujVzdelaniePocet;
+			fujVzdelaniePocet = nullptr;
+		}
+		if (fujVzdelaniePodiel != nullptr)
+		{
+			delete fujVzdelaniePodiel;
+			fujVzdelaniePodiel = nullptr;
+		}
 	}
 
 	

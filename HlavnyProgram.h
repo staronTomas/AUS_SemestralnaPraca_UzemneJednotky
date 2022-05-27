@@ -61,9 +61,9 @@ public:
 	HlavnyProgam() {
 		slovensko_ = new UzemnaJednotka("Slovensko", UZEMNA_JEDNOTKA::STAT, "SK", nullptr);
 		reader_ = new CsvReader();
-		filter_ = new Filtrovanie();
-		bodoveVyhladavanie_ = new BodoveVyhladavanie();
-		triedenie_ = new Triedenie();
+		bodoveVyhladavanie_ = nullptr;
+		filter_ = nullptr;
+		triedenie_ = nullptr;
 	}
 
 	~HlavnyProgam() {
@@ -84,11 +84,6 @@ public:
 		}
 		delete slovensko_;
 
-		delete filter_;
-
-		delete bodoveVyhladavanie_;
-
-		delete triedenie_;
 	}
 
 
@@ -132,16 +127,25 @@ public:
 			switch (vstupInt)
 			{
 			case 1:
+				bodoveVyhladavanie_ = new BodoveVyhladavanie();;
 				bodoveVyhladavanie_->bodoveVyhladavnie(slovensko_);
+				delete bodoveVyhladavanie_;
+
 				zvolCinnost();
 				break;
 
 			case 2:
+				filter_ = new Filtrovanie();
 				filter_->zapniFiltrovanie(slovensko_);
+				delete filter_;
+
 				zvolCinnost();
 				break;
 			case 3:
+				triedenie_ = new Triedenie();
 				triedenie_->spustiTriedenie(slovensko_);
+				delete triedenie_;
+
 				zvolCinnost();
 				break;
 

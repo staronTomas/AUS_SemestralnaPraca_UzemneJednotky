@@ -7,7 +7,6 @@
 
 #include "structures/table/unsorted_sequence_table.h";
 
-#include "structures/table/sorting/quick_sort.h"
 
 class Triedenie {
 
@@ -22,8 +21,6 @@ private:
 
 	bool triedVzostupne;
 	bool triedZostupne;
-
-	QuickSort<std::string, UzemnaJednotka*>* sorter_;
 
 public:
 	
@@ -174,7 +171,18 @@ public:
 		}
 
 		std::cout << "Triedim Uzemne Jednotky...";
-		TYP_VZDELANIA typVzd = pouzivatelVyberTypVzdelania();
+
+		TYP_VZDELANIA typVzd;
+
+		if (!triedPodlaNazvu)
+		{
+			typVzd = pouzivatelVyberTypVzdelania();
+		}
+		else {
+			// len nastavim lebo mi treba do metody na triedenie... neovyplivni to nic ked to tu bude
+			typVzd = TYP_VZDELANIA::BEZ_UKONCENEHO_VZDELANIA_DETI;
+		}
+		
 
 		sort(*utriedenaTabulka, triedVzostupne, triedPodlaNazvu, triedVzdelaniePocet, triedVzdelaniePodiel, typVzd);
 
@@ -212,7 +220,7 @@ public:
 
 		if (triedPodlaNazvu)
 		{
-			std::string hlavnyKluc = table.getItemAtIndex((min + max) / 2).getKey();
+			std::string hlavnyKluc = table.getItemAtIndex((min + max) / 2).accessData()->getNazov();
 
 			int lavy = min;
 			int pravy = max;
@@ -221,21 +229,21 @@ public:
 			{
 				if (vzostupne)
 				{
-					while (table.getItemAtIndex(lavy).getKey() < hlavnyKluc)
+					while (table.getItemAtIndex(lavy).accessData()->getNazov() < hlavnyKluc)
 					{
 						lavy++;
 					}
-					while (table.getItemAtIndex(pravy).getKey() > hlavnyKluc)
+					while (table.getItemAtIndex(pravy).accessData()->getNazov() > hlavnyKluc)
 					{
 						pravy--;
 					}
 				}
 				else { // zostupne
-					while (table.getItemAtIndex(lavy).getKey() > hlavnyKluc)
+					while (table.getItemAtIndex(lavy).accessData()->getNazov() > hlavnyKluc)
 					{
 						lavy++;
 					}
-					while (table.getItemAtIndex(pravy).getKey() < hlavnyKluc)
+					while (table.getItemAtIndex(pravy).accessData()->getNazov() < hlavnyKluc)
 					{
 						pravy--;
 					}
