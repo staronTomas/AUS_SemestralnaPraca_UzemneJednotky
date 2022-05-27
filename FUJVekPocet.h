@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CriterionVzdelaniePocet.h"
+#include "CriterionUJVekPocet.h"
 
 #include "FilterInterval.h"
 #include "UzemnaJednotka.h"

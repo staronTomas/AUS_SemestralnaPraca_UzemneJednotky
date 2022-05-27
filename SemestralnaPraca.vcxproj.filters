@@ -353,5 +353,11 @@
     <ClInclude Include="FUJVekPodiel.h">
       <Filter>Source Files\Filters</Filter>
     </ClInclude>
+    <ClInclude Include="FUJVekovaSkupinaPocet.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FUJVekovaSkupinaPodiel.h">
+      <Filter>Source Files\Filters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

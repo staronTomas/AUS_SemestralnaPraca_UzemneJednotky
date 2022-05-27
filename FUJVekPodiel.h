@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CriterionVzdelaniePodiel.h"
+#include "CriterionUJVekPodiel.h"
 
 #include "FilterInterval.h"
 #include "UzemnaJednotka.h"
@@ -20,7 +20,7 @@ private:
 
 public:
 
-	FUJVekPodiel(POHLAVIE typPohlavia, double min, double max) : FilterInterval(new CriterionUJVzdelaniePodiel(typPohlavia), min, max) {
+	FUJVekPodiel(POHLAVIE typPohlavia, double min, double max) : FilterInterval(new CriterionUJVekPodiel(typPohlavia), min, max) {
 		typPohlavia_ = typPohlavia;
 		min_ = min;
 		max_ = max;
