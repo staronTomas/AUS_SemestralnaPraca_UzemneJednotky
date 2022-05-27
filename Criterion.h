@@ -3,9 +3,9 @@
 
 template<typename O, typename T>
 
-// T - Navratova hodnota kriteria
+// T - Navratova hodnota kriteria - ResultType
 
-// O - UzemnaJednotka*
+// O - UzemnaJednotka* - ObjectType
 
 class Criterion {
 
